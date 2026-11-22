@@ -1,10 +1,10 @@
-# rhino-ai-mods
+# kazi-rhino
 
 My Rhino 8 setup, modded with AI:
 
 1. **Claude drives Rhino** through [rhinomcp](https://github.com/jingcheng-chen/rhinomcp), the open-source Rhino MCP server (geometry, layers, commands, Grasshopper wiring and sliders).
 2. **Claude writes Grasshopper scripts.** rhinomcp can't author script components, so this repo adds a small bridge + MCP server that lets Claude create Python 3 / C# script components with code, inputs and outputs, wire them up, and read back errors so it can fix its own code.
-3. **Voice to the Rhino command line.** Speak, and it runs in Rhino. Text comes from [hushtype](../hushtype) (my Wispr Flow-style dictation app), gets mapped to a Rhino macro by fast rules or a Hugging Face model, and is typed into Rhino's command line.
+3. **Voice to the Rhino command line.** Speak, and it runs in Rhino. Text comes from [hushtype](https://github.com/armaan-k019/hushtype) (my Wispr Flow-style dictation app), gets mapped to a Rhino macro by fast rules or a Hugging Face model, and is typed into Rhino's command line.
 
 ```
                         ┌───────────────── Rhino 8 ──────────────────┐
@@ -18,16 +18,16 @@ mic → hushtype ─HTTP→ rhino-voice ─┘   Grasshopper script comps,     �
 
 ## Quick start
 
-Requirements: Rhino 8 (Windows or Mac), Python 3.10+, [uv](https://docs.astral.sh/uv/) recommended.
+Requirements: Rhino 8 (built for Windows; Mac should work), Python 3.10+, [uv](https://docs.astral.sh/uv/) recommended.
 
 ```bash
-git clone https://github.com/armaan-k019/rhino-ai-mods && cd rhino-ai-mods
+git clone https://github.com/armaan-k019/kazi-rhino && cd kazi-rhino
 uv venv && uv pip install -e ".[hf]"      # or: pip install -e ".[hf]"
 ```
 
 1. **rhinomcp** (base MCP): follow [docs/01-rhino-mcp.md](docs/01-rhino-mcp.md).
 2. **Start the bridge in Rhino** (every session, or add it to startup, see the doc):
-   `_-ScriptEditor _Run "C:\path\to\rhino-ai-mods\bridge\rhino_ai_bridge.py"`
+   `_-ScriptEditor _Run "C:\path\to\kazi-rhino\bridge\rhino_ai_bridge.py"`
 3. **Grasshopper scripting for Claude**: [docs/02-grasshopper-scripts.md](docs/02-grasshopper-scripts.md).
 4. **Voice**: [docs/03-voice-to-rhino.md](docs/03-voice-to-rhino.md). Short version:
    ```bash

@@ -21,7 +21,7 @@ To have Rhino start everything automatically, add this to Tools → Options → 
 
 ```
 _mcpstart
-_-ScriptEditor _Run "C:\path\to\rhino-ai-mods\bridge\rhino_ai_bridge.py"
+_-ScriptEditor _Run "C:\path\to\kazi-rhino\bridge\rhino_ai_bridge.py"
 ```
 
 ## Learn it by doing

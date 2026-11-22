@@ -11,10 +11,14 @@ Two backends, both using any chat/instruct model on the Hugging Face Hub:
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
+import time
 from dataclasses import dataclass
 from typing import Protocol
+
+log = logging.getLogger("rhino_voice")
 
 SYSTEM_PROMPT = """\
 You turn a spoken request from an architect using Rhino 8 into ONE Rhino command-line macro.
@@ -78,9 +82,16 @@ def parse_reply(raw: str) -> LLMResult:
 
 
 class HFLocal:
-    """Run an instruct model locally with transformers (loaded lazily on first use)."""
+    """Run an instruct model locally with transformers (loaded lazily on first use).
+
+    CPU-only laptops are fine: Qwen2.5-1.5B answers in roughly 2-4 s on a modern 8-core CPU
+    (bf16 on CPUs with AVX-512 BF16 such as Ryzen 7040+, float32 otherwise). On CPU the long
+    command-name hint is left out of the prompt to keep it fast; output is still validated
+    against Rhino's real command list.
+    """
 
     name = "hf-local"
+    use_command_hint = True
 
     def __init__(self, model: str = "Qwen/Qwen2.5-1.5B-Instruct", device: str | None = None):
         self.model_id = model
@@ -96,9 +107,12 @@ class HFLocal:
 
         device = self.device or ("cuda" if torch.cuda.is_available()
                                  else "mps" if torch.backends.mps.is_available() else "cpu")
+        dtype = "auto"
+        if device == "cpu":
+            self.use_command_hint = False
+            dtype = torch.bfloat16 if _cpu_has_fast_bf16() else torch.float32
         self._tok = AutoTokenizer.from_pretrained(self.model_id)
-        self._model = AutoModelForCausalLM.from_pretrained(
-            self.model_id, torch_dtype="auto").to(device)
+        self._model = AutoModelForCausalLM.from_pretrained(self.model_id, torch_dtype=dtype).to(device)
         self._model.eval()
 
     def complete(self, messages: list[dict]) -> str:
@@ -113,10 +127,22 @@ class HFLocal:
         return self._tok.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
 
 
+def _cpu_has_fast_bf16() -> bool:
+    """True when the CPU has native bf16 math (AVX-512 BF16 / AMX); otherwise float32 is faster."""
+    try:
+        import torch  # noqa: PLC0415
+
+        return torch.backends.cpu.get_cpu_capability() in ("AVX512", "AVX512_BF16", "AMX") and \
+            torch.ops.mkldnn._is_mkldnn_bf16_supported()
+    except Exception:  # noqa: BLE001
+        return False
+
+
 class HFApi:
     """Call a model through Hugging Face Inference Providers."""
 
     name = "hf-api"
+    use_command_hint = True
 
     def __init__(self, model: str = "Qwen/Qwen2.5-7B-Instruct", token: str | None = None):
         from huggingface_hub import InferenceClient  # noqa: PLC0415
@@ -143,4 +169,9 @@ class LLMMapper:
         self.backend = backend
 
     def map(self, text: str, commands_hint: list[str] | None = None) -> LLMResult:
-        return parse_reply(self.backend.complete(build_messages(text, commands_hint)))
+        if not getattr(self.backend, "use_command_hint", True):
+            commands_hint = None
+        start = time.perf_counter()
+        result = parse_reply(self.backend.complete(build_messages(text, commands_hint)))
+        log.info("model answered in %.1fs", time.perf_counter() - start)
+        return result

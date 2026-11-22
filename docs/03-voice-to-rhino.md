@@ -33,6 +33,20 @@ rhino-voice repl                                      # type phrases to test
 
 Any Hugging Face chat/instruct model works with `--model`. Good choices: `Qwen/Qwen2.5-1.5B-Instruct` (CPU-friendly), `Qwen/Qwen2.5-7B-Instruct` (GPU or `hf-api`), `meta-llama/Llama-3.2-3B-Instruct`, `microsoft/Phi-3.5-mini-instruct`.
 
+## On a laptop without an NVIDIA GPU
+
+The default local model runs fine on CPU alone. On Windows, `pip install -e ".[hf]"` installs the CPU build of PyTorch, so there's nothing else to set up.
+
+Speed (measured with same-size Qwen2.5 models on a 4-core cloud CPU; an 8+ core laptop should be faster):
+
+| Model | Time per command (CPU) | Notes |
+| --- | --- | --- |
+| `Qwen/Qwen2.5-1.5B-Instruct` (default) | about 4 s | best balance |
+| `Qwen/Qwen2.5-0.5B-Instruct` | about 1.5–2 s | faster, makes more mistakes on long sentences |
+| `--llm hf-api` | about 1 s + network | runs on Hugging Face's servers, needs a free HF token |
+
+Only sentences that the rules don't recognize go to the model, so "undo", "boolean union", "circle 0,0,0 5" and the other built-in phrases always run instantly. The model loads once when `rhino-voice serve` starts (first start downloads ~3 GB), and each sentence logs how long it took.
+
 ## With hushtype
 
 hushtype already speaks this contract. Two ways in:

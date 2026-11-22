@@ -43,7 +43,7 @@ Speed (measured with same-size Qwen2.5 models on a 4-core cloud CPU; an 8+ core 
 | --- | --- | --- |
 | `Qwen/Qwen2.5-1.5B-Instruct` (default) | about 4 s | best balance |
 | `Qwen/Qwen2.5-0.5B-Instruct` | about 1.5–2 s | faster, makes more mistakes on long sentences |
-| `--llm hf-api` | about 1 s + network | runs on Hugging Face's servers, needs a free HF token |
+| `--llm hf-api` | likely ~1 s (not measured) | runs on Hugging Face's servers, needs a free HF token |
 
 Only sentences that the rules don't recognize go to the model, so "undo", "boolean union", "circle 0,0,0 5" and the other built-in phrases always run instantly. The model loads once when `rhino-voice serve` starts (first start downloads ~3 GB), and each sentence logs how long it took.
 

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "rhino": {
+      "command": "uvx",
+      "args": ["rhinomcp@latest"]
+    },
+    "rhino-ai-mods": {
+      "command": "uv",
+      "args": ["run", "--directory", "C:\\path\\to\\rhino-ai-mods", "rhino-ai-mcp"]
+    }
+  }
+}

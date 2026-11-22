@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rhino-ai-mods"
+version = "0.1.0"
+description = "AI mods for Rhino 8: Claude-authored Grasshopper script components and a voice-to-Rhino command pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.2,<2",
+]
+
+[project.optional-dependencies]
+# Local Hugging Face model for free-form speech -> command
+hf = ["transformers>=4.45", "torch>=2.2", "accelerate>=0.33"]
+# Hugging Face Inference Providers instead of a local model
+hf-api = ["huggingface_hub>=0.25"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+rhino-ai-mcp = "rhino_ai_mods.mcp_server:main"
+rhino-voice = "rhino_ai_mods.voice.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rhino_ai_mods"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]

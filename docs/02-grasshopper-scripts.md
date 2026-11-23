@@ -4,9 +4,9 @@ The `rhino-ai-mods` MCP server lets Claude write Grasshopper script components: 
 
 ## Setup
 
-1. In Rhino, start the bridge:
+1. In Rhino, run `KaziStart` (after the one-time `install_in_rhino.py`, see the README), or start the bridge directly:
    `_-ScriptEditor _Run "C:\path\to\kazi-rhino\bridge\rhino_ai_bridge.py"`
-   You should see `rhino-ai-mods bridge 0.1.0 listening on 127.0.0.1:2010`. Run it again to restart; `bridge/stop_bridge.py` stops it.
+   You should see `rhino-ai-mods bridge 0.3.0 listening on 127.0.0.1:2010`. Run it again to restart; `bridge/stop_bridge.py` stops it.
 2. Open Grasshopper (the bridge will also try to open it when needed).
 3. Connect the MCP server to Claude:
    - Claude Code (from the repo folder): `claude mcp add rhino-ai-mods -- uv run --directory C:/path/to/kazi-rhino rhino-ai-mcp`

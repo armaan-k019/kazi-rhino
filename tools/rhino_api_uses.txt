@@ -181,3 +181,25 @@ Rhino.Geometry.GeometryBase Translate/1
 Rhino.Geometry.AreaMassProperties Compute/1
 Rhino.Geometry.PolylineCurve .ctor/1
 Rhino.Geometry.Vector3d .ctor/3
+# round 2: kazi builds, bake, sliders, installer
+Rhino.RhinoApp IsOnMainThread
+Rhino.RhinoDoc BeginUndoRecord/1
+Rhino.RhinoDoc EndUndoRecord/1
+Rhino.RhinoDoc Layers
+Rhino.RhinoDoc Views
+Rhino.DocObjects.Tables.ViewTable Redraw/0
+Rhino.DocObjects.Tables.LayerTable FindByFullPath/2
+Rhino.DocObjects.Tables.LayerTable AddPath/1
+Rhino.DocObjects.Layer FullPath
+Rhino.DocObjects.ObjectAttributes .ctor/0
+Rhino.DocObjects.ObjectAttributes LayerIndex
+Rhino.DocObjects.Tables.ObjectTable Add/2
+Grasshopper.Kernel.GH_Convert ToGeometryBase/1
+Grasshopper.Kernel.Special.GH_NumberSlider CurrentValue
+Grasshopper.Kernel.Special.GH_NumberSlider SetSliderValue/1
+Grasshopper.GUI.Base.GH_SliderBase Minimum
+Grasshopper.GUI.Base.GH_SliderBase Maximum
+Grasshopper.GUI.Base.GH_SliderBase DecimalPlaces
+Rhino.ApplicationSettings.CommandAliasList IsAlias/1
+Rhino.ApplicationSettings.CommandAliasList SetMacro/2
+Rhino.ApplicationSettings.CommandAliasList Add/2

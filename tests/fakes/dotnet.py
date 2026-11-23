@@ -57,6 +57,7 @@ def make_system():
     system.Action = lambda fn: fn
     system.Threading = types.SimpleNamespace(ManualResetEvent=_Event)
     system.Guid = _Guid
+    _Guid.Empty = _Guid(uuid.UUID(int=0))
     system.Decimal = float
     system.Drawing = types.SimpleNamespace(PointF=_PointF,
                                            Color=types.SimpleNamespace(FromArgb=lambda *a: a))
@@ -87,6 +88,26 @@ class FakeRhinoApp:
         self.ui_thread_ids.add(threading.get_ident())
         while True:
             self._q.get()()
+
+    @property
+    def IsOnMainThread(self):
+        return threading.get_ident() in self.ui_thread_ids
+
+    def run_on_ui(self, fn):
+        """Run fn on the UI thread and wait (how a script started from Rhino's command bar runs)."""
+        box, done = {}, threading.Event()
+
+        def go():
+            try:
+                box["r"] = fn()
+            except Exception as exc:  # noqa: BLE001
+                box["e"] = exc
+            done.set()
+        self._q.put(go)
+        assert done.wait(5)
+        if "e" in box:
+            raise box["e"]
+        return box.get("r")
 
     def InvokeOnUiThread(self, action):
         self._q.put(action)
@@ -123,13 +144,57 @@ class _Layer:
         self.FullPath = path
 
 
+class _Layers(list):
+    def FindByFullPath(self, path, not_found):
+        for i, layer in enumerate(self):
+            if layer.FullPath == path:
+                return i
+        return not_found
+
+    def AddPath(self, path):
+        parts = path.split("::")
+        for k in range(1, len(parts) + 1):
+            sub = "::".join(parts[:k])
+            if self.FindByFullPath(sub, -1) < 0:
+                self.append(_Layer(sub))
+        return self.FindByFullPath(path, -1)
+
+
+class _Aliases:
+    def __init__(self):
+        self.items = {}
+
+    def IsAlias(self, name):
+        return name in self.items
+
+    def Add(self, name, macro):
+        assert name not in self.items
+        self.items[name] = macro
+        return True
+
+    def SetMacro(self, name, macro):
+        self.items[name] = macro
+        return True
+
+
 def make_rhino(app: FakeRhinoApp, commands):
     selected = []
+    added = []
+    layers = _Layers([_Layer("Default"), _Layer("Facade")])
+
+    def add_object(geo, attrs):
+        added.append((geo, attrs.LayerIndex))
+        return _Guid(uuid.uuid4())
+
+    undo = []
     doc = types.SimpleNamespace(
         Name="facade_study.3dm",
         ModelAbsoluteTolerance=0.001,
-        Objects=types.SimpleNamespace(GetSelectedObjects=lambda a, b: list(selected)),
-        Layers=[_Layer("Default"), _Layer("Facade")],
+        Objects=types.SimpleNamespace(GetSelectedObjects=lambda a, b: list(selected), Add=add_object),
+        Layers=layers,
+        BeginUndoRecord=lambda name: undo.append(("begin", name)) or 7,
+        EndUndoRecord=lambda sn: undo.append(("end", sn)) or True,
+        Views=types.SimpleNamespace(Redraw=lambda: None),
     )
     rhino = types.ModuleType("Rhino")
     rhino.RhinoApp = app
@@ -148,6 +213,10 @@ def make_rhino(app: FakeRhinoApp, commands):
         ShowMessageIcon=types.SimpleNamespace(Question="Question"),
         ShowMessageResult=types.SimpleNamespace(Yes="Yes", No="No"))
     rhino.selected = selected
+    rhino.added = added
+    rhino.undo = undo
+    rhino.DocObjects = types.SimpleNamespace(ObjectAttributes=lambda: types.SimpleNamespace(LayerIndex=0))
+    rhino.ApplicationSettings = types.SimpleNamespace(CommandAliasList=_Aliases())
     rhino.make_object = lambda kind, name="", layer=1: _RhinoObject(_Geometry(kind), name, layer)
     return rhino
 
@@ -316,6 +385,10 @@ class Slider(Param):
         self.Attributes = None
         self.Slider = types.SimpleNamespace(Type=None, DecimalPlaces=2, Minimum=0.0, Maximum=1.0)
         self.value = None
+
+    @property
+    def CurrentValue(self):
+        return self.value
         self.Sources = []
 
     def SetSliderValue(self, v):
@@ -408,7 +481,7 @@ def make_grasshopper(open_canvas=True, script_with_out=True):
         GH_ParamAccess=types.SimpleNamespace(item="item", list="list", tree="tree"),
         GH_RuntimeMessageLevel=levels,
         IGH_VariableParameterComponent=lambda obj: obj,
-        GH_Convert=types.SimpleNamespace(ToGeometricGoo=_Goo),
+        GH_Convert=types.SimpleNamespace(ToGeometricGoo=_Goo, ToGeometryBase=lambda goo: goo),
         Special=types.SimpleNamespace(GH_NumberSlider=Slider, GH_BooleanToggle=Toggle, GH_Group=Group),
         Parameters=types.SimpleNamespace(Param_Geometry=ParamGeometry))
     gh.GUI = types.SimpleNamespace(Base=types.SimpleNamespace(

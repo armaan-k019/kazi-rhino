@@ -99,6 +99,20 @@ class FakeBridge:
             return {"connected": True}
         if cmd == "gh_group":
             return {"group": self._new("GH_Group", a["name"], members=a["components"])}
+        if cmd == "kazi_record_build":
+            self.builds = getattr(self, "builds", []) + [a]
+            return {"recorded": len(self.builds)}
+        if cmd == "kazi_builds":
+            return {"builds": getattr(self, "builds", [])}
+        if cmd == "gh_get_slider":
+            o = self.objects[a["component"]]
+            args = o["args"]
+            return {"nickname": o["nickname"], "value": o.get("value", args.get("value")),
+                    "min": args.get("min"), "max": args.get("max"), "integer": bool(args.get("integer"))}
+        if cmd == "gh_set_slider":
+            o = self.objects[a["component"]]
+            o["value"] = a["value"]
+            return {"nickname": o["nickname"], "value": a["value"]}
         if cmd == "gh_solve":
             return {"problems": []}
         if cmd == "gh_read_script":

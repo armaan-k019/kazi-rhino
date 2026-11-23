@@ -29,7 +29,9 @@ import scriptcontext as sc
 HOST = "127.0.0.1"
 PORT = 2010
 STICKY_KEY = "rhino_ai_mods_bridge"
-VERSION = "0.2.0"
+COMMANDS_KEY = "rhino_ai_mods_commands"
+BUILDS_KEY = "kazi_builds"
+VERSION = "0.3.0"
 UI_TIMEOUT_MS = 60000
 APPEND = 2147483647  # GH_Document.AddObject index: end of the object list
 
@@ -40,6 +42,10 @@ APPEND = 2147483647  # GH_Document.AddObject index: end of the object list
 
 def on_ui(func, timeout_ms=UI_TIMEOUT_MS):
     """Run func() on Rhino's UI thread and return its result (or raise its error)."""
+    if Rhino.RhinoApp.IsOnMainThread:
+        # Called from a script running inside Rhino (e.g. the Kazi* commands): run directly,
+        # waiting for ourselves would deadlock.
+        return func()
     box = {}
     done = System.Threading.ManualResetEvent(False)
 
@@ -704,6 +710,121 @@ def cmd_gh_free_spot(args):
     return on_ui(work)
 
 
+# --------------------------------------------------------------------------- #
+# Kazi builds: remember what voice/MCP built, so it can be undone, baked or edited
+# --------------------------------------------------------------------------- #
+
+def _builds():
+    return sc.sticky.setdefault(BUILDS_KEY, [])
+
+
+def cmd_kazi_record_build(args):
+    record = {k: args.get(k) for k in ("title", "group", "script", "components", "sliders", "request", "recipe")}
+    _builds().append(record)
+    del _builds()[:-20]  # keep the last 20
+    return {"recorded": len(_builds())}
+
+
+def cmd_kazi_builds(args):
+    return {"builds": list(_builds())}
+
+
+def _pick_build(args):
+    builds = _builds()
+    if not builds:
+        raise ValueError("Nothing built with kazi yet in this Rhino session.")
+    ref = args.get("group")
+    if ref:
+        for b in builds:
+            if b.get("group") == ref or b.get("title") == ref:
+                return b
+        raise ValueError("No kazi build '%s'" % ref)
+    return builds[-1]
+
+
+def cmd_kazi_undo_build(args):
+    """Delete the components of the last (or a named) kazi build from the canvas."""
+    def work():
+        doc = _gh_doc()
+        build = _pick_build(args)
+        removed = 0
+        for ref in list(build.get("components") or []) + [build.get("group")]:
+            try:
+                doc.RemoveObject(_find_obj(doc, ref), False)
+                removed += 1
+            except ValueError:
+                pass
+        doc.NewSolution(False)
+        _builds().remove(build)
+        Rhino.RhinoApp.WriteLine("[kazi] removed '%s' (%d components)" % (build.get("title"), removed))
+        return {"removed": removed, "title": build.get("title")}
+    return on_ui(work)
+
+
+def cmd_kazi_bake(args):
+    """Bake the script outputs of the last (or a named) build to layers kazi::<title>::<output>."""
+    def work():
+        gh = _gh()
+        doc = _gh_doc()
+        rdoc = Rhino.RhinoDoc.ActiveDoc
+        build = _pick_build(args)
+        script = _find_obj(doc, build.get("script"))
+        undo = rdoc.BeginUndoRecord("kazi bake")
+        baked = {}
+        try:
+            for p in script.Params.Output:
+                if str(p.NickName) == "out":
+                    continue
+                path = "kazi::%s::%s" % (build.get("title"), p.NickName)
+                idx = rdoc.Layers.FindByFullPath(path, -1)
+                if idx < 0:
+                    idx = rdoc.Layers.AddPath(path)
+                attrs = Rhino.DocObjects.ObjectAttributes()
+                attrs.LayerIndex = idx
+                n = 0
+                for goo in p.VolatileData.AllData(True):
+                    geo = gh.Kernel.GH_Convert.ToGeometryBase(goo)
+                    if geo is not None and rdoc.Objects.Add(geo, attrs) != System.Guid.Empty:
+                        n += 1
+                baked[str(p.NickName)] = n
+        finally:
+            rdoc.EndUndoRecord(undo)
+        rdoc.Views.Redraw()
+        Rhino.RhinoApp.WriteLine("[kazi] baked '%s': %s" % (build.get("title"), baked))
+        return {"baked": baked, "title": build.get("title")}
+    return on_ui(work)
+
+
+def cmd_gh_set_slider(args):
+    """Set a slider's value; widens the range if the value is outside it."""
+    def work():
+        doc = _gh_doc()
+        slider = _find_obj(doc, args["component"])
+        if not hasattr(slider, "SetSliderValue"):
+            raise ValueError("%s is not a number slider" % slider.NickName)
+        val = float(args["value"])
+        s = slider.Slider
+        if val < float(s.Minimum):
+            s.Minimum = System.Decimal(val)
+        if val > float(s.Maximum):
+            s.Maximum = System.Decimal(val)
+        slider.SetSliderValue(System.Decimal(val))
+        slider.ExpireSolution(True)
+        return {"nickname": str(slider.NickName), "value": float(slider.CurrentValue),
+                "min": float(s.Minimum), "max": float(s.Maximum)}
+    return on_ui(work)
+
+
+def cmd_gh_get_slider(args):
+    def work():
+        slider = _find_obj(_gh_doc(), args["component"])
+        s = slider.Slider
+        return {"nickname": str(slider.NickName), "value": float(slider.CurrentValue),
+                "min": float(s.Minimum), "max": float(s.Maximum),
+                "integer": int(s.DecimalPlaces) == 0}
+    return on_ui(work)
+
+
 COMMANDS = {
     "ping": cmd_ping,
     "run_command": cmd_run_command,
@@ -725,6 +846,12 @@ COMMANDS = {
     "gh_add_geometry_input": cmd_gh_add_geometry_input,
     "gh_group": cmd_gh_group,
     "gh_free_spot": cmd_gh_free_spot,
+    "gh_set_slider": cmd_gh_set_slider,
+    "gh_get_slider": cmd_gh_get_slider,
+    "kazi_record_build": cmd_kazi_record_build,
+    "kazi_builds": cmd_kazi_builds,
+    "kazi_undo_build": cmd_kazi_undo_build,
+    "kazi_bake": cmd_kazi_bake,
 }
 
 
@@ -805,10 +932,11 @@ def main():
     if old is not None:
         old.stop()
         old.thread.join(2.0)
-    bridge = Bridge()
+    bridge = Bridge(HOST, PORT)
     bridge.start()
     sc.sticky[STICKY_KEY] = bridge
-    print("rhino-ai-mods bridge %s listening on %s:%d" % (VERSION, HOST, PORT))
+    sc.sticky[COMMANDS_KEY] = COMMANDS
+    print("rhino-ai-mods bridge %s listening on %s:%d" % (VERSION, HOST, bridge.sock.getsockname()[1]))
 
 
 if __name__ == "__main__":

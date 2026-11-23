@@ -126,3 +126,23 @@ def test_voice_edits_through_the_real_bridge_script(rhino):
     assert info["value"] == 5 and info["max"] >= 5
     with pytest.raises(Exception, match="not a boolean toggle"):
         rhino.client.call("gh_toggle", component=rec["sliders"]["count"])
+
+
+def test_model_code_edit_through_the_real_bridge_script(rhino):
+    from rhino_ai_mods.gh.edits import Editor
+    from rhino_ai_mods.gh.planner import Planner
+
+    class LLM:
+        prompts = []
+
+        def complete(self, messages, max_tokens=96):
+            self.prompts.append(messages[-1]["content"])
+            return "```python\ncells, openings, sites = [], [], []\n```"
+
+    res = build(rhino)
+    llm = LLM()
+    out = Editor(rhino.client, Planner(llm), confirm=False).handle("make the openings circular")
+    assert out.status == "edited", out
+    assert "(facade, count, seed, frame)" in llm.prompts[0] and "(cells, openings, sites)" in llm.prompts[0]
+    code = rhino.client.call("gh_read_script", component=res.script)["code"]
+    assert code.startswith("cells, openings, sites = [], [], []")

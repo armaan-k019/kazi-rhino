@@ -332,9 +332,10 @@ class Editor:
         title, script = build.get("title", ""), build.get("script")
         info = self.bridge.call("gh_read_script", component=script)
         code = info.get("code") or ""
-        ins = [p["name"] if isinstance(p, dict) else p for p in info.get("inputs", [])]
-        outs = [p["name"] if isinstance(p, dict) else p for p in info.get("outputs", []) if
-                (p["name"] if isinstance(p, dict) else p) != "out"]
+        def pname(p):   # script variables are the params' nicknames
+            return (p.get("nickname") or p.get("name")) if isinstance(p, dict) else str(p)
+        ins = [pname(p) for p in info.get("inputs", [])]
+        outs = [pname(p) for p in info.get("outputs", []) if pname(p) != "out"]
         self.say(f"{title}: asking the model to change the script...")
         new_code = self.planner.edit_code(code, text, ins, outs)
         if not new_code or new_code.strip() == code.strip():

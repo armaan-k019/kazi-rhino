@@ -129,6 +129,10 @@ class Surface(GeometryBase):
     def PointAt(self, s, t):
         return self.o + self.u * s + self.v * t
 
+    def NormalAt(self, s, t):
+        u, v = self.u, self.v
+        return Vector3d(u.Y * v.Z - u.Z * v.Y, u.Z * v.X - u.X * v.Z, u.X * v.Y - u.Y * v.X)
+
     def IsoCurve(self, direction, c):
         if direction == 0:
             return Curve([self.PointAt(0, c), self.PointAt(self.w, c)])
@@ -144,6 +148,45 @@ class Surface(GeometryBase):
 
 class BrepFace(Surface):
     pass
+
+
+class CurvedFace(BrepFace):
+    """A vertical cylinder segment: s runs along an arc of `radius` through `angle` radians."""
+
+    def __init__(self, radius, angle, h):
+        self.r, self.a = float(radius), float(angle)
+        super().__init__(Point3d(), Vector3d(1, 0, 0), Vector3d(0, 0, 1), self.r * self.a, h)
+
+    def PointAt(self, s, t):
+        th = s / self.r
+        return Point3d(self.r * math.cos(th), self.r * math.sin(th), t)
+
+    def NormalAt(self, s, t):
+        th = s / self.r
+        return Vector3d(math.cos(th), math.sin(th), 0)
+
+    def IsoCurve(self, direction, c):
+        if direction == 0:
+            return Curve([self.PointAt(self.w * k / 400, c) for k in range(401)])
+        return Curve([self.PointAt(c, 0), self.PointAt(c, self.h)])
+
+
+class PipeCapMode:
+    None_, Flat, Round = 0, 1, 2
+
+
+class NurbsSurface(GeometryBase):
+    """Ruled surface between two polylines (only what the recipes read)."""
+
+    def __init__(self, a, b):
+        self.a, self.b = a, b
+
+    @staticmethod
+    def CreateRuledSurface(a, b):
+        return NurbsSurface(a, b)
+
+    def ToBrep(self):
+        return Brep([], "ruled", profile=self)
 
 
 class _List(list):
@@ -162,6 +205,18 @@ class Brep(GeometryBase):
         b = Brep(self.Faces, self.kind, self._area, self.profile, self.height)
         b.capped = True
         return b
+
+    @staticmethod
+    def CreateFromCornerPoints(a, b, c, d, tol):
+        b_ = Brep([], "quad")
+        b_.corners = [a, b, c, d]
+        return b_
+
+    @staticmethod
+    def CreatePipe(rail, radius, local_blending, cap, fit_rail, abs_tol, ang_tol):
+        b_ = Brep([], "pipe", profile=rail)
+        b_.radius, b_.cap = radius, cap
+        return [b_]
 
     @staticmethod
     def CreatePlanarBreps(curves, tol):

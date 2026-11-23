@@ -144,7 +144,7 @@ def test_garbage_model_reply_falls_back_to_recipe(bridge):
 
 
 def test_no_model_no_recipe_is_a_clear_error(bridge):
-    out = make(bridge).handle("build a louvre system", "grasshopper")
+    out = make(bridge).handle("build a kangaroo form-finding mesh", "grasshopper")
     assert out.status == "error" and "--gh-llm" in out.detail
 
 

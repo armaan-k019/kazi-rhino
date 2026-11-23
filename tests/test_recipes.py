@@ -142,4 +142,4 @@ def test_speech_numbers_become_slider_values():
 
 
 def test_unknown_request_has_no_recipe():
-    assert match_recipe("build a louvre system") is None
+    assert match_recipe("build a kangaroo form-finding mesh") is None

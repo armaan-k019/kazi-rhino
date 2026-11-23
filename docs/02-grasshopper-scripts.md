@@ -26,7 +26,7 @@ The `rhino-ai-mods` MCP server lets Claude write Grasshopper script components: 
 | `gh_connect` / `gh_disconnect` | Wire output → input (by nickname, name or index) |
 | `gh_delete`, `gh_solve` | Delete a component; recompute everything and list problems |
 | `gh_build` | **One call, whole definition**: geometry from the Rhino selection + sliders/toggles → one script → outputs, wired, grouped, solved, errors returned. Or `recipe="voronoi_facade"` |
-| `gh_recipes` | Tested plans (voronoi facade, stepped massing) to build or adapt |
+| `gh_recipes` | Tested plans (voronoi facade, attractor openings, fins/louvres, panels, diagrid, stepped massing) to build or adapt |
 | `gh_add_slider`, `gh_add_geometry_input` | A slider with range/value; a Geometry param referencing the Rhino selection |
 | `rhino_selection` | What's selected in Rhino |
 | `voice_command` | How a spoken phrase maps to a command ("select previous" → `_SelPrev`); `run=true` types it |

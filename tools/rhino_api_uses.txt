@@ -203,3 +203,12 @@ Grasshopper.GUI.Base.GH_SliderBase DecimalPlaces
 Rhino.ApplicationSettings.CommandAliasList IsAlias/1
 Rhino.ApplicationSettings.CommandAliasList SetMacro/2
 Rhino.ApplicationSettings.CommandAliasList Add/2
+# facade recipes (attractor, fins, panels, diagrid)
+Rhino.Geometry.Surface NormalAt/2
+Rhino.Geometry.NurbsSurface CreateRuledSurface/2
+Rhino.Geometry.NurbsSurface ToBrep/0
+Rhino.Geometry.Brep CreateFromCornerPoints/5
+Rhino.Geometry.Brep CreatePipe/7
+Rhino.Geometry.PipeCapMode Flat
+Rhino.Geometry.Point3d .ctor/3
+Rhino.Geometry.PolylineCurve .ctor/1

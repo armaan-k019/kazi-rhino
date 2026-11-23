@@ -47,7 +47,10 @@ Your own phrases go in `~/.kazi-rhino/aliases.json` (see [config/aliases.example
 ```
 "build me a voronoi script that attaches to a facade with 80 cells"
 "build a stepping condition that sets back 3 metres every 4 floors, 20 floors"
-"make a grasshopper definition for vertical fins along this curve"     (needs a model)
+"30 vertical fins 0.8 deep rotated 15 degrees"
+"panelize this facade 12 by 6 with 20 mm joints, brick bond"
+"put a diagrid on the tower, 10 bays"
+"make a grasshopper definition for a kangaroo relaxed canopy"         (needs a model)
 ```
 
 What gets built: a **Geometry** input holding what you have selected in Rhino (live-referenced,
@@ -58,12 +61,19 @@ The Rhino command line reports what happened (`[kazi] built 'Voronoi facade'`).
 
 Built-in recipes (tested, work with no model at all):
 
-| Recipe | Say | Inputs |
+| Recipe | Say | Inputs → outputs |
 | --- | --- | --- |
-| Voronoi facade | "voronoi", "cellular" | facade (selection), count, seed, frame → cells, openings, sites |
-| Stepped massing | "stepping", "setback", "terraced", "tiered" | footprint (selection), floors, floor height, floors per tier, setback → masses, slabs, terraces |
+| Voronoi facade | "voronoi", "cellular" | facade, count, seed, frame → cells, openings, sites |
+| Attractor openings | "attractor", "perforated", "openings that get bigger near..." | facade, columns, rows, min/max size, attractor x/y, falloff, sides, invert → openings, sizes, centers |
+| Fins / louvres | "fins", "louvres", "brise soleil", "blades" | facade, count, depth, rotation, twist range, horizontal, flip → fins, axes |
+| Panels | "panelize", "cladding", "panels", "brick bond" | facade, columns, rows, gap, stagger → panels, outlines, centers |
+| Diagrid | "diagrid", "diamond grid", "lattice" | facade, bays, levels, radius, ring beams → members, rings, nodes, structure (piped) |
+| Stepped massing | "stepping", "setback", "terraced", "tiered" | footprint, floors, floor height, floors per tier, setback → masses, slabs, terraces |
 
-Numbers you say become slider values ("80 cells", "20 floors", "every 4 floors", "setback of 3").
+All facade recipes work on flat and curved facades (they follow the surface) and on the largest
+face of a polysurface. Each one is tested at the minimum and maximum of every slider.
+
+Numbers you say become slider values ("80 cells", "20 floors", "12 by 6", "0.8 deep", "15 degrees", "20 mm joints").
 
 For anything else, a model writes the script. Writing good Grasshopper code needs a stronger
 model than your laptop's CPU can run quickly, so pick one:

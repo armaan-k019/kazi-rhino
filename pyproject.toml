@@ -25,6 +25,7 @@ dev = ["pytest>=8", "dnfile>=0.15"]
 rhino-ai-mcp = "rhino_ai_mods.mcp_server:main"
 rhino-voice = "rhino_ai_mods.voice.server:main"
 kazi-setup = "rhino_ai_mods.setup_cli:main"
+kazi-addons = "rhino_ai_mods.addons.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/rhino_ai_mods"]

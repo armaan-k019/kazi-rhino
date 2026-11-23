@@ -1,0 +1,2026 @@
+{
+"id": "kangaroo2",
+"name": "Kangaroo 2",
+"version_checked": "2.5.3",
+"source": "grasshopperdocs.com/addons/kangaroo-2.html (read 2026-11-23)",
+"components": [
+[
+"Solver",
+null,
+"Main",
+"The main component where Goals are combined and applied",
+[
+[
+"GoalObjects",
+"GoalObjects",
+"Generic Data"
+],
+[
+"Points",
+"Points",
+"Point"
+],
+[
+"Reset",
+"Reset",
+"Boolean"
+],
+[
+"Restart",
+"Restart",
+"Boolean"
+],
+[
+"Parallel",
+"Parallel",
+"Boolean"
+],
+[
+"Threshold",
+"Threshold",
+"Number"
+],
+[
+"Tolerance",
+"Tolerance",
+"Number"
+],
+[
+"AddCurrent",
+"AddCurrent",
+"Boolean"
+],
+[
+"On",
+"On",
+"Boolean"
+]
+],
+[
+[
+"V",
+"V",
+"Point"
+],
+[
+"O",
+"O",
+"Generic Data"
+]
+]
+],
+[
+"Soft & Hard Solver",
+"Soft&HardSolver",
+"Main",
+"Solver with separate inputs for soft goals, and hard constraint type goals",
+[
+[
+"SoftGoals",
+"SoftGoals",
+"Generic Data"
+],
+[
+"HardGoals",
+"HardGoals",
+"Generic Data"
+],
+[
+"HardIterations",
+"HardIterations",
+"Integer"
+],
+[
+"SoftMultiplier",
+"SoftMultiplier",
+"Number"
+],
+[
+"Reset",
+"Reset",
+"Boolean"
+],
+[
+"Threshold",
+"Threshold",
+"Number"
+],
+[
+"Tolerance",
+"Tolerance",
+"Number"
+],
+[
+"On",
+"On",
+"Boolean"
+]
+],
+[
+[
+"I",
+"I",
+"Integer"
+],
+[
+"V",
+"V",
+"Point"
+],
+[
+"O",
+"O",
+"Generic Data"
+]
+]
+],
+[
+"Bouncy Solver",
+"BouncySolver",
+"Main",
+"Solver with momentum",
+[
+[
+"GoalObjects",
+"GoalObjects",
+"Generic Data"
+],
+[
+"Reset",
+"Reset",
+"Boolean"
+],
+[
+"Threshold",
+"Threshold",
+"Number"
+],
+[
+"Tolerance",
+"Tolerance",
+"Number"
+],
+[
+"Damping",
+"Damping",
+"Number"
+],
+[
+"Iterations",
+"Iterations",
+"Integer"
+],
+[
+"On",
+"On",
+"Boolean"
+]
+],
+[
+[
+"I",
+"I",
+"Integer"
+],
+[
+"V",
+"V",
+"Point"
+],
+[
+"O",
+"O",
+"Generic Data"
+]
+]
+],
+[
+"Step Solver",
+"StepSolver",
+"Main",
+"Solver which advances only when input refreshed. Useful for making animations",
+[
+[
+"GoalObjects",
+"GoalObjects",
+"Generic Data"
+],
+[
+"Tolerance",
+"Tolerance",
+"Number"
+],
+[
+"Momentum",
+"Momentum",
+"Boolean"
+],
+[
+"Damping",
+"Damping",
+"Number"
+],
+[
+"SubIterations",
+"SubIterations",
+"Integer"
+],
+[
+"Animate",
+"Animate",
+"Boolean"
+]
+],
+[
+[
+"I",
+"I",
+"Integer"
+],
+[
+"V",
+"V",
+"Point"
+],
+[
+"O",
+"O",
+"Generic Data"
+]
+]
+],
+[
+"Zombie Solver",
+"ZombieSolver",
+"Main",
+"Version of the solver which keeps all iterations internal and outputs the final result",
+[
+[
+"GoalObjects",
+"GoalObjects",
+"Generic Data"
+],
+[
+"Threshold",
+"Threshold",
+"Number"
+],
+[
+"Tolerance",
+"Tolerance",
+"Number"
+],
+[
+"MaxIterations",
+"MaxIterations",
+"Integer"
+]
+],
+[
+[
+"I",
+"I",
+"Integer"
+],
+[
+"V",
+"V",
+"Point"
+],
+[
+"O",
+"O",
+"Generic Data"
+]
+]
+],
+[
+"Show",
+null,
+"Main",
+"Show",
+[
+[
+"G",
+"G",
+"Generic Data"
+]
+],
+[
+[
+"G",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Grab",
+null,
+"Main",
+"Lets you drag particles in Rhino (hold Alt and drag with LMB)",
+[
+[
+"On",
+"On",
+"Boolean"
+],
+[
+"Strength",
+"Strength",
+"Number"
+],
+[
+"Range",
+"Range",
+"Number"
+]
+],
+[
+[
+"Grab",
+"G",
+"Generic Data"
+],
+[
+"Anchors",
+"A",
+"Point"
+]
+]
+],
+[
+"Anchor",
+null,
+"Goals-Pt",
+"Anchor",
+[
+[
+"Point",
+"P",
+"Point"
+],
+[
+"Target",
+"T",
+"Point"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"A",
+"A",
+"Generic Data"
+]
+]
+],
+[
+"Anchor XYZ",
+"AnchorXYZ",
+"Goals-Pt",
+"Fix a point only along chosen world axes",
+[
+[
+"Point",
+"P",
+"Point"
+],
+[
+"X",
+"X",
+"Boolean"
+],
+[
+"Y",
+"Y",
+"Boolean"
+],
+[
+"Z",
+"Z",
+"Boolean"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"A",
+"A",
+"Generic Data"
+]
+]
+],
+[
+"Load",
+null,
+"Goals-Pt",
+"Load",
+[
+[
+"Point",
+"P",
+"Generic Data"
+],
+[
+"Force vector",
+"FV",
+"Vector"
+],
+[
+"Weighting",
+"W",
+"Number"
+]
+],
+[
+[
+"Unary",
+"U",
+"Generic Data"
+]
+]
+],
+[
+"Bomb",
+"B",
+"Goals-Pt",
+"Causes an explosion after a given number of iterations",
+null,
+null
+],
+[
+"Coincident",
+"C",
+"Goals-Pt",
+"Equivalent to a zero length constraint between a pair of points",
+null,
+null
+],
+[
+"Floor",
+null,
+"Goals-Pt",
+"Floor",
+[
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Floor",
+"H",
+"Generic Data"
+]
+]
+],
+[
+"Floor Friction",
+"Floor",
+"Goals-Pt",
+"Floor with static friction",
+null,
+null
+],
+[
+"Magnet Snap",
+"MS",
+"Goals-Pt",
+"Snap points together according to proximity",
+null,
+null
+],
+[
+"Plastic Anchor",
+"PlasticAnchor",
+"Goals-Pt",
+"PlasticAnchor",
+null,
+null
+],
+[
+"Transform",
+null,
+"Goals-Pt",
+"Keep a given transformation between 2 points",
+null,
+null
+],
+[
+"Length(Line)",
+null,
+"Goals-Lin",
+"Length(Line)",
+[
+[
+"Line",
+"Line",
+"Curve"
+],
+[
+"Length",
+"Length",
+"Number"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Spring",
+"S",
+"Generic Data"
+]
+]
+],
+[
+"Length(Pts)",
+null,
+"Goals",
+"Length(Pts)",
+[
+[
+"Start",
+"Start",
+"Generic Data"
+],
+[
+"End",
+"End",
+"Generic Data"
+],
+[
+"Length",
+"Length",
+"Number"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Spring",
+"S",
+"Generic Data"
+]
+]
+],
+[
+"Clamp Length",
+"ClampLength",
+"Goals-Lin",
+"Keep length within given bounds",
+[
+[
+"Line",
+"Line",
+"Curve"
+],
+[
+"LowerLimit",
+"LowerLimit",
+"Number"
+],
+[
+"UpperLimit",
+"UpperLimit",
+"Number"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Clamp",
+"C",
+"Generic Data"
+]
+]
+],
+[
+"Constant Tension",
+"CT",
+"Goals-Lin",
+"Element which adapts its stiffness to maintain a constant force",
+null,
+null
+],
+[
+"Direction",
+null,
+"Goals-Lin",
+"Align a line segment with a given vector, or the closest World XYZ vector if none",
+null,
+null
+],
+[
+"Dynamic Weight1d",
+"DW",
+"Goals-Lin",
+"Load in negative Z direction, magnitude updates with line length",
+null,
+null
+],
+[
+"Equal Length",
+"EqualLength",
+"Goals-Lin",
+"EqualLength",
+[
+[
+"Line",
+"Line",
+"Curve"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Equal",
+"E",
+"Generic Data"
+]
+]
+],
+[
+"Length Ratio",
+"LengthRatio",
+"Goals-Lin",
+"Maintain a fixed ratio between the lengths of a pair of lines",
+null,
+null
+],
+[
+"Length Snap",
+"LengthSnap",
+"Goals-Lin",
+"Snap length to whole number multiples of a given number",
+null,
+null
+],
+[
+"Plastic Length",
+"PL",
+"Goals-Lin",
+"Preserves line length elastically until a limit, then changes rest length",
+null,
+null
+],
+[
+"Conicalize",
+"Conical",
+"Goals-Mesh",
+"Adjust a quad mesh so vertices are conical (face-face offset); use with Planarize",
+null,
+null
+],
+[
+"Cyclic Quad",
+"CyclicQuad",
+"Goals-Mesh",
+"Make a quadrilateral have a circumscribed circle",
+null,
+null
+],
+[
+"Developablize",
+null,
+"Goals-Mesh",
+"Turn a triangular mesh into developable patches with creases",
+null,
+null
+],
+[
+"Edge Lengths",
+"EdgeLengths",
+"Goals-Mesh",
+"Set the edge lengths of a mesh",
+[
+[
+"Mesh",
+"Mesh",
+"Mesh"
+],
+[
+"LengthFactor",
+"LengthFactor",
+"Number"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"EL",
+"EL",
+"Generic Data"
+]
+]
+],
+[
+"Isothermic",
+"Iso",
+"Goals-Mesh",
+"Make a quad mesh S-Isothermic",
+null,
+null
+],
+[
+"Live Soap",
+"LS",
+"Goals-Mesh",
+"Generate minimal and CMC meshes that adapt connectivity during relaxation",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+],
+[
+"UseVolume",
+"U",
+"Boolean"
+],
+[
+"VolumeChange",
+"V",
+"Number"
+],
+[
+"Strength",
+"S",
+"Number"
+],
+[
+"Reset",
+"R",
+"Boolean"
+]
+],
+[
+[
+"LS",
+"LS",
+"Generic Data"
+]
+]
+],
+[
+"No Fold Through",
+"NoFoldThrough",
+"Goals-Mesh",
+"Stop the sides of a hinge passing through each other",
+null,
+null
+],
+[
+"Planarize",
+null,
+"Goals-Mesh",
+"Planarize",
+[
+[
+"M",
+"M",
+"Mesh"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Planarize",
+"P",
+"Generic Data"
+]
+]
+],
+[
+"Hinge",
+null,
+"Goals-Mesh",
+"Hinge",
+[
+[
+"FoldStart",
+"FoldStart",
+"Point"
+],
+[
+"FoldEnd",
+"FoldEnd",
+"Point"
+],
+[
+"Tip1",
+"Tip1",
+"Point"
+],
+[
+"Tip2",
+"Tip2",
+"Point"
+],
+[
+"RestAngle",
+"RestAngle",
+"Number"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Hinge",
+"H",
+"Generic Data"
+]
+]
+],
+[
+"Plastic Hinge",
+"PH",
+"Goals-Mesh",
+"Like Hinge, but folding beyond the plastic/elastic threshold alters the rest angle",
+null,
+null
+],
+[
+"Polygon Area",
+"PolygonArea",
+"Goals-Mesh",
+"PolygonArea",
+null,
+null
+],
+[
+"Pressure",
+null,
+"Goals-Mesh",
+"A force normal to each triangle, proportional to its area",
+[
+[
+"M",
+"M",
+"Mesh"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Pressure",
+"P",
+"Generic Data"
+]
+]
+],
+[
+"Smooth",
+null,
+"Goals-Mesh",
+"Smooth",
+[
+[
+"M",
+"M",
+"Mesh"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Smooth",
+"P",
+"Generic Data"
+]
+]
+],
+[
+"Soap Film",
+"SG",
+"Goals-Mesh",
+"Area minimizing triangle, for generating zero mean curvature meshes",
+[
+[
+"Pts",
+"Pts",
+"Point"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"SoapFilm",
+"S",
+"Generic Data"
+]
+]
+],
+[
+"Tangential Smooth",
+"TSmooth",
+"Goals-Mesh",
+"Smooth a mesh only in local tangent planes; used with Soap Film",
+[
+[
+"M",
+"M",
+"Mesh"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Smooth",
+"P",
+"Generic Data"
+]
+]
+],
+[
+"Tangent Incircles",
+null,
+"Goals-Mesh",
+"TangentIncircles",
+null,
+null
+],
+[
+"Vertex Loads",
+"VertexLoads",
+"Goals-Mesh",
+"Apply equal vertical loads to all vertices of a mesh",
+[
+[
+"Mesh",
+"Mesh",
+"Mesh"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"L",
+"L",
+"Generic Data"
+]
+]
+],
+[
+"Volume",
+null,
+"Goals-Mesh",
+"Set the total volume of a mesh",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+],
+[
+"Volume",
+"V",
+"Number"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Volume",
+"V",
+"Generic Data"
+]
+]
+],
+[
+"Wind",
+null,
+"Goals-Mesh",
+"Wind",
+null,
+null
+],
+[
+"Align Faces",
+"AlignFaces",
+"Goals-6dof",
+"Align faces of a pair of rigid bodies",
+null,
+null
+],
+[
+"Beam",
+null,
+"Goals-6dof",
+"Beam resisting bending and torsion",
+null,
+null
+],
+[
+"Concentric",
+null,
+"Goals-6dof",
+"Align axes of a pair of rigid bodies",
+null,
+null
+],
+[
+"Rigid Body",
+"RigidBody",
+"Goals-6dof",
+"RigidBody",
+null,
+null
+],
+[
+"Rigid Point Set",
+"RigidPointSet",
+"Goals-6dof",
+"A set of points which maintain their relative positions",
+null,
+null
+],
+[
+"Rigid Body Collide",
+"RigidBodyCollide",
+"Goals-6dof",
+"Collision between a pair of rigid bodies",
+null,
+null
+],
+[
+"Solid Plane Collide",
+"SolidPlaneCollide",
+"Goals-6dof",
+"Collision between a plane and a solid",
+null,
+null
+],
+[
+"Support",
+null,
+"Goals-6dof",
+"Set support conditions for a beam end or rigid body",
+null,
+null
+],
+[
+"Angle",
+null,
+"Goals-Angle",
+"Angle",
+null,
+null
+],
+[
+"Angle Snap",
+"AS",
+"Goals-Angle",
+"Snap the angle between 2 lines to the nearest whole multiple of a given value",
+null,
+null
+],
+[
+"Clamp Angle",
+"ClampAngle",
+"Goals-Angle",
+"Keep an angle between 2 lines within a given range",
+null,
+null
+],
+[
+"Equal Angle",
+"EA",
+"Goals-Angle",
+"Equalize angles between multiple pairs of lines",
+null,
+null
+],
+[
+"G2",
+null,
+"Goals-Angle",
+"Maintain curvature continuity between 2 nurbs curves",
+null,
+null
+],
+[
+"Rod",
+null,
+"Goals-Angle",
+"Bending and stretching resistant rod",
+[
+[
+"Polyline",
+"Polyline",
+"Curve"
+],
+[
+"LengthFactor",
+"LengthFactor",
+"Number"
+],
+[
+"AngleFactor",
+"AngleFactor",
+"Number"
+],
+[
+"AxialStrength",
+"AxialStrength",
+"Number"
+],
+[
+"BendStrength",
+"BendStrength",
+"Number"
+]
+],
+[
+[
+"R",
+"R",
+"Generic Data"
+]
+]
+],
+[
+"Co Circular",
+"CoCircular",
+"Goals-Co",
+"CoCircular",
+null,
+null
+],
+[
+"Co Linear",
+"CoLinear",
+"Goals-Co",
+"CoLinear",
+null,
+null
+],
+[
+"Co Planar",
+"CoPlanar",
+"Goals-Co",
+"CoPlanar",
+[
+[
+"Points",
+"Points",
+"Point"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Coplanar",
+"C",
+"Generic Data"
+]
+]
+],
+[
+"Co Spherical",
+"CoSpherical",
+"Goals-Co",
+"CoSpherical",
+null,
+null
+],
+[
+"Collide2d",
+"C2d",
+"Goals-Col",
+"Collisions between closed polygons in a given plane",
+null,
+null
+],
+[
+"Collider",
+null,
+"Goals-Col",
+"Collisions between thickened line segments and spheres",
+[
+[
+"Objects",
+"Objects",
+"Generic Data"
+],
+[
+"Radii",
+"Radii",
+"Number"
+],
+[
+"IgnoreA",
+"IgnoreA",
+"Integer"
+],
+[
+"IgnoreB",
+"IgnoreB",
+"Integer"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"Collider",
+"C",
+"Generic Data"
+]
+]
+],
+[
+"Curve Point Collide",
+"CPC",
+"Goals-Col",
+"Keep a set of points outside or inside a given 2d curve",
+null,
+null
+],
+[
+"Curve Collide",
+"CC",
+"Goals-Col",
+"Collisions between closed curves in a given plane",
+null,
+null
+],
+[
+"Image Circles",
+"ImgCircles",
+"Goals-Col",
+"Circle packing with sizes from image colours",
+null,
+null
+],
+[
+"Soft Body Collide",
+"SoftBodyCollide",
+"Goals-Col",
+"Collisions between a collection of deformable meshes",
+null,
+null
+],
+[
+"Solid Point Collide",
+"SPC",
+"Goals-Col",
+"Keep a set of points outside or inside a given Mesh",
+null,
+null
+],
+[
+"Sphere Collide",
+"SC",
+"Goals-Col",
+"Collisions between large numbers of equal sized spheres",
+[
+[
+"Points",
+"Points",
+"Point"
+],
+[
+"Radius",
+"R",
+"Number"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"S",
+"S",
+"Generic Data"
+]
+]
+],
+[
+"On Curve",
+"OnCurve",
+"Goals-On",
+"Keep a point on a given Curve",
+[
+[
+"Points",
+"Points",
+"Point"
+],
+[
+"Curve",
+"Curve",
+"Curve"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"P",
+"P",
+"Generic Data"
+]
+]
+],
+[
+"On Mesh",
+"OnMesh",
+"Goals-On",
+"Keep a point on a given Mesh",
+[
+[
+"Points",
+"Points",
+"Point"
+],
+[
+"Mesh",
+"Mesh",
+"Mesh"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"P",
+"P",
+"Generic Data"
+]
+]
+],
+[
+"On Plane",
+"OnPlane",
+"Goals-On",
+"Keep a point on a given plane",
+[
+[
+"Points",
+"Points",
+"Point"
+],
+[
+"Plane",
+"Plane",
+"Plane"
+],
+[
+"Strength",
+"Strength",
+"Number"
+]
+],
+[
+[
+"P",
+"P",
+"Generic Data"
+]
+]
+],
+[
+"Simple",
+null,
+"Mesh",
+"Simple Target Length",
+[
+[
+"Simple",
+"S",
+"Number"
+]
+],
+[
+[
+"Target",
+"T",
+"Generic Data"
+]
+]
+],
+[
+"Refine",
+null,
+"Mesh",
+"Divide each quad into 4 quads, and each triangle into 4 triangles",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+],
+[
+"Level",
+"L",
+"Integer"
+]
+],
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+]
+],
+[
+"Bipartite",
+null,
+"Mesh",
+"Assign a boolean to each vertex so that no connected vertices share the same value (attempt)",
+null,
+null
+],
+[
+"By Parent",
+"ByParent",
+"Mesh",
+"Refine a Mesh, separating outputs by parent face",
+null,
+null
+],
+[
+"Checkerboard",
+null,
+"Mesh",
+"Assign a boolean to each face so that no adjacent faces share the same value (attempt)",
+null,
+null
+],
+[
+"Diagonalize",
+"Diag",
+"Mesh",
+"Replace each edge with a new face",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+],
+[
+[
+"DiagonalMesh",
+"M",
+"Mesh"
+]
+]
+],
+[
+"Face Face Offset",
+"FaceFace",
+"Mesh",
+"Offset a conical mesh so corresponding faces are constant distance apart",
+null,
+null
+],
+[
+"Fold Angle",
+"FoldAngle",
+"Mesh",
+"Measure the current angle between two triangles about their common edge",
+null,
+null
+],
+[
+"Hinge Points",
+"HingePoints",
+"Mesh",
+"Get the 4 points for each internal edge to use in a Hinge Force",
+null,
+null
+],
+[
+"Combine&Clean",
+"Clean",
+"Mesh",
+"Combine and clean a list of meshes, removing unused and duplicate vertices",
+[
+[
+"Meshes",
+"M",
+"Mesh"
+]
+],
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+]
+],
+[
+"Mesh Corners",
+"MC",
+"Mesh",
+"Extract corners sharper than some angle",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+],
+[
+"Angle",
+"A",
+"Number"
+]
+],
+[
+[
+"Corners",
+"C",
+"Point"
+]
+]
+],
+[
+"Mesh Direction",
+"MD",
+"Mesh",
+"Sort the face directions of a mesh",
+null,
+null
+],
+[
+"Mesh Map",
+"MeshMap",
+"Mesh",
+"Map points from one mesh to another",
+null,
+null
+],
+[
+"Mesh Turn",
+"Turn",
+"Mesh",
+"Rotate the vertex order of each face",
+null,
+null
+],
+[
+"Naked Vertices",
+"NV",
+"Mesh",
+"Sorts mesh vertices into 2 lists: surrounded by faces or not",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+],
+[
+[
+"ClothedIndex",
+"ClothedI",
+"Integer"
+],
+[
+"NakedIndex",
+"NakedI",
+"Integer"
+],
+[
+"ClothedPts",
+"ClothedPts",
+"Point"
+],
+[
+"NakedPts",
+"NakedPts",
+"Point"
+]
+]
+],
+[
+"Planarity Analysis",
+"PA",
+"Mesh",
+"Display face planarity as a coloured mesh",
+null,
+null
+],
+[
+"Refine Strips",
+"Strips",
+"Mesh",
+"Directional subdivision; refines quads in one direction only",
+null,
+null
+],
+[
+"Stripper",
+null,
+"Mesh",
+"Divide a mesh into strips",
+null,
+null
+],
+[
+"Tangent Circles",
+"TC",
+"Mesh",
+"Generate face incircles, circle packing centred on vertices, or incircular dual",
+null,
+null
+],
+[
+"Unroller",
+null,
+"Mesh",
+"Unroll a strip of quads",
+null,
+null
+],
+[
+"Vertex Neighbours",
+"VN",
+"Mesh",
+"Returns positions of vertices connected to the given vertex by an edge",
+null,
+null
+],
+[
+"Warp Weft",
+"WarpWeft",
+"Mesh",
+"Separate mesh edges into 2 lists by Warp and Weft direction",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+],
+[
+[
+"Warp",
+"A",
+"Line"
+],
+[
+"Weft",
+"B",
+"Line"
+],
+[
+"NakedA",
+"NA",
+"Boolean"
+],
+[
+"NakedB",
+"NB",
+"Boolean"
+]
+]
+],
+[
+"Remesh By Colour",
+"RemeshByColour",
+"Mesh",
+"Remeshing with edge lengths dependent on the vertex colours of the input mesh",
+null,
+null
+],
+[
+"remesher",
+null,
+"Mesh",
+"Remeshing tool",
+null,
+null
+],
+[
+"Simple Remesh",
+"SimpleRemesh",
+"Mesh",
+"Isotropically remesh a Brep or Mesh",
+[
+[
+"Geometry",
+"Geometry",
+"Geometry"
+],
+[
+"Length",
+"Length",
+"Number"
+],
+[
+"Creases",
+"Creases",
+"Curve"
+],
+[
+"Corners",
+"Corners",
+"Point"
+],
+[
+"Steps",
+"Steps",
+"Integer"
+]
+],
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+]
+],
+[
+"Morph To Mesh",
+"M2M",
+"Morph",
+"Morph geometry from reference polygons to offset cells of a tri, quad or ngon mesh",
+null,
+null
+],
+[
+"Multi Pipe",
+"MP",
+"SubD",
+"Create a branching pipe around a network of lines/curves",
+[
+[
+"Curves",
+"C",
+"Generic Data"
+],
+[
+"NodeSize",
+"N",
+"Number"
+],
+[
+"SizePoints",
+"SP",
+"Point"
+],
+[
+"EndOffset",
+"E",
+"Number"
+],
+[
+"StrutSize",
+"SS",
+"Number"
+],
+[
+"Segment",
+"S",
+"Number"
+],
+[
+"KinkAngle",
+"KA",
+"Number"
+],
+[
+"CubeFit",
+"CF",
+"Number"
+]
+],
+[
+[
+"Pipe",
+"P",
+"SubD"
+]
+]
+],
+[
+"Sub D Fuse",
+"Fuse",
+"SubD",
+"Combine 2 SubD objects",
+null,
+null
+],
+[
+"Tri Remesh",
+"TriRemesh",
+"Triangulation",
+"Convert a Brep or Mesh into a mesh of near equilateral triangles",
+[
+[
+"Geometry",
+"Geometry",
+"Geometry"
+],
+[
+"Target",
+"Target",
+"Mesh"
+],
+[
+"Sharp",
+"Sharp",
+"Boolean"
+],
+[
+"Features",
+"Features",
+"Generic Data"
+],
+[
+"Length",
+"Length",
+"Number"
+],
+[
+"Iterations",
+"Iters",
+"Integer"
+]
+],
+[
+[
+"Triangulation",
+"T",
+"Mesh"
+],
+[
+"Dual",
+"D",
+"Mesh"
+],
+[
+"Creases",
+"C",
+"Line"
+]
+]
+],
+[
+"remove Duplicate Pts",
+"dupPt",
+"Utility",
+"Removes similar points from a list",
+[
+[
+"points",
+"P",
+"Point"
+],
+[
+"tolerance",
+"t",
+"Number"
+]
+],
+[
+[
+"unique points",
+"Q",
+"Point"
+]
+]
+],
+[
+"interconnect Points",
+"inter",
+"Utility",
+"Draws one line between every pair of points in a list",
+null,
+null
+],
+[
+"Dot Display",
+"Dot",
+"Utility",
+"Show points as round dots",
+null,
+null
+],
+[
+"remove Duplicate Lines",
+"dupLn",
+"Utility",
+"Removes similar lines from a list",
+[
+[
+"lines",
+"L",
+"Line"
+],
+[
+"tolerance",
+"t",
+"Number"
+]
+],
+[
+[
+"unique lines",
+"Q",
+"Line"
+]
+]
+],
+[
+"Möbius Transformation",
+"MB",
+"Utility",
+"3d Möbius transformations of any geometry using 4d rotation",
+null,
+null
+],
+[
+"Split At Corners",
+"SplitAtCorners",
+"Utility",
+"Break a polyline into multiple parts based on angle",
+null,
+null
+]
+]
+}

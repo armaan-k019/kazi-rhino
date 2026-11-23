@@ -12,6 +12,7 @@ from typing import Any, Literal
 
 from mcp.server.fastmcp import FastMCP
 
+from .addons import mcp_tools as addon_tools
 from .bridge_client import BridgeClient, BridgeError
 from .gh.builder import Builder
 from .gh.recipes import RECIPES, Input, Plan
@@ -38,7 +39,7 @@ the Rhino selection as geometry input, all wired and grouped). gh_recipes lists 
 voice_command shows how spoken words map to Rhino commands.
 """
 
-mcp = FastMCP("rhino-ai-mods", instructions=INSTRUCTIONS)
+mcp = FastMCP("rhino-ai-mods", instructions=INSTRUCTIONS + addon_tools.INSTRUCTIONS)
 _bridge = BridgeClient()
 
 
@@ -214,6 +215,8 @@ def gh_build(
     except BridgeError as exc:
         return {"error": str(exc)}
 
+
+addon_tools.register(mcp, _call)   # gh_addons, gh_find_component, gh_place_component, ...
 
 _rules = RuleMapper()
 

@@ -1,0 +1,968 @@
+{
+"id": "human",
+"name": "Human",
+"version_checked": "2019-Aug-05",
+"source": "grasshopperdocs.com/addons/human.html (read 2026-11-23)",
+"components": [
+[
+"Explode Blocks",
+"BlockExplode",
+"Reference",
+"Explodes a set of Instance Objects into their proper geometry",
+null,
+null
+],
+[
+"Explode Blocks Recursively",
+"BlockExplode R",
+"Reference",
+"Recursively explodes Instance Objects, structured in a Data Tree by block nesting",
+null,
+null
+],
+[
+"Dynamic Geometry Pipeline",
+"DPipeline",
+"Reference",
+"Defines a Geometry Pipeline from Rhino to Grasshopper, with variable filters for name, object type, and layer.",
+[
+[
+"Layer Filter",
+"lay",
+"Text"
+],
+[
+"Name Filter",
+"name",
+"Text"
+]
+],
+[
+[
+"Geometry Out",
+"G",
+"Generic"
+]
+]
+],
+[
+"Hatch Explode",
+"HatchExp",
+"Reference",
+"Gets the geometry and properties of a referenced hatch object",
+null,
+null
+],
+[
+"LightProperties",
+"LightProps",
+"Reference",
+"Reads Light Properties from a Rhino.DocObjects.LightObject",
+null,
+null
+],
+[
+"Object Attributes",
+"ObjAtts",
+"Reference",
+"Access the individual attributes of a RhinoObject or an ObjectAttributes type.",
+[
+[
+"Object or Attributes",
+"A",
+"Generic"
+]
+],
+[
+[
+"Name",
+"name",
+"String"
+],
+[
+"Layer Name",
+"lay",
+"String"
+],
+[
+"Layer Full Path",
+"FP",
+"Text"
+],
+[
+"Color",
+"col",
+"Colour"
+],
+[
+"Material Name",
+"mat",
+"String"
+],
+[
+"Linetype Name",
+"lt",
+"String"
+],
+[
+"Group Indices",
+"grp",
+"Integer"
+],
+[
+"Plot Weight",
+"PW",
+"Number"
+],
+[
+"Plot Color",
+"PC",
+"Colour"
+],
+[
+"Visibility",
+"V",
+"Boolean"
+],
+[
+"UserData Keys",
+"udk",
+"Text"
+],
+[
+"UserData Values",
+"udv",
+"Text"
+]
+]
+],
+[
+"Reinstate Tree",
+"ReTree",
+"Reference",
+"Brings back data tree structure for referenced geometry baked with Bake Geometry and Preserve Trees enabled",
+null,
+null
+],
+[
+"Objects By Selection",
+"SelObj",
+"Reference",
+"Gets the currently selected objects in Rhino",
+[
+[
+"Reset",
+"reset",
+"Boolean"
+]
+],
+[
+[
+"Selected Geometry",
+"G",
+"Generic"
+]
+]
+],
+[
+"Sort Objects By Type",
+"SortByType",
+"Reference",
+"Sorts a set of Rhino Objects by type and extracts geometry for types that already exist in Grasshopper.",
+null,
+null
+],
+[
+"Text Object Info",
+"TxtObjInfo",
+"Reference",
+"Gets the location, orientation plane, alignment, and text from a referenced text object.",
+null,
+null
+],
+[
+"Clickable Mesh",
+"ClickM",
+"Misc",
+"Select from a list of meshes by clicking in the Rhino Viewport. Harvests ALL Rhino mouse clicks while enabled.",
+null,
+null
+],
+[
+"Convert To Document Units",
+"DocUnits",
+"Misc",
+"Parses a formatted distance string and converts it to numerical format in the active document units.",
+null,
+null
+],
+[
+"DeleteOnLayer",
+"DelOnLay",
+"Misc",
+"Deletes all objects on specified Layers, then passes true.",
+[
+[
+"Run",
+"run",
+"Boolean"
+],
+[
+"Layer",
+"lay",
+"Text"
+]
+],
+[
+[
+"run",
+"run",
+"Boolean"
+]
+]
+],
+[
+"Deserialize Image from String",
+"Str2Img",
+"Misc",
+"Converts a Base-64 encoded image string to a temp image file and returns the path.",
+null,
+null
+],
+[
+"Directory Contents",
+"Dir",
+"Misc",
+"Lists the files in a specified directory.",
+null,
+null
+],
+[
+"Filter By Item",
+"IFilter",
+"Misc",
+"Filter a list or lists by a guide list and a subset of that guide list.",
+null,
+null
+],
+[
+"Dispatch Multiple",
+"MDispatch",
+"Misc",
+"Dispatch multiple lists at a time. Only retrieves true values.",
+null,
+null
+],
+[
+"Read 3dm File",
+"3dm",
+"Misc",
+"Reads objects from an external .3dm file",
+null,
+null
+],
+[
+"Save Viewport To File",
+"SaveView",
+"Misc",
+"Saves a viewport screenshot or render to a specified filepath.",
+[
+[
+"Run",
+"R",
+"Boolean"
+],
+[
+"Viewport Name",
+"VP",
+"Text"
+],
+[
+"Render",
+"Rnd",
+"Boolean"
+],
+[
+"File Path",
+"FP",
+"Text"
+],
+[
+"Scale Factor",
+"Sc",
+"Number"
+]
+],
+[
+[
+"Saved File Path",
+"P",
+"Text"
+]
+]
+],
+[
+"Serialize Image to String",
+"Img2Str",
+"Misc",
+"Converts an image file into a text string that can be embedded in your file.",
+null,
+null
+],
+[
+"Render Curve to Screen",
+"CrvToScreen",
+"Display",
+"Displays a Curve object in a fixed position on screen",
+null,
+null
+],
+[
+"Custom Preview Lineweights",
+"PreviewLW",
+"Display",
+"Custom Preview with Lineweights",
+[
+[
+"Geometry",
+"G",
+"Geometry"
+],
+[
+"Shader",
+"S",
+"Any"
+],
+[
+"Thickness",
+"T",
+"Number"
+],
+[
+"Absolute",
+"A",
+"Boolean"
+]
+],
+[]
+],
+[
+"Custom Preview Materials",
+"PreviewMat",
+"Display",
+"Custom Preview with Materials",
+[
+[
+"Geometry",
+"G",
+"Geometry"
+],
+[
+"Diffuse Color",
+"DC",
+"Colour"
+],
+[
+"Transparency",
+"T",
+"Number"
+],
+[
+"Diffuse Bitmap",
+"DB",
+"Text"
+],
+[
+"Transparency Bitmap",
+"TB",
+"Text"
+]
+],
+[]
+],
+[
+"Render Mesh to Screen",
+"MeshToScreen",
+"Display",
+"Displays a Mesh object in a fixed position on screen",
+null,
+null
+],
+[
+"Render Point to Screen",
+"PtToScreen",
+"Display",
+"Displays a Point object in a fixed position on screen",
+null,
+null
+],
+[
+"Screen-Oriented Mesh",
+"ScreenMesh",
+"Display",
+"Displays a Mesh object that remains consistently oriented relative to the screen",
+null,
+null
+],
+[
+"Screen-Oriented Text",
+"ScreenText",
+"Display",
+"Displays text that remains consistently oriented relative to the screen",
+null,
+null
+],
+[
+"Screen-To-World Tag",
+"S2WTag",
+"Display",
+"Creates a display tag anchored to a screen location and a model location",
+null,
+null
+],
+[
+"Render Text to Screen",
+"TextToScreen",
+"Display",
+"Displays a text object in a fixed position on screen",
+null,
+null
+],
+[
+"Bake Geometry",
+"Bake",
+"Creation",
+"Bake geometry to the document with the specified attributes",
+[
+[
+"Bake?",
+"bake",
+"Boolean"
+],
+[
+"Geometry",
+"geo",
+"Geometry"
+],
+[
+"Attributes",
+"att",
+"Generic"
+]
+],
+[]
+],
+[
+"CreateAttributes",
+"CreateAtts",
+"Creation",
+"Create Object Attributes",
+[
+[
+"Name",
+"name",
+"Text"
+],
+[
+"Layer Name",
+"lay",
+"Text"
+],
+[
+"Color",
+"col",
+"Colour"
+],
+[
+"Material Name",
+"mat",
+"Text"
+],
+[
+"Linetype Name",
+"lt",
+"Text"
+],
+[
+"Group Indices",
+"grp",
+"Integer"
+],
+[
+"Plot Weight",
+"PW",
+"Number"
+],
+[
+"Plot Color",
+"PC",
+"Colour"
+],
+[
+"Visibility",
+"V",
+"Boolean"
+],
+[
+"UserData Keys",
+"udk",
+"Text"
+],
+[
+"UserData Values",
+"udv",
+"Text"
+]
+],
+[
+[
+"Object Attributes",
+"att",
+"Generic"
+]
+]
+],
+[
+"CreateHatch",
+null,
+"Creation",
+"Create Hatch Objects with specified pattern, scale, rotation, and attributes",
+[
+[
+"Bake?",
+"B",
+"Boolean"
+],
+[
+"Curves",
+"C",
+"Curve"
+],
+[
+"Hatch Pattern Name",
+"N",
+"Text"
+],
+[
+"Hatch Scale",
+"S",
+"Number"
+],
+[
+"Hatch Rotation",
+"R",
+"Number"
+],
+[
+"Attributes",
+"att",
+"Generic"
+]
+],
+[
+[
+"Hatch Geometry",
+"HG",
+"Geometry"
+],
+[
+"Hatch Objects",
+"HO",
+"Generic"
+]
+]
+],
+[
+"CreateLight",
+null,
+"Creation",
+"Create Light Object. So far works well for point lights and directional lights",
+null,
+null
+],
+[
+"Define Block",
+"DefBlock",
+"Creation",
+"Define or replace a block definition.",
+null,
+null
+],
+[
+"JustifiedText3d",
+"Justified Text",
+"Creation",
+"Creates 3d Text objects with specified size, location, alignment, and font.",
+[
+[
+"Location",
+"L",
+"Plane"
+],
+[
+"Text",
+"T",
+"Text"
+],
+[
+"Size",
+"S",
+"Number"
+],
+[
+"Color",
+"C",
+"Colour"
+],
+[
+"Horizontal Alignment",
+"A",
+"Integer"
+],
+[
+"Vertical Alginment",
+"VA",
+"Integer"
+],
+[
+"Font",
+"F",
+"Text"
+],
+[
+"Use Meshes",
+"M",
+"Boolean"
+],
+[
+"Attributes",
+"att",
+"Generic"
+],
+[
+"Bake",
+"B",
+"Boolean"
+]
+],
+[]
+],
+[
+"PlaceBlock",
+null,
+"Creation",
+"Places a specified block with the desired transform",
+null,
+null
+],
+[
+"Font Table",
+"Fonts",
+"Document Info",
+"Retrieves the list of system fonts.",
+null,
+null
+],
+[
+"Hatch Table",
+"HatchTable",
+"Document Info",
+"Gets the hatches from the active Rhino Document",
+null,
+null
+],
+[
+"Layer Table",
+"LayerTable",
+"Document Info",
+"Gets the list of layers in the active document",
+[
+[
+"Update",
+"U",
+"Boolean"
+],
+[
+"Auto-Update",
+"AU",
+"Boolean"
+]
+],
+[
+[
+"Layers",
+"L",
+"Text"
+],
+[
+"Full Layer Paths",
+"LF",
+"Text"
+],
+[
+"Layer Colors",
+"C",
+"Colour"
+],
+[
+"Linetypes",
+"LT",
+"Text"
+],
+[
+"Material Names",
+"M",
+"Text"
+],
+[
+"Visible",
+"V",
+"Boolean"
+],
+[
+"Print Width",
+"PW",
+"Number"
+],
+[
+"Print Color",
+"PC",
+"Colour"
+]
+]
+],
+[
+"Linetype Table",
+"LT Table",
+"Document Info",
+"Gets the linetypes from the active Rhino Document",
+null,
+null
+],
+[
+"Material Table",
+"MatTable",
+"Document Info",
+"Accesses the render materials in the document",
+null,
+null
+],
+[
+"Named Views and Display Modes",
+"ViewsAndModes",
+"Document Info",
+"Gets a list of the Named Views and Display Modes in this document",
+[
+[
+"Update",
+"U",
+"Boolean"
+]
+],
+[
+[
+"Named Views",
+"NV",
+"Text"
+],
+[
+"Display Modes",
+"DM",
+"Text"
+]
+]
+],
+[
+"Viewport Properties",
+"Viewports",
+"Document Info",
+"Get a list of viewports and their properties",
+null,
+null
+],
+[
+"Create/Modify Layers",
+"Layers",
+"Document Modifications",
+"Create and Modify Rhino Layers",
+[
+[
+"Layer Name",
+"L",
+"Text"
+],
+[
+"Layer Color",
+"C",
+"Colour"
+],
+[
+"Layer Linetype",
+"LT",
+"Text"
+],
+[
+"Layer Material",
+"M",
+"Text"
+],
+[
+"Visibility",
+"V",
+"Boolean"
+],
+[
+"Print Width",
+"PW",
+"Number"
+],
+[
+"Print Color",
+"PC",
+"Colour"
+],
+[
+"Delete Layer",
+"D",
+"Boolean"
+]
+],
+[
+[
+"Layer Names",
+"L",
+"Text"
+],
+[
+"Layer Full Path",
+"FP",
+"Text"
+]
+]
+],
+[
+"Create/Modify Materials",
+"Materials",
+"Document Modifications",
+"Create or Edit document Render Materials.",
+null,
+null
+],
+[
+"Modify Object Attributes",
+"ModAtts",
+"Document Modifications",
+"Modify the object attributes of geometry in Rhino.",
+[
+[
+"Objects",
+"O",
+"Any"
+],
+[
+"Attributes",
+"A",
+"Generic"
+]
+],
+[]
+],
+[
+"Modify Viewport",
+"Mod Viewport",
+"Document Modifications",
+"Restore a named view in a viewport, set its display mode, or set its camera.",
+[
+[
+"Viewport Name",
+"N",
+"Text"
+],
+[
+"Named View to Restore",
+"NV",
+"Text"
+],
+[
+"Display Mode",
+"DM",
+"Text"
+],
+[
+"Camera Location",
+"CL",
+"Point"
+],
+[
+"Camera Target",
+"CT",
+"Point"
+],
+[
+"Camera Projection",
+"CPr",
+"Boolean"
+],
+[
+"Camera Lens Length",
+"CLL",
+"Number"
+],
+[
+"Camera Up",
+"CU",
+"Vector"
+]
+],
+[]
+],
+[
+"BoxMapping",
+"BoxMap",
+"Texture Mapping",
+"Applies a box texture mapping to a mesh.",
+null,
+null
+],
+[
+"Custom Mapping",
+"Custom Map",
+"Texture Mapping",
+"Applies per-vertex mesh texture coordinates to a mesh",
+null,
+null
+],
+[
+"CylinderMapping",
+"CylinderMap",
+"Texture Mapping",
+"Applies a cylindrical texture mapping to a mesh.",
+null,
+null
+],
+[
+"PlanarMapping",
+"PlanarMap",
+"Texture Mapping",
+"Applies a planar texture mapping to a mesh.",
+null,
+null
+],
+[
+"SphericalMapping",
+"SphericalMap",
+"Texture Mapping",
+"Applies a spherical texture mapping to a mesh.",
+null,
+null
+],
+[
+"SurfaceMapping",
+"SurfaceMap",
+"Texture Mapping",
+"Applies a surface UV texture mapping to a mesh.",
+null,
+null
+]
+]
+}

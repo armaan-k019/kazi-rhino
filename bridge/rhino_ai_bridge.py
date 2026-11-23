@@ -871,6 +871,40 @@ COMMANDS = {
 
 
 # --------------------------------------------------------------------------- #
+# Extensions: extra commands from files next to this one
+# --------------------------------------------------------------------------- #
+
+EXTENSIONS = ("kazi_addons",)  # kazi_addons.py: components from installed Grasshopper plug-ins
+
+
+def _load_extensions():
+    import importlib.util
+    import os
+    import types
+    loaded = []
+    try:
+        here = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        here = sc.sticky.get("kazi_bridge_dir") or ""
+    for name in EXTENSIONS:
+        path = os.path.join(here, name + ".py")
+        if not os.path.isfile(path):
+            continue
+        try:
+            spec = importlib.util.spec_from_file_location(name, path)
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            mod.register(types.SimpleNamespace(**globals()))
+            loaded.append("%s %s" % (name, getattr(mod, "VERSION", "")))
+        except Exception as exc:  # noqa: BLE001  (an extension must never stop the bridge)
+            print("[kazi] could not load %s: %s" % (name, exc))
+    return loaded
+
+
+LOADED_EXTENSIONS = _load_extensions()
+
+
+# --------------------------------------------------------------------------- #
 # TCP server
 # --------------------------------------------------------------------------- #
 

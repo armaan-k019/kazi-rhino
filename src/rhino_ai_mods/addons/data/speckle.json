@@ -1,0 +1,599 @@
+{
+"id": "speckle",
+"name": "Speckle",
+"version_checked": "2026.9",
+"source": "docs.speckle.systems/connectors/grasshopper (read 2026-11-23)",
+"notes": "Names are from the Speckle documentation; nicknames and exact parameter labels were not listed there. Query Objects is also written 'Query Speckle Objects', and Speckle Object was formerly 'Speckle Data Object'. Publish and Load are triggered by a button on the component, not by an input.",
+"components": [
+[
+"Sign-In",
+null,
+"Models",
+"Signs in to a Speckle account in the browser; click the Sign in button.",
+[
+[
+"Server URL",
+"Server URL",
+""
+]
+],
+[
+[
+"Accounts",
+"Accounts",
+""
+]
+]
+],
+[
+"Speckle Model",
+null,
+"Models",
+"Selects workspace, project, model and version with buttons, or from a pasted model URL.",
+[
+[
+"URL",
+"URL",
+""
+]
+],
+null
+],
+[
+"Load",
+null,
+"Models",
+"Loads the selected model version. Click the Load button.",
+[
+[
+"Speckle Model",
+"Speckle Model",
+""
+]
+],
+[
+[
+"Collection",
+"Collection",
+""
+],
+[
+"Properties",
+"Properties",
+""
+]
+]
+],
+[
+"Publish",
+null,
+"Models",
+"Publishes a Collection as a new model version. Click the Publish button.",
+[
+[
+"Speckle Model",
+"Speckle Model",
+""
+],
+[
+"Collection",
+"Collection",
+""
+],
+[
+"Version Message",
+"Version Message",
+""
+],
+[
+"Properties",
+"Properties",
+""
+]
+],
+[
+[
+"Speckle Model",
+"Speckle Model",
+""
+],
+[
+"Version ID",
+"Version ID",
+""
+]
+]
+],
+[
+"Create Collection",
+null,
+"Collections",
+"Places objects into named sub-Collections (rename each input; add inputs with +).",
+null,
+[
+[
+"Collection",
+"Collection",
+""
+]
+]
+],
+[
+"Query Objects",
+null,
+"Collections",
+"Flat list of all objects in a Collection, including sub-Collections.",
+[
+[
+"Collection",
+"Collection",
+""
+],
+[
+"Paths",
+"Paths",
+""
+]
+],
+[
+[
+"Objects",
+"Objects",
+""
+]
+]
+],
+[
+"Collection Selector",
+null,
+"Collections",
+"Lists full paths of sub-Collections for selection.",
+[
+[
+"Collection",
+"Collection",
+""
+]
+],
+null
+],
+[
+"Expand Collection",
+null,
+"Collections",
+"Steps through a Collection one level at a time.",
+[
+[
+"Collection",
+"Collection",
+""
+]
+],
+null
+],
+[
+"Speckle Object",
+null,
+"Objects",
+"Wraps geometry with a name and properties.",
+[
+[
+"Speckle Object",
+"Speckle Object",
+""
+],
+[
+"Geometries",
+"Geometries",
+""
+],
+[
+"Name",
+"Name",
+""
+],
+[
+"Properties",
+"Properties",
+""
+]
+],
+[
+[
+"Speckle Object",
+"Speckle Object",
+""
+],
+[
+"Geometries",
+"Geometries",
+""
+],
+[
+"Name",
+"Name",
+""
+],
+[
+"Properties",
+"Properties",
+""
+],
+[
+"Path",
+"Path",
+""
+]
+]
+],
+[
+"Speckle Geometry",
+null,
+"Objects",
+"Geometry, color and material for a single geometry.",
+[
+[
+"Speckle Geometry",
+"Speckle Geometry",
+""
+],
+[
+"Geometry",
+"Geometry",
+""
+],
+[
+"Color",
+"Color",
+""
+],
+[
+"Material",
+"Material",
+""
+]
+],
+null
+],
+[
+"Speckle Block Definition",
+null,
+"Objects",
+"Block definitions.",
+[
+[
+"Speckle Block Definition",
+"Speckle Block Definition",
+""
+],
+[
+"Name",
+"Name",
+""
+],
+[
+"Geometries",
+"Geometries",
+""
+]
+],
+[
+[
+"Speckle Block Definition",
+"Speckle Block Definition",
+""
+],
+[
+"Name",
+"Name",
+""
+],
+[
+"Geometries",
+"Geometries",
+""
+]
+]
+],
+[
+"Speckle Block Instance",
+null,
+"Objects",
+"Block instances.",
+[
+[
+"Speckle Block Instance",
+"Speckle Block Instance",
+""
+],
+[
+"Definition",
+"Definition",
+""
+],
+[
+"Transform",
+"Transform",
+""
+],
+[
+"Name",
+"Name",
+""
+],
+[
+"Properties",
+"Properties",
+""
+],
+[
+"Color",
+"Color",
+""
+],
+[
+"Material",
+"Material",
+""
+]
+],
+[
+[
+"Speckle Block Instance",
+"Speckle Block Instance",
+""
+],
+[
+"Definition",
+"Definition",
+""
+],
+[
+"Transform",
+"Transform",
+""
+],
+[
+"Name",
+"Name",
+""
+],
+[
+"Properties",
+"Properties",
+""
+],
+[
+"Color",
+"Color",
+""
+],
+[
+"Material",
+"Material",
+""
+]
+]
+],
+[
+"Filter Objects",
+null,
+"Objects",
+"Splits objects by Name, Property key, Material, Application ID or Speckle ID.",
+[
+[
+"Objects",
+"Objects",
+""
+],
+[
+"Name",
+"Name",
+""
+],
+[
+"Property",
+"Property",
+""
+],
+[
+"Material",
+"Material",
+""
+],
+[
+"Application ID",
+"Application ID",
+""
+],
+[
+"Speckle ID",
+"Speckle ID",
+""
+]
+],
+[
+[
+"Objects",
+"Objects",
+""
+],
+[
+"Culled Objects",
+"Culled Objects",
+""
+]
+]
+],
+[
+"Create Properties",
+null,
+"Properties",
+"Creates a Properties set; each named input becomes a key.",
+null,
+[
+[
+"Properties",
+"Properties",
+""
+]
+]
+],
+[
+"Speckle Properties",
+null,
+"Properties",
+"Create, modify or inspect a Properties set.",
+[
+[
+"Properties",
+"Properties",
+""
+],
+[
+"Keys",
+"Keys",
+""
+],
+[
+"Values",
+"Values",
+""
+]
+],
+[
+[
+"Properties",
+"Properties",
+""
+],
+[
+"Keys",
+"Keys",
+""
+],
+[
+"Values",
+"Values",
+""
+]
+]
+],
+[
+"Properties Selector",
+null,
+"Properties",
+"Lists property keys for selection.",
+[
+[
+"Properties",
+"Properties",
+""
+]
+],
+null
+],
+[
+"Query Properties",
+null,
+"Properties",
+"Returns values for the given keys.",
+[
+[
+"Properties",
+"Properties",
+""
+],
+[
+"Keys",
+"Keys",
+""
+]
+],
+[
+[
+"Values",
+"Values",
+""
+]
+]
+],
+[
+"Expand Properties",
+null,
+"Properties",
+"One output per property entry.",
+[
+[
+"Properties",
+"Properties",
+""
+]
+],
+null
+],
+[
+"Explore",
+null,
+"Explore",
+"Lists the relationships recorded for an object.",
+null,
+null
+],
+[
+"Deconstruct",
+null,
+"Developer",
+"Exposes every direct attribute of a Speckle param.",
+[
+[
+"Speckle Param",
+"Speckle Param",
+""
+]
+],
+null
+],
+[
+"Speckle Model URL with Token",
+null,
+"Developer",
+"Creates a Speckle Model from a URL and developer access token.",
+[
+[
+"Speckle URL",
+"Speckle URL",
+""
+],
+[
+"Speckle Token",
+"Speckle Token",
+""
+]
+],
+[
+[
+"Speckle Model",
+"Speckle Model",
+""
+]
+]
+],
+[
+"(Sync) Load",
+null,
+"Developer",
+"Synchronous version of Load.",
+null,
+null
+],
+[
+"(Sync) Publish",
+null,
+"Developer",
+"Synchronous version of Publish.",
+null,
+null
+]
+]
+}

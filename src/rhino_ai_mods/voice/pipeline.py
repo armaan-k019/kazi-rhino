@@ -32,7 +32,10 @@ def is_new_build(text: str) -> bool:
 
 
 def is_grasshopper_request(text: str) -> bool:
-    return bool(GH_REQUEST.search(normalize(text)))
+    if GH_REQUEST.search(normalize(text)):
+        return True
+    from ..addons.registry import mentioned  # noqa: PLC0415  (naming a Grasshopper add-on)
+    return bool(mentioned(text, strict=True))
 
 
 @dataclass

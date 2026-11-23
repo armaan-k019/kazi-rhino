@@ -26,6 +26,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from ..bridge_client import BridgeClient
 from ..gh.builder import Builder
+from ..addons.planner import AddonBuilder, AddonPlanner
 from ..gh.edits import Editor
 from ..gh.planner import Planner
 from .llm import LLMMapper, make_backend
@@ -115,10 +116,11 @@ def build_pipeline(args) -> VoicePipeline:
     gh_kind = args.gh_llm or default_gh_llm()
     gh_model = args.gh_model or ("Qwen/Qwen2.5-Coder-32B-Instruct" if gh_kind == "hf-api" else None)
     gh_backend = make_backend(gh_kind, gh_model)
-    planner = Planner(gh_backend)
-    builder = None if args.dry_run else Builder(BridgeClient(timeout=900), planner,
-                                                confirm=not args.no_confirm_builds)
-    editor = None if args.dry_run else Editor(BridgeClient(timeout=900), planner,
+    script_planner = Planner(gh_backend)
+    planner = AddonPlanner(script_planner)     # add-on requests ("... with LunchBox") first
+    builder = None if args.dry_run else AddonBuilder(Builder(BridgeClient(timeout=900), planner,
+                                                             confirm=not args.no_confirm_builds))
+    editor = None if args.dry_run else Editor(BridgeClient(timeout=900), script_planner,
                                               confirm=not args.no_confirm_builds)
     log.info("Grasshopper builds: %s", gh_kind if gh_backend else "recipes only (no model)")
     return VoicePipeline(llm=LLMMapper(backend) if backend else None, dry_run=args.dry_run,

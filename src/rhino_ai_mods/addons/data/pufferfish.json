@@ -1,0 +1,3115 @@
+{
+"id": "pufferfish",
+"name": "Pufferfish",
+"version_checked": "3.0",
+"source": "grasshopperdocs.com/addons/pufferfish.html (read 2026-11-23)",
+"notes": "Names listed in names_from_url were reconstructed from documentation page addresses, so their capitalisation may differ slightly inside Grasshopper; the bridge matches them loosely.",
+"names_from_url": [
+"Color To Point",
+"Grayscale Color",
+"Invert Color",
+"Mirror Combine Colors",
+"Mirror Cut Colors",
+"Point To Color",
+"Tween Consecutive Colors",
+"Tween Through Colors",
+"Tween Two Colors",
+"Average Domain",
+"Mirror Combine Domains",
+"Mirror Cut Domains",
+"Reparameterize Domains",
+"Slide Within Domain",
+"Tween Consecutive Domains",
+"Tween Through Domains",
+"Tween Two Domains",
+"Two Way Domain",
+"Weighted Average Domain",
+"Dispatch Indices",
+"Last Index",
+"List Indices",
+"Mirror Combine Items",
+"Mirror Cut Items",
+"Null Placeholder",
+"Point Sort Items",
+"Sift Indices",
+"Angle Split Mesh",
+"Average Mesh",
+"Blend Consecutive Meshes",
+"Blend Through Meshes",
+"Blend Two Meshes",
+"Close Mesh",
+"Displace Mesh",
+"Is Mesh Closed",
+"Is Mesh Disjoint",
+"Mesh Statistics",
+"Mirror Cut Mesh",
+"Offset Mesh",
+"Parameter Extrude Mesh",
+"Parameter Loft Mesh",
+"Parameter Pipe Mesh",
+"Parameter Plane Mesh",
+"Parameter Surface Mesh",
+"Plane Trim Mesh",
+"Polyline To Mesh",
+"Rebuild Mesh",
+"Recursive Morph Mesh",
+"Reduce Mesh",
+"Tween Consecutive Meshes",
+"Tween Through Meshes",
+"Tween Two Meshes",
+"Voxel Mesh",
+"Weighted Average Mesh",
+"Curve Graph Mapper",
+"Deconstruct Number",
+"Default Angle Tolerance",
+"Document Angle Tolerance",
+"Document Distance Tolerance",
+"Highest Lowest Numbers",
+"Invert Boolean",
+"Last Index Range",
+"Linearize Numbers",
+"List Length Range",
+"Mass Division",
+"Mass Subtraction",
+"Mirror Combine Numbers",
+"Mirror Cut Numbers",
+"Odd Even Numbers",
+"Partition Number",
+"Percentage",
+"Reparameterized Range",
+"Reparameterize Numbers",
+"Round To Decimal Place",
+"Round To Factor",
+"Round To Nearest",
+"Tween Consecutive Numbers",
+"Tween Through Numbers",
+"Tween Two Numbers",
+"X Minus One",
+"X Plus One",
+"Zero Distance Tolerance",
+"Equality Within Tolerance",
+"Average Plane",
+"Closest Plane Orientation",
+"Flip Plane",
+"Mirror Cut Planes",
+"Offset Plane",
+"Parameter Plane Divide Surface",
+"Parameter Plane In Rectangle",
+"Parameter Plane On Surface",
+"Plane Trim Planes",
+"Tween Consecutive Planes",
+"Tween Consecutive Planes On Curve",
+"Tween Consecutive Planes On Surface",
+"Tween Through Planes",
+"Tween Through Planes On Curve",
+"Tween Through Planes On Surface",
+"Tween Two Planes",
+"Tween Two Planes On Curve",
+"Tween Two Planes On Surface",
+"Weighted Average Plane",
+"Are Points Collinear",
+"Are Points Coplanar",
+"Curve Coil Points",
+"Curve Edit Points",
+"Curve Middle Point",
+"Curve Wave Points",
+"Map Point To Surface",
+"Mirror Cut Points",
+"Parameter Point Divide Surface",
+"Parameter Point In Rectangle",
+"Parameter Point On Surface",
+"Pinch N Spread Points",
+"Plane Trim Points",
+"Point Divide Curve Segments",
+"Point Divide Curve Target Length",
+"Point Mesh Side",
+"Point Plane Side",
+"Point Surface Edge",
+"Point Surface Side",
+"Reparameterize Points",
+"Surface Edit Points",
+"Tween Consecutive Points",
+"Tween Consecutive Points On Curve",
+"Tween Consecutive Points On Surface",
+"Tween Through Points",
+"Tween Through Points On Curve",
+"Tween Through Points On Surface",
+"Tween Two Points",
+"Tween Two Points On Curve",
+"Tween Two Points On Surface",
+"Average SubD",
+"Mirror Cut SubD",
+"Tween Consecutive SubDs",
+"Tween Through SubDs",
+"Tween Two SubDs",
+"Twisted Box Consecutive SubDs",
+"Twisted Box SubD",
+"Twisted Box Through SubDs",
+"Twisted Box Two SubDs",
+"Weighted Average SubD",
+"Parameter Subdivide Surface",
+"Plane Trim Surface",
+"Rebuild Surface",
+"Remap Surface Domain",
+"Reparameterize Surface",
+"Shell Polysurface",
+"Shrink Trimmed Surface",
+"Split Kinky Surface",
+"Superimpose Surface",
+"Surface Degree",
+"Surface Spans",
+"Surface Statistics",
+"Swap Surface Directions",
+"Tween Consecutive Surfaces",
+"Tween Through Surfaces",
+"Tween Two Surfaces",
+"Tween Two Surfaces Along Curve",
+"Unroll Polysurface",
+"Unsplit Edge Surface",
+"Unsplit Extrude Surface",
+"Unsplit Loft Surface",
+"Unsplit Rail Revolve Surface",
+"Unsplit Revolve Surface",
+"Unsplit Sum Surface",
+"Unsplit Sweep Surface",
+"Weighted Average Surface",
+"Fit Surface",
+"Average Transform",
+"Mass Transform",
+"Mirror Combine Transforms",
+"Mirror Cut Transforms",
+"Morph To Twisted Box",
+"Move To Point",
+"Recursive Transform",
+"Rotate Euler",
+"Rotate Quaternion",
+"Rotate World",
+"Scale To Area",
+"Scale To Length",
+"Scale To Volume",
+"Slide Within Transform",
+"Transform Twisted Box",
+"Tween Consecutive Transforms",
+"Tween Through Transforms",
+"Tween Two Transforms",
+"Weighted Average Transform",
+"Zeroed Transform",
+"Closest Vector",
+"Mirror Combine Vectors",
+"Mirror Cut Vectors",
+"Reparameterize Vectors",
+"Tween Consecutive Vectors",
+"Tween Through Vectors",
+"Tween Two Vectors",
+"Vector Star",
+"Vector World"
+],
+"components": [
+[
+"Align Curve Seams",
+"AliCrvSeams",
+"Curve",
+"",
+null,
+null
+],
+[
+"Arc/Circle/Ellipse",
+"ACE",
+"Curve",
+"",
+null,
+null
+],
+[
+"Average Curve",
+"AvrCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Bounding Rectangle",
+"BRec",
+"Curve",
+"",
+null,
+null
+],
+[
+"Close Curve",
+"ClsCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Compatibilize Polylines",
+"ComPLines",
+"Curve",
+"",
+null,
+null
+],
+[
+"Constrained Area Ellipse",
+"ConsAreaEli",
+"Curve",
+"",
+null,
+null
+],
+[
+"Constrained Area Polygon",
+"ConsAreaPly",
+"Curve",
+"",
+null,
+null
+],
+[
+"Constrained Area Rectangle",
+"ConsAreaRec",
+"Curve",
+"",
+null,
+null
+],
+[
+"Curve Align Curve Seams",
+"CrvAliCrvSeams",
+"Curve",
+"",
+null,
+null
+],
+[
+"Curve Degree",
+"CrvDeg",
+"Curve",
+"",
+null,
+null
+],
+[
+"Curve Length At",
+"CrvLenAt",
+"Curve",
+"",
+null,
+null
+],
+[
+"Curve Length Between",
+"CrvLenBtwn",
+"Curve",
+"",
+null,
+null
+],
+[
+"Curve Spans",
+"CrvSpans",
+"Curve",
+"",
+null,
+null
+],
+[
+"Curve Statistics",
+"CrvStats",
+"Curve",
+"",
+null,
+null
+],
+[
+"Discrete Polyline",
+"DPLine",
+"Curve",
+"",
+null,
+null
+],
+[
+"Is Arc/Circle/Ellipse",
+"IsACE",
+"Curve",
+"",
+null,
+null
+],
+[
+"Is Curve Kinky",
+"CrvKinky",
+"Curve",
+"",
+null,
+null
+],
+[
+"Is Curve Linear",
+"CrvLinr",
+"Curve",
+"",
+null,
+null
+],
+[
+"Is Curve Segmented",
+"CrvSegs",
+"Curve",
+"",
+null,
+null
+],
+[
+"Mesh Loop Edges",
+"MshLoopEdgs",
+"Curve",
+"",
+null,
+null
+],
+[
+"Mesh Naked Edges",
+"MshNakedEdgs",
+"Curve",
+"",
+null,
+null
+],
+[
+"Mirror Cut Curve",
+"MirCutCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Net On Surface",
+"NetSrf",
+"Curve",
+"",
+null,
+null
+],
+[
+"Offset Curve",
+"OffCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Offset Curve From Surface",
+"OffCrvFromSrf",
+"Curve",
+"",
+null,
+null
+],
+[
+"Parameter Curve Divide Rectangle",
+"ParamCrvDivRec",
+"Curve",
+"",
+null,
+null
+],
+[
+"Parameter Curve Divide Surface",
+"ParamCrvDivSrf",
+"Curve",
+"",
+null,
+null
+],
+[
+"Parameter Rectangle Grid",
+"ParamRecGrid",
+"Curve",
+"",
+null,
+null
+],
+[
+"Parameter Rectangle Isocurve",
+"ParamRecIso",
+"Curve",
+"",
+null,
+null
+],
+[
+"Parameter Surface Grid",
+"ParamSrfGrid",
+"Curve",
+"",
+null,
+null
+],
+[
+"Parameter Surface Isocurve",
+"ParamSrfIso",
+"Curve",
+"",
+null,
+null
+],
+[
+"Plane Trim Curve",
+"PlnTrimCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Point Fit Rectangle",
+"PtFitRec",
+"Curve",
+"",
+null,
+null
+],
+[
+"Points Trim Curve",
+"PtsTrimCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Rebuild Curve",
+"RebCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Rebuild Curve Segments",
+"RebCrvSegs",
+"Curve",
+"",
+null,
+null
+],
+[
+"Relocate Curve Ends",
+"ReCrvEnds",
+"Curve",
+"",
+null,
+null
+],
+[
+"Remap Curve Domain",
+"ReCrvDom",
+"Curve",
+"",
+null,
+null
+],
+[
+"Reparameterize Curve",
+"ReparamCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Seam To Curve Corner",
+"Seam2CrvCorn",
+"Curve",
+"",
+null,
+null
+],
+[
+"Slide Curve Along Curve",
+"SlideCrvCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Smooth Curve",
+"SmoCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Superimpose Curve",
+"SuperCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Curves",
+"TwnConCrvs",
+"Curve",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Curves Along Curve",
+"TwnConCrvsCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Curves On Surface",
+"TwnConCrvsSrf",
+"Curve",
+"",
+null,
+null
+],
+[
+"Tween Through Curves",
+"TwnThruCrvs",
+"Curve",
+"",
+[
+[
+"Curves",
+"C",
+"Curve"
+],
+[
+"Factor",
+"F",
+"Number"
+],
+[
+"Normalized",
+"N",
+"Boolean"
+],
+[
+"Equalized",
+"E",
+"Boolean"
+],
+[
+"Loopback",
+"L",
+"Boolean"
+],
+[
+"Interpolation Type",
+"I",
+"Integer"
+],
+[
+"Refit",
+"R",
+"Integer"
+],
+[
+"Point Sample",
+"P",
+"Integer"
+]
+],
+[
+[
+"Tween",
+"T",
+"Curve"
+]
+]
+],
+[
+"Tween Through Curves Along Curve",
+"TwnThruCrvsCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Tween Through Curves On Surface",
+"TwnThruCrvsSrf",
+"Curve",
+"",
+null,
+null
+],
+[
+"Tween Two Curves",
+"Twn2Crvs",
+"Curve",
+"",
+[
+[
+"Curve A",
+"A",
+"Curve"
+],
+[
+"Curve B",
+"B",
+"Curve"
+],
+[
+"Factor",
+"F",
+"Number"
+],
+[
+"Refit",
+"R",
+"Integer"
+],
+[
+"Point Sample",
+"P",
+"Integer"
+]
+],
+[
+[
+"Tween",
+"T",
+"Curve"
+]
+]
+],
+[
+"Tween Two Curves Along Curve",
+"Twn2CrvsCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Tween Two Curves On Surface",
+"Twn2CrvsSrf",
+"Curve",
+"",
+null,
+null
+],
+[
+"Weighted Average Curve",
+"WavCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Fit Curve Segments",
+"FitCrvSegs",
+"Curve",
+"",
+null,
+null
+],
+[
+"Fit Curve Smooth",
+"FitCrvSmo",
+"Curve",
+"",
+null,
+null
+],
+[
+"Open Curve",
+"OpnCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"Prude Curve",
+"PrudeCrv",
+"Curve",
+"",
+null,
+null
+],
+[
+"2Pt Twisted Box",
+"2PtTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Average Twisted Box",
+"AvrTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Center Twisted Box",
+"CenTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Construct Twisted Box",
+"CoTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Deconstruct Twisted Box",
+"DeTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Deform Twisted Box",
+"DeformTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Domain Twisted Box",
+"DomTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Evaluate Twisted Box",
+"EvalTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Mesh Boolean Twisted Boxes",
+"MshBoolTBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Mesh Trim Twisted Boxes",
+"MshTrimTBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Plane Trim Twisted Boxes",
+"PlnTrimTBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Polysurface Boolean Twisted Boxes",
+"PsrfBoolTBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Reference Twisted Box",
+"RefTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Subdivide Twisted Box",
+"SubDivTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Surface Trim Twisted Boxes",
+"SrfTrimTBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Thicken Twisted Box",
+"ThickTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Twisted Boxes",
+"TwnConTBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Tween Through Twisted Boxes",
+"TwnThruTBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Tween Two Twisted Boxes",
+"Twn2TBoxs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Centers",
+"TBoxCents",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Consecutive Curves",
+"TBoxConCrvs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Consecutive Meshes",
+"TBoxConMshs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Consecutive Surfaces",
+"TBoxConSrfs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Corners",
+"TBox Corners",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Curve",
+"TBoxCrv",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Curve Variable",
+"TBoxCrvVar",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Extrude",
+"TBoxExtr",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Loft",
+"TBoxLoft",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Mesh",
+"TBoxMsh",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Pipe",
+"TBoxPipe",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Pipe Variable",
+"TBoxPipeVar",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Strip",
+"TBoxStrip",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Strips",
+"TBoxStrips",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Strip Variable",
+"TTBoxStripVar",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Surface",
+"TBoxSrf",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Sweep",
+"TBoxSweep",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Sweep Variable",
+"TBoxSweepVar",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Through Curves",
+"TBoxThruCrvs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Through Meshes",
+"TBoxThruMshs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Through Surfaces",
+"TBoxThruSrfs",
+"Twisted Box",
+"",
+[
+[
+"Surfaces",
+"S",
+"Surface"
+],
+[
+"Parameters U",
+"u",
+"Number"
+],
+[
+"Parameters V",
+"v",
+"Number"
+],
+[
+"Parameters W",
+"w",
+"Number"
+],
+[
+"Normalized",
+"N",
+"Boolean"
+],
+[
+"Equalized",
+"E",
+"Boolean"
+],
+[
+"Weighted",
+"W",
+"Boolean"
+],
+[
+"Loopback",
+"L",
+"Boolean"
+],
+[
+"Degree",
+"D",
+"Integer"
+],
+[
+"Interpolation Type",
+"I",
+"Integer"
+],
+[
+"Refit",
+"R",
+"Integer"
+],
+[
+"Point Sample",
+"P",
+"Integer"
+]
+],
+[
+[
+"Twisted Boxes",
+"TB",
+"Twisted Box"
+]
+]
+],
+[
+"Twisted Box Tube",
+"TBoxTube",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Tube Variable",
+"TBoxTubeVar",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Two Curves",
+"TBox2Crvs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Two Meshes",
+"TBox2Mshs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Two Surfaces",
+"TBox2Srfs",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Volume",
+"TBoxVol",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Weighted Average Twisted Box",
+"WavTBox",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Twisted Box Array",
+"TBoxArray",
+"Twisted Box",
+"",
+null,
+null
+],
+[
+"Append Polysurfaces",
+"AppPsrfs",
+"Surface",
+"",
+null,
+null
+],
+[
+"Automatic Edge Surface",
+"AutoEdgSrf",
+"Surface",
+"",
+null,
+null
+],
+[
+"Automatic Network Surface",
+"AutoNetSrf",
+"Surface",
+"",
+null,
+null
+],
+[
+"Average Surface",
+"AvrSrf",
+"Surface",
+"",
+null,
+null
+],
+[
+"Constrained Volume Box",
+"ConsVolBox",
+"Surface",
+"",
+null,
+null
+],
+[
+"Constrained Volume Ellipsoid",
+"ConsVolEli",
+"Surface",
+"",
+null,
+null
+],
+[
+"Extrude Tapered Polysurface",
+"ExtrTaper",
+"Surface",
+"",
+null,
+null
+],
+[
+"Flip Polysurface",
+"FlipPsrf",
+"Surface",
+"",
+null,
+null
+],
+[
+"Is Polysurface Closed",
+"PsrfClsd",
+"Surface",
+"",
+null,
+null
+],
+[
+"Is Surface Closed",
+"SrfClsd",
+"Surface",
+"",
+null,
+null
+],
+[
+"Is Surface Collapsed",
+"SrfCollapsed",
+"Surface",
+"",
+null,
+null
+],
+[
+"Is Surface Trimmed",
+"SrfTrimd",
+"Surface",
+"",
+null,
+null
+],
+[
+"Mesh To Polysurface",
+"Msh2Psrf",
+"Surface",
+"",
+null,
+null
+],
+[
+"Mirror Cut Polysurface",
+"MirCutPsrf",
+"Surface",
+"",
+null,
+null
+],
+[
+"Mirror Cut Surface",
+"MirCutSrf",
+"Surface",
+"",
+null,
+null
+],
+[
+"Offset Surface",
+"OffSrf",
+"Surface",
+"",
+[
+[
+"Surface",
+"S",
+"Brep"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"Both Sides",
+"B",
+"Number"
+],
+[
+"Create Solid",
+"C",
+"Boolean"
+]
+],
+[
+[
+"Offset",
+"O",
+"Brep"
+]
+]
+],
+[
+"Color To Point",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Grayscale Color",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Invert Color",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Mirror Combine Colors",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Mirror Cut Colors",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Point To Color",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Colors",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Tween Through Colors",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Tween Two Colors",
+null,
+"Color",
+"",
+null,
+null
+],
+[
+"Average Domain",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Mirror Combine Domains",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Mirror Cut Domains",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Reparameterize Domains",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Slide Within Domain",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Domains",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Tween Through Domains",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Tween Two Domains",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Two Way Domain",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Weighted Average Domain",
+null,
+"Domain",
+"",
+null,
+null
+],
+[
+"Dispatch Indices",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"Last Index",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"List Indices",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"Mirror Combine Items",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"Mirror Cut Items",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"Null Placeholder",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"Point Sort Items",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"Sift Indices",
+null,
+"List",
+"",
+null,
+null
+],
+[
+"Angle Split Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Average Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Blend Consecutive Meshes",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Blend Through Meshes",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Blend Two Meshes",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Close Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Displace Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Is Mesh Closed",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Is Mesh Disjoint",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Mesh Statistics",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Mirror Cut Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Offset Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Parameter Extrude Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Parameter Loft Mesh",
+null,
+"Mesh",
+"",
+[
+[
+"Sections",
+"S",
+"Curve"
+],
+[
+"Parameters U",
+"u",
+"Number"
+],
+[
+"Parameters V",
+"v",
+"Number"
+],
+[
+"Weighted",
+"W",
+"Boolean"
+],
+[
+"Lengths",
+"L",
+"Boolean"
+],
+[
+"Angle",
+"A",
+"Number"
+],
+[
+"Closed",
+"C",
+"Boolean"
+],
+[
+"Triangulate",
+"T",
+"Boolean"
+],
+[
+"Point Start",
+"sP",
+"Point"
+],
+[
+"Point End",
+"eP",
+"Point"
+]
+],
+[
+[
+"Lofted",
+"L",
+"Mesh"
+]
+]
+],
+[
+"Parameter Pipe Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Parameter Plane Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Parameter Surface Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Plane Trim Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Polyline To Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Rebuild Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Recursive Morph Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Reduce Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Meshes",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Tween Through Meshes",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Tween Two Meshes",
+null,
+"Mesh",
+"",
+[
+[
+"Mesh A",
+"A",
+"Mesh"
+],
+[
+"Mesh B",
+"B",
+"Mesh"
+],
+[
+"Factor",
+"F",
+"Number"
+],
+[
+"Colored",
+"C",
+"Boolean"
+]
+],
+[
+[
+"Tween",
+"T",
+"Mesh"
+]
+]
+],
+[
+"Voxel Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Weighted Average Mesh",
+null,
+"Mesh",
+"",
+null,
+null
+],
+[
+"Curve Graph Mapper",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Deconstruct Number",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Default Angle Tolerance",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Document Angle Tolerance",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Document Distance Tolerance",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Highest Lowest Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Invert Boolean",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Last Index Range",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Linearize Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"List Length Range",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Mass Division",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Mass Subtraction",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Mirror Combine Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Mirror Cut Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Odd Even Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Partition Number",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Percentage",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Reparameterized Range",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Reparameterize Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Round To Decimal Place",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Round To Factor",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Round To Nearest",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Tween Through Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Tween Two Numbers",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"X Minus One",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"X Plus One",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Zero Distance Tolerance",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Equality Within Tolerance",
+null,
+"Number",
+"",
+null,
+null
+],
+[
+"Average Plane",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Closest Plane Orientation",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Flip Plane",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Mirror Cut Planes",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Offset Plane",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Parameter Plane Divide Surface",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Parameter Plane In Rectangle",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Parameter Plane On Surface",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Plane Trim Planes",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Planes",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Planes On Curve",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Planes On Surface",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Through Planes",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Through Planes On Curve",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Through Planes On Surface",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Two Planes",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Two Planes On Curve",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Tween Two Planes On Surface",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Weighted Average Plane",
+null,
+"Plane",
+"",
+null,
+null
+],
+[
+"Are Points Collinear",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Are Points Coplanar",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Curve Coil Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Curve Edit Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Curve Middle Point",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Curve Wave Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Map Point To Surface",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Mirror Cut Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Parameter Point Divide Surface",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Parameter Point In Rectangle",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Parameter Point On Surface",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Pinch N Spread Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Plane Trim Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Point Divide Curve Segments",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Point Divide Curve Target Length",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Point Mesh Side",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Point Plane Side",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Point Surface Edge",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Point Surface Side",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Reparameterize Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Surface Edit Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Points On Curve",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Points On Surface",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Through Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Through Points On Curve",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Through Points On Surface",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Two Points",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Two Points On Curve",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Tween Two Points On Surface",
+null,
+"Point",
+"",
+null,
+null
+],
+[
+"Average SubD",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Mirror Cut SubD",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Tween Consecutive SubDs",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Tween Through SubDs",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Tween Two SubDs",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Twisted Box Consecutive SubDs",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Twisted Box SubD",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Twisted Box Through SubDs",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Twisted Box Two SubDs",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Weighted Average SubD",
+null,
+"SubD",
+"",
+null,
+null
+],
+[
+"Parameter Subdivide Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Plane Trim Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Rebuild Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Remap Surface Domain",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Reparameterize Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Shell Polysurface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Shrink Trimmed Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Split Kinky Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Superimpose Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Surface Degree",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Surface Spans",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Surface Statistics",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Swap Surface Directions",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Surfaces",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Tween Through Surfaces",
+null,
+"Surface",
+"",
+[
+[
+"Surfaces",
+"S",
+"Surface"
+],
+[
+"Factor",
+"F",
+"Number"
+],
+[
+"Normalized",
+"N",
+"Boolean"
+],
+[
+"Equalized",
+"E",
+"Boolean"
+],
+[
+"Weighted",
+"W",
+"Boolean"
+],
+[
+"Loopback",
+"L",
+"Boolean"
+],
+[
+"Degree",
+"D",
+"Integer"
+],
+[
+"Interpolation Type",
+"I",
+"Integer"
+],
+[
+"Refit",
+"R",
+"Integer"
+],
+[
+"Point Sample",
+"P",
+"Integer"
+]
+],
+[
+[
+"Tween",
+"T",
+"Surface"
+]
+]
+],
+[
+"Tween Two Surfaces",
+null,
+"Surface",
+"",
+[
+[
+"Surface A",
+"A",
+"Surface"
+],
+[
+"Surface B",
+"B",
+"Surface"
+],
+[
+"Factor",
+"F",
+"Number"
+],
+[
+"Refit",
+"R",
+"Integer"
+],
+[
+"Point Sample",
+"P",
+"Integer"
+]
+],
+[
+[
+"Tween",
+"T",
+"Surface"
+]
+]
+],
+[
+"Tween Two Surfaces Along Curve",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unroll Polysurface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unsplit Edge Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unsplit Extrude Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unsplit Loft Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unsplit Rail Revolve Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unsplit Revolve Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unsplit Sum Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Unsplit Sweep Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Weighted Average Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Fit Surface",
+null,
+"Surface",
+"",
+null,
+null
+],
+[
+"Average Transform",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Mass Transform",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Mirror Combine Transforms",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Mirror Cut Transforms",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Morph To Twisted Box",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Move To Point",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Recursive Transform",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Rotate Euler",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Rotate Quaternion",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Rotate World",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Scale To Area",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Scale To Length",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Scale To Volume",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Slide Within Transform",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Transform Twisted Box",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Transforms",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Tween Through Transforms",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Tween Two Transforms",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Weighted Average Transform",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Zeroed Transform",
+null,
+"Transform",
+"",
+null,
+null
+],
+[
+"Closest Vector",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Mirror Combine Vectors",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Mirror Cut Vectors",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Reparameterize Vectors",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Tween Consecutive Vectors",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Tween Through Vectors",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Tween Two Vectors",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Vector Star",
+null,
+"Vector",
+"",
+null,
+null
+],
+[
+"Vector World",
+null,
+"Vector",
+"",
+null,
+null
+]
+]
+}

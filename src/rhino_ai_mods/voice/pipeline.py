@@ -28,7 +28,10 @@ NEW_BUILD = re.compile(r"^(?:(?:please|can you|could you|let'?s|now)\s+)?(?:buil
 
 
 def is_new_build(text: str) -> bool:
-    return bool(NEW_BUILD.search(normalize(text)))
+    if NEW_BUILD.search(normalize(text)):
+        return True
+    from ..addons.registry import mentioned  # noqa: PLC0415  ("... with LunchBox", "sun path")
+    return bool(mentioned(text))
 
 
 def is_grasshopper_request(text: str) -> bool:

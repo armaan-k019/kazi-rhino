@@ -416,6 +416,29 @@ def test_voice_pipeline_builds_addon_requests(rhino):
     assert out.status == "dry_run" and out.build["kind"] == "graph" and "Kangaroo" in out.detail
 
 
+def test_addon_requests_and_voice_edits_work_together(rhino):
+    from rhino_ai_mods.gh.edits import Editor
+    rhino.rhino.selected.append(rhino.rhino.make_object("Brep", "wall"))
+    planner = AddonPlanner(Planner(Backend("no")))
+    pipe = VoicePipeline(bridge=rhino.client, planner=planner,
+                         builder=AddonBuilder(Builder(rhino.client, planner, confirm=False)),
+                         editor=Editor(rhino.client, planner.inner, confirm=False))
+    assert pipe.handle("lunchbox diamond panels 10 by 6", mode="grasshopper").status == "built"
+    # with a build on the canvas, a new add-on request is still a new build, not an edit of it
+    for said, recipe in [("weaverbird picture frame and thicken it", "weaverbird_frame_thicken"),
+                         ("change it to a kangaroo hanging shell", "kangaroo_hanging"),
+                         ("show me the sun path", "ladybug_sun_path")]:
+        out = pipe.handle(said, mode="grasshopper")
+        assert (out.status, out.source) == ("built", recipe), (said, out)
+    assert len(rhino.sc.sticky["kazi_builds"]) == 4 and planner.backend.seen == []
+    # sliders of an add-on build can be edited by voice like any other build
+    pipe.handle("lunchbox quads 10 by 6", mode="grasshopper")
+    out = pipe.handle("set u to 15", mode="grasshopper")
+    assert (out.status, out.source) == ("edited", "edit"), out
+    u = next(o for o in rhino.gh.doc.Objects if o.NickName == "u" and o.value == 15)
+    assert u.value == 15
+
+
 @pytest.mark.parametrize("rhino", [["lunchbox", "kangaroo2"]], indirect=True)
 def test_voice_reports_a_missing_addon(rhino):
     planner = AddonPlanner(Planner(None))

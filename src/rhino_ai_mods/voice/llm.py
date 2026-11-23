@@ -59,7 +59,7 @@ class LLMResult:
 class Backend(Protocol):
     name: str
 
-    def complete(self, messages: list[dict]) -> str: ...
+    def complete(self, messages: list[dict], max_tokens: int = 96) -> str: ...
 
 
 def build_messages(text: str, commands_hint: list[str] | None = None) -> list[dict]:
@@ -115,14 +115,14 @@ class HFLocal:
         self._model = AutoModelForCausalLM.from_pretrained(self.model_id, torch_dtype=dtype).to(device)
         self._model.eval()
 
-    def complete(self, messages: list[dict]) -> str:
+    def complete(self, messages: list[dict], max_tokens: int = 96) -> str:
         self._load()
         import torch  # noqa: PLC0415
 
         prompt = self._tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         inputs = self._tok(prompt, return_tensors="pt").to(self._model.device)
         with torch.no_grad():
-            out = self._model.generate(**inputs, max_new_tokens=96, do_sample=False,
+            out = self._model.generate(**inputs, max_new_tokens=max_tokens, do_sample=False,
                                        pad_token_id=self._tok.eos_token_id)
         return self._tok.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
 
@@ -149,9 +149,44 @@ class HFApi:
 
         self.client = InferenceClient(model=model, token=token or os.environ.get("HF_TOKEN"))
 
-    def complete(self, messages: list[dict]) -> str:
-        resp = self.client.chat_completion(messages=messages, max_tokens=96, temperature=0.0)
+    def complete(self, messages: list[dict], max_tokens: int = 96) -> str:
+        resp = self.client.chat_completion(messages=messages, max_tokens=max_tokens, temperature=0.0)
         return resp.choices[0].message.content or ""
+
+
+class AnthropicBackend:
+    """Claude via the Anthropic API (needs ANTHROPIC_API_KEY or `ant auth login`).
+
+    Best quality for writing Grasshopper scripts; optional, everything else stays on HF models.
+    """
+
+    name = "anthropic"
+    use_command_hint = True
+
+    def __init__(self, model: str = "claude-opus-5-5"):
+        import anthropic  # noqa: PLC0415
+
+        self.client = anthropic.Anthropic()
+        self.model = model
+
+    def complete(self, messages: list[dict], max_tokens: int = 96) -> str:
+        system = "\n\n".join(m["content"] for m in messages if m["role"] == "system")
+        convo = [m for m in messages if m["role"] != "system"]
+        kwargs = {}
+        if self.model in ("claude-opus-5-5", "claude-fable-5-2", "claude-sonnet-5-5"):
+            # Re-run on a fallback model if a safety classifier declines.
+            kwargs = {"betas": ["server-side-fallback-2026-07-01"], "fallbacks": "default"}
+        resp = self.client.beta.messages.create(
+            model=self.model,
+            max_tokens=max(max_tokens, 1024),
+            system=system,
+            messages=convo,
+            output_config={"effort": "medium" if max_tokens > 200 else "low"},
+            **kwargs,
+        )
+        if resp.stop_reason == "refusal":
+            return ""
+        return "".join(b.text for b in resp.content if b.type == "text")
 
 
 def make_backend(kind: str, model: str | None = None) -> Backend | None:
@@ -161,7 +196,9 @@ def make_backend(kind: str, model: str | None = None) -> Backend | None:
         return HFLocal(model) if model else HFLocal()
     if kind == "hf-api":
         return HFApi(model) if model else HFApi()
-    raise ValueError(f"unknown LLM backend '{kind}' (use hf-local, hf-api or none)")
+    if kind == "anthropic":
+        return AnthropicBackend(model) if model else AnthropicBackend()
+    raise ValueError(f"unknown LLM backend '{kind}' (use hf-local, hf-api, anthropic or none)")
 
 
 class LLMMapper:

@@ -6,8 +6,11 @@ Rules run before any model, so common commands ("undo", "zoom extents", "boolean
 
 from __future__ import annotations
 
+import difflib
+import json
 import re
 from dataclasses import dataclass
+from pathlib import Path
 
 # Spoken phrase -> macro. Keys are normalized (lowercase, no punctuation).
 ALIASES: dict[str, str] = {
@@ -94,7 +97,11 @@ Scale2D Section SelAll SelNone Show Sphere Split Sweep1 Sweep2 Text Torus Trim T
 Ungroup Unroll Grasshopper Zoom SetView Undo Redo Save Export Import Render
 ProjectToCPlane SetPt Smash Squish Area Volume Length BoundingBox Cplane Gumball
 Osnap Ortho Planar Snap MaxViewport Isolate Unisolate Lock Unlock Invert Properties
-Layout Make2D Clippingplane NamedView Named Purge Exit Close New Open
+Layout Make2D Clippingplane NamedView Named Purge Exit Close New Open SelPrev SelLast
+SelCrv SelSrf SelPolysrf SelPt SelLayer SelColor SelDup SelBadObjects SelGroup SelClosedCrv
+SelOpenCrv SelMesh SelBlockInstance SelText SelDim DupEdge DupBorder ExtractSrf MatchSrf
+PlanarSrf NetworkSrf ExtrudeCrv OffsetSrf Sweep1 Sweep2 CurvatureAnalysis ZebraAnalysis
+PointsOn PointsOff Rebuild Fair ShowEdges Check What Analyze Dir Flip Shell ExtractIsocurve
 """.split()
 
 _NUMBER_WORDS = {
@@ -105,6 +112,13 @@ _NUMBER_WORDS = {
     "seventy": 70, "eighty": 80, "ninety": 90, "hundred": 100,
 }
 
+# Words speech-to-text commonly gets wrong for Rhino vocabulary.
+MISHEARINGS = {
+    "bullion": "boolean", "boolian": "boolean", "fillit": "fillet", "filet": "fillet",
+    "lofted": "loft", "nerbs": "nurbs", "rhinos": "rhino", "grass hopper": "grasshopper",
+    "c plane": "cplane", "sub d": "subd", "poly line": "polyline", "poly surface": "polysurface",
+}
+_TRAILING = re.compile(r"(?:\s+(?:please|thanks|thank you|now))+$")
 _FILLERS = re.compile(r"^(?:(?:please|hey rhino|ok rhino|okay rhino|rhino|now|and|then|just)\s+)+")
 _EXPLICIT = re.compile(r"^(?:run|command|type)\s+(.+)$")
 _ARG_TOKEN = re.compile(r"^[-+]?\d*\.?\d+(?:,[-+]?\d*\.?\d+){0,2}$|^_?[A-Za-z]+=\S+$")
@@ -150,7 +164,12 @@ def normalize(text: str) -> str:
     # "0 comma 0 comma 0" / "0, 0, 0" -> "0,0,0"
     text = re.sub(r"\s*\bcomma\b\s*", ",", text)
     text = re.sub(r"(?<=\d),\s+(?=[-\d])", ",", text)
+    text = re.sub(r",(?![-\d])", " ", text)  # commas that aren't coordinates
+    text = re.sub(r"\s+", " ", text)
+    for wrong, right in MISHEARINGS.items():
+        text = re.sub(rf"\b{wrong}\b", right, text)
     text = _FILLERS.sub("", text)
+    text = _TRAILING.sub("", text)
     return text.strip()
 
 
@@ -158,22 +177,82 @@ def needs_confirm(command: str | None) -> bool:
     return bool(command) and command.lower().lstrip("_-!") in CONFIRM_COMMANDS
 
 
+# Spoken word -> the abbreviation Rhino uses inside command names, so that
+# "select previous", "sel prev" and "select prev" all become "selprev" (SelPrev).
+ABBREVIATIONS: dict[str, str] = {
+    "select": "sel", "selection": "sel", "previous": "prev", "curve": "crv", "curves": "crv",
+    "surface": "srf", "surfaces": "srf", "polysurface": "polysrf", "polysurfaces": "polysrf",
+    "point": "pt", "points": "pt", "dimension": "dim", "dimensions": "dim", "object": "obj",
+    "objects": "obj", "duplicate": "dup", "information": "info", "maximize": "max",
+    "construction": "c", "rectangle": "rect", "extension": "ext", "direction": "dir",
+    "control": "ctrl", "mesh": "mesh", "meshes": "mesh", "block": "block", "blocks": "block",
+    "text": "text", "lines": "line", "polylines": "polyline", "circles": "circle",
+    "one": "1", "two": "2", "three": "3",
+}
+# Words people say that never appear in command names ("select BY layer").
+GLUE_WORDS = {"by", "the", "a", "an", "to", "of", "on", "all"}
+_GLUE_KEEP = {"all"}  # ... except when the command really has it (SelAll)
+
+FUZZY_CUTOFF = 0.86
+
+
+def load_user_aliases(path: str | Path | None) -> dict[str, str]:
+    """Read {"spoken phrase": "macro"} from a JSON file; missing file -> {}."""
+    if not path:
+        return {}
+    path = Path(path).expanduser()
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {normalize(k): v for k, v in data.items() if not k.startswith("_")}
+
+
 class RuleMapper:
-    def __init__(self, commands: list[str] | None = None):
+    def __init__(self, commands: list[str] | None = None, user_aliases: dict[str, str] | None = None):
+        self.aliases = {**ALIASES, **(user_aliases or {})}
         self.set_commands(commands or FALLBACK_COMMANDS)
 
     def set_commands(self, commands: list[str]) -> None:
         self.commands = {c.lower(): c for c in commands}
+        self._keys = list(self.commands)
 
     def is_command(self, name: str) -> bool:
         return name.lower().lstrip("_-!") in self.commands
 
-    def map(self, text: str) -> Match | None:
+    # -- spoken words -> command name ---------------------------------------- #
+    @staticmethod
+    def _variants(words: list[str]) -> list[str]:
+        raw = "".join(words)
+        canon = "".join(ABBREVIATIONS.get(w, w) for w in words)
+        no_glue = "".join(ABBREVIATIONS.get(w, w) for w in words
+                          if w not in GLUE_WORDS or w in _GLUE_KEEP)
+        no_glue_all = "".join(ABBREVIATIONS.get(w, w) for w in words if w not in GLUE_WORDS)
+        out = []
+        for v in (raw, canon, no_glue, no_glue_all):
+            v = v.lstrip("_-")
+            if v and v not in out:
+                out.append(v)
+        return out
+
+    def lookup(self, words: list[str], fuzzy: bool = False) -> str | None:
+        for key in self._variants(words):
+            if key in self.commands:
+                return self.commands[key]
+        if fuzzy:
+            for key in self._variants(words):
+                if len(key) < 5:
+                    continue
+                close = difflib.get_close_matches(key, self._keys, n=1, cutoff=FUZZY_CUTOFF)
+                if close:
+                    return self.commands[close[0]]
+        return None
+
+    def map(self, text: str, fuzzy: bool = True) -> Match | None:
         norm = normalize(text)
         if not norm:
             return None
-        if norm in ALIASES:
-            macro = ALIASES[norm]
+        if norm in self.aliases:
+            macro = self.aliases[norm]
             cmd = macro.split()[0].lstrip("_-!") if macro and macro != "!" else None
             return Match(macro, "alias", cmd, needs_confirm(cmd))
 
@@ -182,20 +261,18 @@ class RuleMapper:
             norm = explicit.group(1)
 
         words = norm.split()
-        # Longest run of leading words that names a Rhino command: "boolean union" -> BooleanUnion
-        for n in range(min(4, len(words)), 0, -1):
-            candidate = "".join(words[:n]).lstrip("_-")
-            name = self.commands.get(candidate)
-            if not name:
-                continue
-            rest = words[n:]
-            # Only accept trailing words that look like command-line input (numbers,
-            # coordinates, Option=Value). Anything else is a sentence for the model.
-            if all(_ARG_TOKEN.match(w) for w in rest):
-                macro = " ".join(["_" + name, *rest])
-                return Match(macro, "command", name, needs_confirm(name))
-            if explicit:
-                # The user said "run ...": pass the rest through untouched.
-                return Match(" ".join(["_" + name, *rest]), "command", name, needs_confirm(name))
-            break
+        # Exact matches first (longest run of leading words), then fuzzy ones.
+        for allow_fuzzy in ((False, True) if fuzzy else (False,)):
+            for n in range(min(5, len(words)), 0, -1):
+                rest = words[n:]
+                # Trailing words must look like command-line input (numbers, coordinates,
+                # Option=Value). Anything else is a sentence for the model, unless the user
+                # said "run ..." in which case it passes through untouched.
+                if not explicit and not all(_ARG_TOKEN.match(w) for w in rest):
+                    continue
+                name = self.lookup(words[:n], fuzzy=allow_fuzzy)
+                if name:
+                    macro = " ".join(["_" + name, *rest])
+                    return Match(macro, "command" if not allow_fuzzy else "fuzzy", name,
+                                 needs_confirm(name))
         return None

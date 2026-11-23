@@ -29,7 +29,7 @@ import scriptcontext as sc
 HOST = "127.0.0.1"
 PORT = 2010
 STICKY_KEY = "rhino_ai_mods_bridge"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 UI_TIMEOUT_MS = 60000
 
 
@@ -37,7 +37,7 @@ UI_TIMEOUT_MS = 60000
 # UI-thread helper
 # --------------------------------------------------------------------------- #
 
-def on_ui(func):
+def on_ui(func, timeout_ms=UI_TIMEOUT_MS):
     """Run func() on Rhino's UI thread and return its result (or raise its error)."""
     box = {}
     done = System.Threading.ManualResetEvent(False)
@@ -52,7 +52,7 @@ def on_ui(func):
             done.Set()
 
     Rhino.RhinoApp.InvokeOnUiThread(System.Action(runner))
-    if not done.WaitOne(UI_TIMEOUT_MS):
+    if not done.WaitOne(timeout_ms):
         raise RuntimeError("Timed out waiting for Rhino's UI thread (is a command or dialog open?)")
     if "error" in box:
         raise RuntimeError("%s\n%s" % (box["error"], box.get("tb", "")))
@@ -565,6 +565,144 @@ def cmd_gh_solve(args):
     return on_ui(work)
 
 
+# --------------------------------------------------------------------------- #
+# Selection, confirmation, messages
+# --------------------------------------------------------------------------- #
+
+def cmd_get_selection(args):
+    def work():
+        doc = Rhino.RhinoDoc.ActiveDoc
+        objs = list(doc.Objects.GetSelectedObjects(False, False)) if doc else []
+        return {"count": len(objs),
+                "objects": [{"id": str(o.Id), "type": o.Geometry.GetType().Name,
+                             "layer": doc.Layers[o.Attributes.LayerIndex].FullPath,
+                             "name": o.Attributes.Name} for o in objs[:50]]}
+    return on_ui(work)
+
+
+def cmd_confirm(args):
+    """Ask the user Yes/No in a Rhino dialog. Returns {"ok": bool}."""
+    title = args.get("title") or "kazi-rhino"
+    message = args.get("message") or "Continue?"
+
+    def work():
+        res = Rhino.UI.Dialogs.ShowMessage(message, title, Rhino.UI.ShowMessageButton.YesNo,
+                                           Rhino.UI.ShowMessageIcon.Question)
+        return res == Rhino.UI.ShowMessageResult.Yes
+    return {"ok": bool(on_ui(work, timeout_ms=600000))}
+
+
+def cmd_rhino_message(args):
+    text = str(args.get("text") or "")
+    on_ui(lambda: Rhino.RhinoApp.WriteLine("[kazi] " + text))
+    return {"shown": True}
+
+
+# --------------------------------------------------------------------------- #
+# Grasshopper inputs: sliders, toggles, geometry from the Rhino selection
+# --------------------------------------------------------------------------- #
+
+def cmd_gh_add_slider(args):
+    def work():
+        gh = _gh()
+        doc = _gh_doc()
+        slider = gh.Kernel.Special.GH_NumberSlider()
+        _place(doc, slider, args.get("x", 100), args.get("y", 100))
+        integer = bool(args.get("integer"))
+        lo, hi = float(args.get("min", 0)), float(args.get("max", 10))
+        val = float(args.get("value", lo))
+        if hi <= lo:
+            hi = lo + 1
+        val = min(max(val, lo), hi)
+        s = slider.Slider
+        s.Type = gh.GUI.Base.GH_SliderAccuracy.Integer if integer else gh.GUI.Base.GH_SliderAccuracy.Float
+        s.DecimalPlaces = 0 if integer else int(args.get("decimals", 2))
+        s.Minimum = System.Decimal(lo)
+        s.Maximum = System.Decimal(hi)
+        slider.SetSliderValue(System.Decimal(round(val) if integer else val))
+        if args.get("nickname"):
+            slider.NickName = args["nickname"]
+        slider.ExpireSolution(False)
+        return _describe(slider)
+    return on_ui(work)
+
+
+def cmd_gh_add_toggle(args):
+    def work():
+        gh = _gh()
+        doc = _gh_doc()
+        toggle = gh.Kernel.Special.GH_BooleanToggle()
+        _place(doc, toggle, args.get("x", 100), args.get("y", 100))
+        toggle.Value = bool(args.get("value", False))
+        if args.get("nickname"):
+            toggle.NickName = args["nickname"]
+        return _describe(toggle)
+    return on_ui(work)
+
+
+def cmd_gh_add_geometry_input(args):
+    """A Geometry parameter holding the objects currently selected in Rhino.
+
+    reference=True (default) keeps a live link: editing the Rhino object updates Grasshopper.
+    """
+    def work():
+        gh = _gh()
+        doc = _gh_doc()
+        param = gh.Kernel.Parameters.Param_Geometry()
+        _place(doc, param, args.get("x", 100), args.get("y", 100))
+        param.NickName = args.get("nickname") or "geometry"
+        rdoc = Rhino.RhinoDoc.ActiveDoc
+        objs = list(rdoc.Objects.GetSelectedObjects(False, False)) if (rdoc and args.get("from_selection", True)) else []
+        added = 0
+        for o in objs:
+            goo = gh.Kernel.GH_Convert.ToGeometricGoo(o.Geometry)
+            if goo is None:
+                continue
+            if args.get("reference", True):
+                try:
+                    goo.ReferenceID = o.Id
+                    goo.LoadGeometry(rdoc)
+                except Exception:  # noqa: BLE001  (fall back to an internalised copy)
+                    goo = gh.Kernel.GH_Convert.ToGeometricGoo(o.Geometry)
+            param.PersistentData.Append(goo)
+            added += 1
+        param.ExpireSolution(False)
+        info = _describe(param)
+        info["objects"] = added
+        return info
+    return on_ui(work)
+
+
+def cmd_gh_group(args):
+    def work():
+        gh = _gh()
+        doc = _gh_doc()
+        grp = gh.Kernel.Special.GH_Group()
+        grp.NickName = args.get("name") or "kazi"
+        grp.CreateAttributes()
+        for ref in args.get("components", []):
+            grp.AddObject(_find_obj(doc, ref).InstanceGuid)
+        grp.Colour = System.Drawing.Color.FromArgb(120, 255, 214, 150)
+        doc.AddObject(grp, False)
+        return {"group": str(grp.InstanceGuid)}
+    return on_ui(work)
+
+
+def cmd_gh_free_spot(args):
+    """A canvas position below everything that's already there."""
+    def work():
+        doc = _gh_doc()
+        bottom = 0.0
+        for obj in doc.Objects:
+            try:
+                b = obj.Attributes.Bounds
+                bottom = max(bottom, float(b.Bottom))
+            except Exception:  # noqa: BLE001
+                pass
+        return {"x": 80.0, "y": bottom + 80.0}
+    return on_ui(work)
+
+
 COMMANDS = {
     "ping": cmd_ping,
     "run_command": cmd_run_command,
@@ -578,6 +716,14 @@ COMMANDS = {
     "gh_disconnect": cmd_gh_disconnect,
     "gh_delete": cmd_gh_delete,
     "gh_solve": cmd_gh_solve,
+    "get_selection": cmd_get_selection,
+    "confirm": cmd_confirm,
+    "rhino_message": cmd_rhino_message,
+    "gh_add_slider": cmd_gh_add_slider,
+    "gh_add_toggle": cmd_gh_add_toggle,
+    "gh_add_geometry_input": cmd_gh_add_geometry_input,
+    "gh_group": cmd_gh_group,
+    "gh_free_spot": cmd_gh_free_spot,
 }
 
 

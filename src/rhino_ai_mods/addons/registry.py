@@ -32,7 +32,8 @@ class Addon:
             return f"{self.title} ships with Rhino 8. If it is missing, repair the Rhino install."
         if self.install == "package_manager":
             return (f"Install {self.title}: type PackageManager in Rhino, search for "
-                    f"\"{self.package}\", click Install, then restart Rhino.")
+                    f"\"{self.package}\", click Install, then restart Rhino. If it is not "
+                    f"listed there, download it from {self.url}")
         return f"Install {self.title} with its installer from {self.url}, then restart Rhino."
 
 

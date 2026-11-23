@@ -17,7 +17,9 @@ dependencies = [
 hf = ["transformers>=4.45", "torch>=2.2", "accelerate>=0.33"]
 # Hugging Face Inference Providers instead of a local model
 hf-api = ["huggingface_hub>=0.25"]
-dev = ["pytest>=8"]
+# Claude for writing Grasshopper scripts (optional)
+anthropic = ["anthropic>=2.12"]
+dev = ["pytest>=8", "dnfile>=0.15"]
 
 [project.scripts]
 rhino-ai-mcp = "rhino_ai_mods.mcp_server:main"

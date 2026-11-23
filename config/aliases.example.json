@@ -1,0 +1,8 @@
+{
+  "_comment": "Copy to ~/.kazi-rhino/aliases.json. Spoken phrase -> Rhino macro. Keys starting with _ are ignored.",
+  "section cut": "_ClippingPlane",
+  "make it pretty": "_-SetDisplayMode _Mode=Arctic",
+  "plan view": "_SetView _World _Top",
+  "save a copy": "_SaveAs",
+  "check model": "_SelBadObjects"
+}

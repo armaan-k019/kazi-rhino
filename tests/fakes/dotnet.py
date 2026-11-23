@@ -308,11 +308,12 @@ class ScriptComponent(Component):
         self.maintenance += 1
 
 
-class Slider(DocObject):
+class Slider(Param):
     TYPE = "Grasshopper.Kernel.Special.GH_NumberSlider"
 
     def __init__(self):
-        super().__init__("Number Slider", "Slider")
+        super().__init__("Number Slider")
+        self.Attributes = None
         self.Slider = types.SimpleNamespace(Type=None, DecimalPlaces=2, Minimum=0.0, Maximum=1.0)
         self.value = None
         self.Sources = []
@@ -323,11 +324,12 @@ class Slider(DocObject):
         return True
 
 
-class Toggle(DocObject):
+class Toggle(Param):
     TYPE = "Grasshopper.Kernel.Special.GH_BooleanToggle"
 
     def __init__(self):
-        super().__init__("Boolean Toggle", "Toggle")
+        super().__init__("Boolean Toggle")
+        self.Attributes = None
         self.Value = False
         self.Sources = []
 
@@ -349,7 +351,8 @@ class GHDocument:
         self.Objects = []
         self.solutions = 0
 
-    def AddObject(self, obj, update):
+    def AddObject(self, obj, update, index):
+        assert index == 2147483647
         self.Objects.append(obj)
         return True
 

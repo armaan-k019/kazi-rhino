@@ -13,6 +13,9 @@ from typing import Any, Literal
 from mcp.server.fastmcp import FastMCP
 
 from .bridge_client import BridgeClient, BridgeError
+from .gh.builder import Builder
+from .gh.recipes import RECIPES, Input, Plan
+from .voice.rules import RuleMapper
 
 INSTRUCTIONS = """\
 Tools for Grasshopper script components in Rhino 8 (via the rhino-ai-mods bridge).
@@ -28,6 +31,11 @@ Python 3 script tips (Rhino 8): `import Rhino.Geometry as rg`; inputs arrive alr
 (set access "list" for lists); assign outputs by name. For C#, put logic in RunScript and use
 the `out` params generated for each output name.
 Components are referenced by GUID (preferred) or nickname.
+
+Fastest way to a working, tweakable definition: gh_build with a plan (one script + sliders +
+the Rhino selection as geometry input, all wired and grouped). gh_recipes lists tested plans
+(voronoi facade, stepped massing) you can build directly or use as a starting point.
+voice_command shows how spoken words map to Rhino commands.
 """
 
 mcp = FastMCP("rhino-ai-mods", instructions=INSTRUCTIONS)
@@ -146,6 +154,87 @@ def rhino_run_macro(macro: str, wait: bool = False) -> Any:
     wait=True runs it as a script and waits for it to finish.
     """
     return _call("run_command", macro=macro, mode="script" if wait else "keystrokes")
+
+
+@mcp.tool()
+def rhino_selection() -> Any:
+    """What is selected in Rhino right now (ids, geometry types, layers)."""
+    return _call("get_selection")
+
+
+@mcp.tool()
+def gh_add_slider(nickname: str, min: float, max: float, value: float, integer: bool = False,
+                  x: float = 100, y: float = 100) -> Any:
+    """Place a number slider with a range and start value."""
+    return _call("gh_add_slider", nickname=nickname, min=min, max=max, value=value,
+                 integer=integer, x=x, y=y)
+
+
+@mcp.tool()
+def gh_add_geometry_input(nickname: str, x: float = 100, y: float = 100) -> Any:
+    """Place a Geometry parameter that references the objects currently selected in Rhino."""
+    return _call("gh_add_geometry_input", nickname=nickname, x=x, y=y)
+
+
+@mcp.tool()
+def gh_recipes() -> Any:
+    """Tested Grasshopper plans (title, inputs, outputs, code) to build or adapt."""
+    return {name: factory("").to_dict() for name, (factory, _words) in RECIPES.items()}
+
+
+@mcp.tool()
+def gh_build(
+    title: str,
+    code: str,
+    outputs: list[str],
+    inputs: list[dict],
+    summary: str = "",
+    confirm: bool = False,
+    recipe: str | None = None,
+) -> Any:
+    """Build a whole definition in one call: inputs -> one Python 3 script -> outputs.
+
+    inputs: [{"name", "type": "geometry"|"number"|"integer"|"bool", "min", "max", "value",
+              "source": "selection" (geometry from the current Rhino selection), "description"}].
+    Geometry inputs arrive in the script as lists. Sliders/toggles are created and wired, all
+    components are grouped, the definition is solved, and errors are returned so you can fix
+    them with gh_update_script. recipe: build a tested recipe by name instead (ignores code).
+    confirm=True shows the user a Yes/No dialog in Rhino first.
+    """
+    if recipe:
+        if recipe not in RECIPES:
+            return {"error": f"unknown recipe {recipe!r}; have {sorted(RECIPES)}"}
+        plan = RECIPES[recipe][0](summary or title)
+    else:
+        plan = Plan(title=title, summary=summary, outputs=outputs, code=code,
+                    inputs=[Input(**{k: v for k, v in i.items() if k in Input.__dataclass_fields__})
+                            for i in inputs])
+    try:
+        return Builder(BridgeClient(timeout=900), None, confirm=confirm).build(plan).to_dict()
+    except BridgeError as exc:
+        return {"error": str(exc)}
+
+
+_rules = RuleMapper()
+
+
+@mcp.tool()
+def voice_command(text: str, run: bool = False) -> Any:
+    """How a spoken phrase maps to a Rhino command ("select previous" -> _SelPrev).
+
+    run=True types it into Rhino's command line (the user confirms with Enter).
+    """
+    try:
+        _rules.set_commands(_bridge.call("list_rhino_commands")["commands"])
+    except BridgeError:
+        pass
+    match = _rules.map(text)
+    if match is None:
+        return {"text": text, "macro": None, "hint": "not a direct command; needs the model"}
+    out = {"text": text, "macro": match.macro, "source": match.source}
+    if run:
+        out["sent"] = _call("run_command", macro=match.macro, enter=False)
+    return out
 
 
 def main() -> None:

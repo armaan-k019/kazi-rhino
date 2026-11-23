@@ -29,7 +29,7 @@ uv venv && uv pip install -e ".[hf]"      # or: pip install -e ".[hf]"
 2. **Start the bridge in Rhino** (every session, or add it to startup, see the doc):
    `_-ScriptEditor _Run "C:\path\to\kazi-rhino\bridge\rhino_ai_bridge.py"`
 3. **Grasshopper scripting for Claude**: [docs/02-grasshopper-scripts.md](docs/02-grasshopper-scripts.md).
-4. **Voice**: [docs/03-voice-to-rhino.md](docs/03-voice-to-rhino.md). Short version:
+4. **Voice for Rhino + Grasshopper**: [docs/03-voice-to-rhino.md](docs/03-voice-to-rhino.md). Hold Ctrl+Alt+R for commands ("select previous"), Ctrl+Alt+G for Grasshopper ("build a voronoi script on the facade"). Nothing runs until you confirm. Short version:
    ```bash
    rhino-voice serve            # local Qwen2.5-1.5B via transformers
    rhino-voice --llm none serve # rules only, no model
@@ -46,6 +46,27 @@ uv venv && uv pip install -e ".[hf]"      # or: pip install -e ".[hf]"
 | `config/` | Example MCP configs for Claude Desktop and Claude Code |
 | `tests/` | `pytest`, uses a fake bridge, no Rhino needed |
 
+## Testing
+
+```bash
+uv pip install -e ".[dev,anthropic]"
+pytest                                  # ~100 tests, no Rhino needed, ~25 s
+python tools/check_rhino_api.py         # every RhinoCommon/Grasshopper call vs the real Rhino 8 assemblies
+```
+
+What the tests cover without Rhino:
+- **Recipes run** in a simulated RhinoCommon (real polygon/offset math): voronoi cells tile the facade
+  exactly, stepped massing produces the right tiers, slabs, setbacks and terraces.
+- **The bridge script itself** (`bridge/rhino_ai_bridge.py`) runs against fake Rhino/Grasshopper
+  objects: UI-thread marshalling, command typing, script params (including Rhino 8's `out`), sliders,
+  wiring, groups, selection references, dialogs.
+- **End to end**: dictation HTTP → `rhino-voice` → bridge, and Claude → MCP → `rhino-ai-mcp` → bridge.
+- **API check**: 178 member/overload uses verified against RhinoCommon + Grasshopper 8.36 from NuGet.
+
+What still needs a real Rhino: the actual geometry results in RhinoCommon, and Rhino 8 script
+component internals (`SetSource`, marshalling flags), which aren't in the public assemblies.
+
 ## Status
 
-Built and unit-tested without Rhino (28 tests, plus an end-to-end run with hushtype against a fake bridge). The Rhino side has not been run in a real Rhino yet, so expect some first-run fixes. Run `bridge_status` and the smoke test in docs/02 first.
+Unit and simulation tested (see above). Not yet run inside a real Rhino: do the smoke test in
+docs/02 first and send any errors back.

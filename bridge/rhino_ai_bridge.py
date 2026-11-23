@@ -31,6 +31,7 @@ PORT = 2010
 STICKY_KEY = "rhino_ai_mods_bridge"
 VERSION = "0.2.0"
 UI_TIMEOUT_MS = 60000
+APPEND = 2147483647  # GH_Document.AddObject index: end of the object list
 
 
 # --------------------------------------------------------------------------- #
@@ -168,7 +169,7 @@ def _place(doc, obj, x, y):
     obj.CreateAttributes()
     if x is not None and y is not None:
         obj.Attributes.Pivot = System.Drawing.PointF(float(x), float(y))
-    doc.AddObject(obj, False)
+    doc.AddObject(obj, False, APPEND)
     return obj
 
 
@@ -683,7 +684,7 @@ def cmd_gh_group(args):
         for ref in args.get("components", []):
             grp.AddObject(_find_obj(doc, ref).InstanceGuid)
         grp.Colour = System.Drawing.Color.FromArgb(120, 255, 214, 150)
-        doc.AddObject(grp, False)
+        doc.AddObject(grp, False, APPEND)
         return {"group": str(grp.InstanceGuid)}
     return on_ui(work)
 

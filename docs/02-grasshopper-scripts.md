@@ -25,9 +25,24 @@ The `rhino-ai-mods` MCP server lets Claude write Grasshopper script components: 
 | `gh_add_component` | Any component by name ("Number Slider", "Panel", "Loft", ...) |
 | `gh_connect` / `gh_disconnect` | Wire output → input (by nickname, name or index) |
 | `gh_delete`, `gh_solve` | Delete a component; recompute everything and list problems |
+| `gh_build` | **One call, whole definition**: geometry from the Rhino selection + sliders/toggles → one script → outputs, wired, grouped, solved, errors returned. Or `recipe="voronoi_facade"` |
+| `gh_recipes` | Tested plans (voronoi facade, stepped massing) to build or adapt |
+| `gh_add_slider`, `gh_add_geometry_input` | A slider with range/value; a Geometry param referencing the Rhino selection |
+| `rhino_selection` | What's selected in Rhino |
+| `voice_command` | How a spoken phrase maps to a command ("select previous" → `_SelPrev`); `run=true` types it |
 | `rhino_run_macro` | Run a Rhino command macro |
 
 Inputs can be plain names (`["pts", "h"]`) or dicts: `{"name": "pts", "access": "list", "optional": true}`.
+
+## How this fits with rhinomcp
+
+Use both servers together; Claude picks the right tool. rhinomcp models geometry, reads the
+document, captures the viewport and drives normal Grasshopper components. rhino-ai-mods writes
+scripts and builds whole slider-driven definitions (`gh_build`). A good loop:
+
+> Select the facade. "Using gh_build, make a parametric fin system on the selected facade with
+> count, depth and rotation sliders. Then capture the viewport with rhinomcp and fix anything that
+> looks wrong."
 
 ## Smoke test (do this first)
 

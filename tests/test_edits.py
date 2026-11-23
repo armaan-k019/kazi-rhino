@@ -188,3 +188,13 @@ def test_model_code_edit_cancelled(bridge):
     old = bridge.objects[script]["code"]
     assert pipe.handle("make the openings circular", "grasshopper").status == "cancelled"
     assert bridge.objects[script]["code"] == old
+
+
+def test_code_edit_skipped_when_build_has_no_script(bridge):
+    llm = StubLLM(["```python\nx = 1\n```"])
+    pipe, editor = setup(bridge, "voronoi_facade", llm=llm)
+    script = bridge.builds[-1]["script"]
+    bridge.objects[script]["code"] = None          # like a plugin component (LunchBox etc.)
+    out = editor.handle("make the openings circular")
+    assert out.status == "not_an_edit" and "no script" in out.detail
+    assert llm.prompts == []

@@ -330,8 +330,11 @@ class Editor:
 
     def edit_code(self, text: str, build: dict) -> EditResult:
         title, script = build.get("title", ""), build.get("script")
-        info = self.bridge.call("gh_read_script", component=script)
+        info = self.bridge.call("gh_read_script", component=script) if script else {}
         code = info.get("code") or ""
+        if not code.strip():   # e.g. an add-on build whose main component isn't a script
+            return EditResult("not_an_edit", title,
+                              detail=f"'{title}' has no script to change; try its sliders instead")
         def pname(p):   # script variables are the params' nicknames
             return (p.get("nickname") or p.get("name")) if isinstance(p, dict) else str(p)
         ins = [pname(p) for p in info.get("inputs", [])]

@@ -48,15 +48,32 @@ def test_bridge_unreachable():
         BridgeClient(port=1).call("ping")
 
 
-def test_rule_command_runs_with_enter(bridge):
-    p = make_pipeline(bridge)
-    out = p.handle("Boolean union.", "dictate")
+def test_commands_wait_for_enter_by_default(bridge):
+    out = make_pipeline(bridge).handle("Boolean union.", "dictate")
+    assert out.status == "typed_for_confirm"
+    assert bridge.macros() == [("_BooleanUnion", False)]
+
+
+def test_auto_run_presses_enter(bridge):
+    out = make_pipeline(bridge, auto_enter=True).handle("Boolean union.", "dictate")
     assert out.status == "ran"
     assert bridge.macros() == [("_BooleanUnion", True)]
 
 
-def test_delete_waits_for_confirmation(bridge):
-    out = make_pipeline(bridge).handle("delete", "rhino")
+@pytest.mark.parametrize("spoken", ["sel prev", "Select previous.", "SelPrev", "select prev please"])
+def test_spoken_variants_of_selprev(bridge, spoken):
+    out = make_pipeline(bridge).handle(spoken, "rhino")
+    assert out.macro == "_SelPrev"
+
+
+def test_fuzzy_only_when_sent_to_rhino(bridge):
+    p = make_pipeline(bridge)
+    assert p.handle("sell prev", "rhino").macro == "_SelPrev"
+    assert p.handle("sell prev", "dictate").status == "not_a_command"
+
+
+def test_delete_waits_for_confirmation_even_with_auto_run(bridge):
+    out = make_pipeline(bridge, auto_enter=True).handle("delete", "rhino")
     assert out.status == "typed_for_confirm"
     assert bridge.macros() == [("_Delete", False)]
 
@@ -65,7 +82,7 @@ def test_model_maps_free_speech(bridge):
     p = make_pipeline(bridge, {"make a box ten by ten by five":
                                'Sure: {"macro": "_Box 0,0,0 10,10,0 5", "is_command": true}'})
     out = p.handle("make a box ten by ten by five", "rhino")
-    assert (out.status, out.macro, out.source) == ("ran", "_Box 0,0,0 10,10,0 5", "llm")
+    assert (out.status, out.macro, out.source) == ("typed_for_confirm", "_Box 0,0,0 10,10,0 5", "llm")
 
 
 def test_model_invented_command_is_rejected(bridge):
@@ -83,7 +100,7 @@ def test_dictate_mode_lets_prose_through(bridge):
 def test_rhino_mode_types_raw_text_without_enter(bridge):
     out = make_pipeline(bridge, {}).handle("sub d", "rhino")
     assert out.status == "typed_raw"
-    assert bridge.macros() == [("SubD", False)]
+    assert bridge.macros() == [("Subd", False)]
 
 
 def test_parse_reply_handles_garbage():

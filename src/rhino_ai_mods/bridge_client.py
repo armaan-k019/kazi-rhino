@@ -30,8 +30,8 @@ class BridgeClient:
             self._sock = socket.create_connection((self.host, self.port), timeout=5)
         except OSError as exc:
             raise BridgeError(
-                f"Can't reach the Rhino bridge at {self.host}:{self.port}. In Rhino, run "
-                '_-ScriptEditor _Run "<path>/bridge/rhino_ai_bridge.py" first.'
+                f"Can't reach the Rhino bridge at {self.host}:{self.port}. In Rhino, run KaziStart "
+                '(or _-ScriptEditor _Run "<path>/bridge/rhino_ai_bridge.py") first.'
             ) from exc
         self._sock.settimeout(self.timeout)
         self._file = self._sock.makefile("rb")

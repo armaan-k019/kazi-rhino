@@ -4,9 +4,9 @@ The `rhino-ai-mods` MCP server lets Claude write Grasshopper script components: 
 
 ## Setup
 
-1. In Rhino, start the bridge:
+1. In Rhino, run `KaziStart` (after the one-time `install_in_rhino.py`, see the README), or start the bridge directly:
    `_-ScriptEditor _Run "C:\path\to\kazi-rhino\bridge\rhino_ai_bridge.py"`
-   You should see `rhino-ai-mods bridge 0.1.0 listening on 127.0.0.1:2010`. Run it again to restart; `bridge/stop_bridge.py` stops it.
+   You should see `rhino-ai-mods bridge 0.3.0 listening on 127.0.0.1:2010`. Run it again to restart; `bridge/stop_bridge.py` stops it.
 2. Open Grasshopper (the bridge will also try to open it when needed).
 3. Connect the MCP server to Claude:
    - Claude Code (from the repo folder): `claude mcp add rhino-ai-mods -- uv run --directory C:/path/to/kazi-rhino rhino-ai-mcp`
@@ -25,9 +25,25 @@ The `rhino-ai-mods` MCP server lets Claude write Grasshopper script components: 
 | `gh_add_component` | Any component by name ("Number Slider", "Panel", "Loft", ...) |
 | `gh_connect` / `gh_disconnect` | Wire output → input (by nickname, name or index) |
 | `gh_delete`, `gh_solve` | Delete a component; recompute everything and list problems |
+| `gh_build` | **One call, whole definition**: geometry from the Rhino selection + sliders/toggles → one script → outputs, wired, grouped, solved, errors returned. Or `recipe="voronoi_facade"` |
+| `gh_recipes` | Tested plans (voronoi facade, attractor openings, fins/louvres, panels, diagrid, stepped massing) to build or adapt |
+| `gh_add_slider`, `gh_add_geometry_input` | A slider with range/value; a Geometry param referencing the Rhino selection |
+| `kazi_builds`, `gh_set_slider`, `gh_edit_last_build` | Tweak what was built: "more cells", "set floors to 20", "flip the fins", "undo", "bake it" |
+| `rhino_selection` | What's selected in Rhino |
+| `voice_command` | How a spoken phrase maps to a command ("select previous" → `_SelPrev`); `run=true` types it |
 | `rhino_run_macro` | Run a Rhino command macro |
 
 Inputs can be plain names (`["pts", "h"]`) or dicts: `{"name": "pts", "access": "list", "optional": true}`.
+
+## How this fits with rhinomcp
+
+Use both servers together; Claude picks the right tool. rhinomcp models geometry, reads the
+document, captures the viewport and drives normal Grasshopper components. rhino-ai-mods writes
+scripts and builds whole slider-driven definitions (`gh_build`). A good loop:
+
+> Select the facade. "Using gh_build, make a parametric fin system on the selected facade with
+> count, depth and rotation sliders. Then capture the viewport with rhinomcp and fix anything that
+> looks wrong."
 
 ## Smoke test (do this first)
 

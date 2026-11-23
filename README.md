@@ -16,25 +16,43 @@ mic → hushtype ─HTTP→ rhino-voice ─┘   Grasshopper script comps,     �
                         └───────────────────────────────────────────┘
 ```
 
-## Quick start
+## Quick start (Windows)
 
-Requirements: Rhino 8 (built for Windows; Mac should work), Python 3.10+, [uv](https://docs.astral.sh/uv/) recommended.
+Requirements: Rhino 8, the rhinomcp plugin (Package Manager, search "rhinomcp"), Python 3.10+.
 
-```bash
-git clone https://github.com/armaan-k019/kazi-rhino && cd kazi-rhino
-uv venv && uv pip install -e ".[hf]"      # or: pip install -e ".[hf]"
+```powershell
+git clone https://github.com/armaan-k019/kazi-rhino; cd kazi-rhino
+powershell -ExecutionPolicy Bypass -File .\install.ps1        # add -Extras "hf,anthropic" for Claude-written scripts
 ```
 
-1. **rhinomcp** (base MCP): follow [docs/01-rhino-mcp.md](docs/01-rhino-mcp.md).
-2. **Start the bridge in Rhino** (every session, or add it to startup, see the doc):
-   `_-ScriptEditor _Run "C:\path\to\kazi-rhino\bridge\rhino_ai_bridge.py"`
-3. **Grasshopper scripting for Claude**: [docs/02-grasshopper-scripts.md](docs/02-grasshopper-scripts.md).
-4. **Voice**: [docs/03-voice-to-rhino.md](docs/03-voice-to-rhino.md). Short version:
-   ```bash
-   rhino-voice serve            # local Qwen2.5-1.5B via transformers
-   rhino-voice --llm none serve # rules only, no model
-   rhino-voice --dry-run say "make a box ten by ten by five"
-   ```
+`install.ps1` installs uv if needed, makes `.venv`, installs the package and runs `kazi-setup`, which:
+adds both MCP servers to Claude Desktop (keeps your other servers, saves a backup), registers them
+with Claude Code if it's installed, and starts `rhino-voice` with Windows (`-NoAutostart` to skip).
+Then, once in Rhino:
+
+```
+_-ScriptEditor _Run "C:\path\to\kazi-rhino\bridge\install_in_rhino.py"
+```
+
+That adds these Rhino commands (add `KaziStart` to Tools > Options > General > startup commands):
+
+| Command | Does |
+| --- | --- |
+| `KaziStart` | Starts rhinomcp (`mcpstart`) and the kazi bridge |
+| `KaziStop` | Stops the bridge |
+| `KaziStatus` | Bridge version, port, last builds |
+| `KaziUndoBuild` | Removes the last voice/Claude-built Grasshopper definition |
+| `KaziBake` | Bakes the last build's outputs to layers `kazi::<build>::<output>` (one undo step) |
+
+Docs: [rhinomcp](docs/01-rhino-mcp.md) · [Grasshopper scripts](docs/02-grasshopper-scripts.md) ·
+[voice](docs/03-voice-to-rhino.md). Hold Ctrl+Alt+R for commands ("select previous"), Ctrl+Alt+G
+for Grasshopper ("build a voronoi script on the facade", then "more cells", "thinner frame", "bake it").
+Nothing runs until you confirm. Recipes: voronoi facade, attractor openings, fins/louvres, panels,
+diagrid, stepped massing; anything else is written by a model.
+
+```bash
+rhino-voice --dry-run say "make a box ten by ten by five"   # try the mapping without Rhino
+```
 
 ## Repo layout
 
@@ -43,9 +61,32 @@ uv venv && uv pip install -e ".[hf]"      # or: pip install -e ".[hf]"
 | `bridge/rhino_ai_bridge.py` | Runs inside Rhino 8 (CPython). JSON-over-TCP server on 127.0.0.1:2010 |
 | `src/rhino_ai_mods/mcp_server.py` | `rhino-ai-mcp`: MCP tools for Grasshopper script components |
 | `src/rhino_ai_mods/voice/` | `rhino-voice`: dictation → rules / HF model → Rhino command line |
+| `bridge/install_in_rhino.py`, `bridge/kazi_*.py` | The Kazi* Rhino commands |
+| `src/rhino_ai_mods/setup_cli.py`, `install.ps1` | One-step setup |
 | `config/` | Example MCP configs for Claude Desktop and Claude Code |
 | `tests/` | `pytest`, uses a fake bridge, no Rhino needed |
 
+## Testing
+
+```bash
+uv pip install -e ".[dev,anthropic]"
+pytest                                  # ~190 tests, no Rhino needed, ~25 s
+python tools/check_rhino_api.py         # every RhinoCommon/Grasshopper call vs the real Rhino 8 assemblies
+```
+
+What the tests cover without Rhino:
+- **Recipes run** in a simulated RhinoCommon (real polygon/offset math): voronoi cells tile the facade
+  exactly, stepped massing produces the right tiers, slabs, setbacks and terraces.
+- **The bridge script itself** (`bridge/rhino_ai_bridge.py`) runs against fake Rhino/Grasshopper
+  objects: UI-thread marshalling, command typing, script params (including Rhino 8's `out`), sliders,
+  wiring, groups, selection references, dialogs.
+- **End to end**: dictation HTTP → `rhino-voice` → bridge, and Claude → MCP → `rhino-ai-mcp` → bridge.
+- **API check**: 210 member/overload uses verified against RhinoCommon + Grasshopper 8.36 from NuGet.
+
+What still needs a real Rhino: the actual geometry results in RhinoCommon, and Rhino 8 script
+component internals (`SetSource`, marshalling flags), which aren't in the public assemblies.
+
 ## Status
 
-Built and unit-tested without Rhino (28 tests, plus an end-to-end run with hushtype against a fake bridge). The Rhino side has not been run in a real Rhino yet, so expect some first-run fixes. Run `bridge_status` and the smoke test in docs/02 first.
+Unit and simulation tested (see above). Not yet run inside a real Rhino: do the smoke test in
+docs/02 first and send any errors back.

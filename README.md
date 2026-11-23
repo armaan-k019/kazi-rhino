@@ -46,7 +46,9 @@ That adds these Rhino commands (add `KaziStart` to Tools > Options > General > s
 
 Docs: [rhinomcp](docs/01-rhino-mcp.md) · [Grasshopper scripts](docs/02-grasshopper-scripts.md) ·
 [voice](docs/03-voice-to-rhino.md). Hold Ctrl+Alt+R for commands ("select previous"), Ctrl+Alt+G
-for Grasshopper ("build a voronoi script on the facade"). Nothing runs until you confirm.
+for Grasshopper ("build a voronoi script on the facade", then "more cells", "thinner frame", "bake it").
+Nothing runs until you confirm. Recipes: voronoi facade, attractor openings, fins/louvres, panels,
+diagrid, stepped massing; anything else is written by a model.
 
 ```bash
 rhino-voice --dry-run say "make a box ten by ten by five"   # try the mapping without Rhino
@@ -68,7 +70,7 @@ rhino-voice --dry-run say "make a box ten by ten by five"   # try the mapping wi
 
 ```bash
 uv pip install -e ".[dev,anthropic]"
-pytest                                  # ~115 tests, no Rhino needed, ~25 s
+pytest                                  # ~190 tests, no Rhino needed, ~25 s
 python tools/check_rhino_api.py         # every RhinoCommon/Grasshopper call vs the real Rhino 8 assemblies
 ```
 
@@ -79,7 +81,7 @@ What the tests cover without Rhino:
   objects: UI-thread marshalling, command typing, script params (including Rhino 8's `out`), sliders,
   wiring, groups, selection references, dialogs.
 - **End to end**: dictation HTTP → `rhino-voice` → bridge, and Claude → MCP → `rhino-ai-mcp` → bridge.
-- **API check**: 199 member/overload uses verified against RhinoCommon + Grasshopper 8.36 from NuGet.
+- **API check**: 210 member/overload uses verified against RhinoCommon + Grasshopper 8.36 from NuGet.
 
 What still needs a real Rhino: the actual geometry results in RhinoCommon, and Rhino 8 script
 component internals (`SetSource`, marshalling flags), which aren't in the public assemblies.

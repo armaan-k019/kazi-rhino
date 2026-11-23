@@ -212,3 +212,7 @@ Rhino.Geometry.Brep CreatePipe/7
 Rhino.Geometry.PipeCapMode Flat
 Rhino.Geometry.Point3d .ctor/3
 Rhino.Geometry.PolylineCurve .ctor/1
+# voice edits
+Grasshopper.Kernel.Special.GH_BooleanToggle Value
+Grasshopper.Kernel.Special.GH_BooleanToggle ExpireSolution/1
+Grasshopper.Kernel.Special.GH_NumberSlider ExpireSolution/1

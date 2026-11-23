@@ -21,6 +21,16 @@ GH_REQUEST = re.compile(rf"^(?:(?:please|can you|could you|let'?s)\s+)?{_GH_VERB
                         rf"|\bin grasshopper\b|^grasshopper[, ]")
 
 
+# a brand-new build, as opposed to an edit of the last one ("more cells", "make the frame thinner")
+NEW_BUILD = re.compile(r"^(?:(?:please|can you|could you|let'?s|now)\s+)?(?:build|create|generate|design|"
+                       r"set up|write|give me|make (?:me )?(?:a|an|some|another)\b|add (?:a|an|some)\b|"
+                       r"put (?:a|an|some)\b|start (?:a|an)\b|new (?:grasshopper|definition|build|script)\b)")
+
+
+def is_new_build(text: str) -> bool:
+    return bool(NEW_BUILD.search(normalize(text)))
+
+
 def is_grasshopper_request(text: str) -> bool:
     return bool(GH_REQUEST.search(normalize(text)))
 
@@ -56,7 +66,7 @@ class VoicePipeline:
 
     def __init__(self, bridge: BridgeClient | None = None, llm: LLMMapper | None = None,
                  dry_run: bool = False, auto_enter: bool = False, llm_in_dictate: bool = False,
-                 builder=None, planner=None, user_aliases: dict | None = None):
+                 builder=None, planner=None, user_aliases: dict | None = None, editor=None):
         self.bridge = bridge or BridgeClient(timeout=10)
         self.rules = RuleMapper(user_aliases=user_aliases)
         self.llm = llm
@@ -65,6 +75,7 @@ class VoicePipeline:
         self.llm_in_dictate = llm_in_dictate
         self.builder = builder
         self.planner = planner
+        self.editor = editor
         self._commands_loaded = False
         self._lock = threading.Lock()
 
@@ -147,6 +158,14 @@ class VoicePipeline:
         return Outcome("ran" if enter else "typed_for_confirm", text, match.macro, match.source)
 
     def handle_grasshopper(self, text: str) -> Outcome:
+        if self.editor is not None and not self.dry_run and not is_new_build(text):
+            try:
+                res = self.editor.handle(text)
+            except BridgeError as exc:
+                return Outcome("error", text, source="edit", detail=str(exc))
+            if res.status not in ("not_an_edit", "no_build"):
+                detail = res.title + ": " + (", ".join(c.text() for c in res.changes) or res.detail)
+                return Outcome(res.status, text, source="edit", detail=detail, build=res.to_dict())
         if self.planner is None:
             return Outcome("error", text, source="grasshopper", detail="Grasshopper building is off")
         try:

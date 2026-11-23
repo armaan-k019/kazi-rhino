@@ -105,3 +105,24 @@ def test_install_in_rhino_adds_aliases(rhino):
     assert str(ROOT / "kazi_bake.py") in aliases["KaziBake"]
     assert "Run these commands every time Rhino starts" in out
     run_in_rhino(rhino, "install_in_rhino.py")  # re-running updates instead of failing
+
+
+def test_voice_edits_through_the_real_bridge_script(rhino):
+    """Editor -> bridge script (fake .NET) -> slider and toggle objects actually change."""
+    from rhino_ai_mods.gh.edits import Editor
+    from rhino_ai_mods.gh.facade_recipes import fins
+
+    Builder(rhino.client, None, confirm=False).build(fins("20 fins"))
+    ed = Editor(rhino.client)
+    assert ed.handle("more fins").changes[0].new == 25
+    assert ed.handle("flip them").changes[0].new is True
+    rec = rhino.client.call("kazi_builds")["builds"][-1]
+    assert rhino.client.call("gh_get_slider", component=rec["sliders"]["count"])["value"] == 25
+    assert rhino.client.call("gh_toggle", component=rec["toggles"]["flip"])["value"] is True
+    ed.handle("undo")
+    assert rhino.client.call("gh_toggle", component=rec["toggles"]["flip"])["value"] is False
+    ed.handle("set depth to 5")   # beyond the slider max: range widens
+    info = rhino.client.call("gh_get_slider", component=rec["sliders"]["depth"])
+    assert info["value"] == 5 and info["max"] >= 5
+    with pytest.raises(Exception, match="not a boolean toggle"):
+        rhino.client.call("gh_toggle", component=rec["sliders"]["count"])

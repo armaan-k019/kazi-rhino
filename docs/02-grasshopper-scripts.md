@@ -28,6 +28,7 @@ The `rhino-ai-mods` MCP server lets Claude write Grasshopper script components: 
 | `gh_build` | **One call, whole definition**: geometry from the Rhino selection + sliders/toggles → one script → outputs, wired, grouped, solved, errors returned. Or `recipe="voronoi_facade"` |
 | `gh_recipes` | Tested plans (voronoi facade, attractor openings, fins/louvres, panels, diagrid, stepped massing) to build or adapt |
 | `gh_add_slider`, `gh_add_geometry_input` | A slider with range/value; a Geometry param referencing the Rhino selection |
+| `kazi_builds`, `gh_set_slider`, `gh_edit_last_build` | Tweak what was built: "more cells", "set floors to 20", "flip the fins", "undo", "bake it" |
 | `rhino_selection` | What's selected in Rhino |
 | `voice_command` | How a spoken phrase maps to a command ("select previous" → `_SelPrev`); `run=true` types it |
 | `rhino_run_macro` | Run a Rhino command macro |

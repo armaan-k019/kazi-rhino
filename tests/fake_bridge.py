@@ -68,6 +68,9 @@ class FakeBridge:
                 "messages": [{"level": "error", "text": e} for e in errors]}
 
     def _dispatch(self, cmd, a):
+        if cmd == "rhino_message":
+            self.messages = getattr(self, "messages", []) + [a["text"]]
+            return {"ok": True}
         if cmd == "boom":
             raise RuntimeError("kaboom")
         if cmd == "list_rhino_commands":
@@ -112,10 +115,27 @@ class FakeBridge:
         if cmd == "gh_set_slider":
             o = self.objects[a["component"]]
             o["value"] = a["value"]
+            args = o["args"]
+            args["min"], args["max"] = min(args["min"], a["value"]), max(args["max"], a["value"])
             return {"nickname": o["nickname"], "value": a["value"]}
+        if cmd == "gh_toggle":
+            o = self.objects[a["component"]]
+            if a.get("value") is not None:
+                o["value"] = bool(a["value"])
+            return {"nickname": o["nickname"], "value": bool(o.get("value", o["args"].get("value")))}
+        if cmd == "kazi_undo_build":
+            b = self.builds.pop()
+            for g in b["components"]:
+                self.objects.pop(g, None)
+            return {"removed": len(b["components"]), "title": b["title"]}
+        if cmd == "kazi_bake":
+            return {"baked": {"cells": 3}, "title": self.builds[-1]["title"]}
         if cmd == "gh_solve":
             return {"problems": []}
         if cmd == "gh_read_script":
             errs = self.script_errors.pop(0) if self.script_errors else []
-            return self._desc(a["component"], errs)
+            o = self.objects[a["component"]]
+            return {**self._desc(a["component"], errs), "code": o.get("code"),
+                    "inputs": [{"name": n} for n in o.get("inputs", [])],
+                    "outputs": [{"name": n} for n in ["out", *o.get("outputs", [])]]}
         return {"echo": a}

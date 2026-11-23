@@ -111,8 +111,10 @@ class Builder:
         result.components = [*ids.values(), result.script]
         group = self.bridge.call("gh_group", components=result.components, name=plan.title)
         sliders = {inp.name: ids[inp.name] for inp in plan.inputs if inp.type in ("number", "integer")}
+        toggles = {inp.name: ids[inp.name] for inp in plan.inputs if inp.type == "bool"}
         self.bridge.call("kazi_record_build", title=plan.title, group=group.get("group"),
                          script=result.script, components=result.components, sliders=sliders,
+                         toggles=toggles,
                          request=plan.summary, recipe=plan.recipe)
 
         info = self._solve(result.script)

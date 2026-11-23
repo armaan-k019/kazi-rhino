@@ -719,7 +719,8 @@ def _builds():
 
 
 def cmd_kazi_record_build(args):
-    record = {k: args.get(k) for k in ("title", "group", "script", "components", "sliders", "request", "recipe")}
+    record = {k: args.get(k) for k in ("title", "group", "script", "components", "sliders", "toggles",
+                                       "request", "recipe")}
     _builds().append(record)
     del _builds()[:-20]  # keep the last 20
     return {"recorded": len(_builds())}
@@ -815,6 +816,19 @@ def cmd_gh_set_slider(args):
     return on_ui(work)
 
 
+def cmd_gh_toggle(args):
+    """Read a Boolean Toggle, or set it when `value` is given."""
+    def work():
+        toggle = _find_obj(_gh_doc(), args["component"])
+        if not hasattr(toggle, "Value") or not isinstance(toggle.Value, bool):
+            raise ValueError("%s is not a boolean toggle" % toggle.NickName)
+        if args.get("value") is not None:
+            toggle.Value = bool(args["value"])
+            toggle.ExpireSolution(True)
+        return {"nickname": str(toggle.NickName), "value": bool(toggle.Value)}
+    return on_ui(work)
+
+
 def cmd_gh_get_slider(args):
     def work():
         slider = _find_obj(_gh_doc(), args["component"])
@@ -848,6 +862,7 @@ COMMANDS = {
     "gh_free_spot": cmd_gh_free_spot,
     "gh_set_slider": cmd_gh_set_slider,
     "gh_get_slider": cmd_gh_get_slider,
+    "gh_toggle": cmd_gh_toggle,
     "kazi_record_build": cmd_kazi_record_build,
     "kazi_builds": cmd_kazi_builds,
     "kazi_undo_build": cmd_kazi_undo_build,

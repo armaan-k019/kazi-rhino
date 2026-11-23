@@ -90,6 +90,19 @@ def parse_plan(text: str) -> Plan | None:
     return plan
 
 
+EDIT_PROMPT = """\
+This Grasshopper Python 3 script is already on the canvas. Change it as the architect asks.
+Keep exactly the same input names ({inputs}) and output names ({outputs}): they are wired.
+Keep everything that the request doesn't mention. Reply with one ```python block only.
+
+Request: {request}
+
+```python
+{code}
+```
+"""
+
+
 class Planner:
     """backend: any object with complete(messages, max_tokens) -> str (see voice/llm.py)."""
 
@@ -137,5 +150,20 @@ class Planner:
             blocks = _blocks(self.backend.complete(messages, max_tokens=6000), "python")
         except Exception as exc:  # noqa: BLE001
             log.warning("repair failed (%s)", exc)
+            return None
+        return blocks[0] if blocks else None
+
+    def edit_code(self, code: str, request: str, inputs: list[str], outputs: list[str]) -> str | None:
+        """Ask the model for a changed version of an existing script (same params)."""
+        if self.backend is None:
+            return None
+        prompt = EDIT_PROMPT.format(request=request, code=code, inputs=", ".join(inputs),
+                                    outputs=", ".join(outputs))
+        messages = [{"role": "system", "content": SYSTEM_PROMPT + "\n" + _example()},
+                    {"role": "user", "content": prompt}]
+        try:
+            blocks = _blocks(self.backend.complete(messages, max_tokens=6000), "python")
+        except Exception as exc:  # noqa: BLE001
+            log.warning("edit failed (%s)", exc)
             return None
         return blocks[0] if blocks else None

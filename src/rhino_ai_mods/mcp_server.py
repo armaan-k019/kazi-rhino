@@ -219,6 +219,38 @@ _rules = RuleMapper()
 
 
 @mcp.tool()
+def kazi_builds() -> Any:
+    """Definitions built with gh_build / voice in this Rhino session (newest last), with their
+    slider and toggle guids, so you can tweak them with gh_set_slider."""
+    return _call("kazi_builds")
+
+
+@mcp.tool()
+def gh_set_slider(component: str, value: float) -> Any:
+    """Set a number slider (guid or nickname). The range widens if needed."""
+    return _call("gh_set_slider", component=component, value=value)
+
+
+@mcp.tool()
+def gh_edit_last_build(text: str) -> Any:
+    """Apply a spoken-style edit to the most recent build, the same way voice does:
+    "more cells", "make the frame thinner", "set floors to 20", "flip the fins", "new layout",
+    "undo", "bake it". Returns the slider/toggle changes."""
+    from .gh.edits import Editor  # noqa: PLC0415
+
+    global _editor
+    if _editor is None:
+        _editor = Editor(BridgeClient(timeout=900), None, confirm=True)
+    try:
+        return _editor.handle(text).to_dict()
+    except BridgeError as exc:
+        return {"error": str(exc)}
+
+
+_editor = None
+
+
+@mcp.tool()
 def voice_command(text: str, run: bool = False) -> Any:
     """How a spoken phrase maps to a Rhino command ("select previous" -> _SelPrev).
 

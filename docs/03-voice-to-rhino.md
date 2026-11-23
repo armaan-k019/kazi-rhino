@@ -75,6 +75,34 @@ face of a polysurface. Each one is tested at the minimum and maximum of every sl
 
 Numbers you say become slider values ("80 cells", "20 floors", "12 by 6", "0.8 deep", "15 degrees", "20 mm joints").
 
+## Change it by voice afterwards
+
+Hold **Ctrl+Alt+G** again and talk about the thing you just built:
+
+```
+"more cells" / "a lot more cells" / "fewer cells"      count ×1.25 / ×1.6 / ÷1.25
+"make the frame thinner", "bigger openings"             frame ÷1.25
+"120 cells", "set floors to 20", "make it 30 floors"    exact values (range widens if needed)
+"make the building taller", "bigger setback"            floors, setback
+"deeper fins", "rotate the fins more", "more twist"     depth, rotation +15°, twist
+"bigger panels", "wider joints", "brick bond"           fewer columns/rows, gap, stagger on
+"move the attractor up / to the left"                   attractor position
+"flip them", "make them horizontal"                     toggles
+"new layout", "shuffle"                                 next random seed
+"undo" / "undo that"                                    reverts the last voice edit
+"bake it"                                               KaziBake: outputs to layers kazi::<build>::<output>
+"delete that build"                                     KaziUndoBuild (asks first)
+```
+
+Slider and toggle edits apply straight away (the Rhino command line shows `[kazi] Voronoi
+facade: count 60 → 75 (say 'undo' to go back)`). "a bit" / "slightly" makes the step smaller,
+"a lot" / "way" makes it bigger. Anything that needs new code ("make the openings circular",
+"add a random rotation to each fin") goes to the model, shows a Yes/No dialog, and if the new
+script errors the old one is put back automatically. Starting with "build", "create", "make me
+a..." always starts a new build instead.
+
+Claude can do the same through MCP: `kazi_builds`, `gh_set_slider` and `gh_edit_last_build`.
+
 For anything else, a model writes the script. Writing good Grasshopper code needs a stronger
 model than your laptop's CPU can run quickly, so pick one:
 

@@ -26,6 +26,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from ..bridge_client import BridgeClient
 from ..gh.builder import Builder
+from ..gh.edits import Editor
 from ..gh.planner import Planner
 from .llm import LLMMapper, make_backend
 from .pipeline import Outcome, VoicePipeline
@@ -117,10 +118,12 @@ def build_pipeline(args) -> VoicePipeline:
     planner = Planner(gh_backend)
     builder = None if args.dry_run else Builder(BridgeClient(timeout=900), planner,
                                                 confirm=not args.no_confirm_builds)
+    editor = None if args.dry_run else Editor(BridgeClient(timeout=900), planner,
+                                              confirm=not args.no_confirm_builds)
     log.info("Grasshopper builds: %s", gh_kind if gh_backend else "recipes only (no model)")
     return VoicePipeline(llm=LLMMapper(backend) if backend else None, dry_run=args.dry_run,
                          auto_enter=args.auto_run, llm_in_dictate=args.llm_in_dictate,
-                         builder=builder, planner=planner,
+                         builder=builder, planner=planner, editor=editor,
                          user_aliases=load_user_aliases(args.aliases))
 
 

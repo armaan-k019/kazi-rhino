@@ -1,0 +1,223 @@
+{
+"id": "wallacei",
+"name": "Wallacei",
+"version_checked": "2.5",
+"source": "grasshopperdocs.com/addons/wallacei.html (read 2026-11-23)",
+"components": [
+[
+"Wallacei X",
+null,
+"Wallacei X",
+"Evolutionary multi-objective optimisation engine. Open its window (double-click) and press Start.",
+[
+[
+"Genes",
+"Genes",
+"Number"
+],
+[
+"Objectives",
+"Objectives",
+"String"
+],
+[
+"Data",
+"Data",
+"Goo"
+],
+[
+"Phenotype",
+"Phenotype",
+"Goo"
+]
+],
+[
+[
+"Wallacei Genomes",
+"WGenomes",
+"Goo"
+],
+[
+"Fitness Values",
+"Fitness Values",
+"Number"
+],
+[
+"Data",
+"Data",
+"Goo"
+],
+[
+"Phenotypes",
+"WPhenotypes",
+"Goo"
+]
+]
+],
+[
+"Decode Genome",
+"GDecoder",
+"Wallacei X",
+"Decodes Wallacei genomes and outputs gene (slider) values per solution",
+[
+[
+"Wallacei Genome",
+"WGenomes",
+"Goo"
+]
+],
+[
+[
+"Gene List",
+"Genes",
+"Number"
+]
+]
+],
+[
+"Decode Phenotype",
+"PDecoder",
+"Wallacei X",
+"Decodes Wallacei phenotypes into geometry, meshes, numbers and text",
+[
+[
+"Wallacei Phenotype",
+"WPhenotypes",
+"Goo"
+]
+],
+[
+[
+"Geometries List",
+"Geometries",
+"GeometricGoo"
+],
+[
+"Meshes List",
+"Meshes",
+"Mesh"
+],
+[
+"Numbers List",
+"Numbers",
+"Number"
+],
+[
+"Text List",
+"Text",
+"String"
+]
+]
+],
+[
+"Distribute to Grid",
+"Distributor",
+"Wallacei X",
+"Distributes exported phenotypes and their data onto a grid in the Rhino scene",
+null,
+null
+],
+[
+"Parallel Coordinate Plot",
+"Paralel Coordinate Plot",
+"Wallacei Analytics",
+"Compares each fitness criterion to the others in a parallel coordinate plot, per solution",
+null,
+null
+],
+[
+"Parallel Coordinate Analysis",
+null,
+"Wallacei Analytics",
+"Analyses data from the Parallel Coordinate Plot component",
+null,
+null
+],
+[
+"Diamond Fitness Chart",
+"Fitness Chart",
+"Wallacei Analytics",
+"Displays the diamond fitness chart and fitness ranking per solution",
+null,
+null
+],
+[
+"Objective Space",
+null,
+"Wallacei Analytics",
+"Displays the objective space of the solutions' fitness values",
+null,
+null
+],
+[
+"Standard Deviation Trend Line",
+"SD Trend Line",
+"Wallacei Analytics",
+"Plots SD factor per generation and a trendline",
+null,
+null
+],
+[
+"Pareto Front",
+null,
+"Wallacei Analytics",
+"Calculates and plots the Pareto Front for a selected generation",
+null,
+null
+],
+[
+"Mean Values Trend Line",
+"Mean Trend Line",
+"Wallacei Analytics",
+"Plots mean values per generation and a trendline",
+null,
+null
+],
+[
+"Fitness Value Graphs",
+"FV Graph",
+"Wallacei Analytics",
+"Plots fitness values per individual per generation",
+null,
+null
+],
+[
+"Standard Deviation Graph",
+"SD Graph",
+"Wallacei Analytics",
+"Calculates SD and draws the normal distribution graph per generation",
+null,
+null
+],
+[
+"Extract Octopus Text Files",
+"Octopus FV",
+"Wallacei Utilities",
+"Extracts the fitness values from an Octopus fitness value export file",
+null,
+null
+],
+[
+"Order FVs From WallaceiX",
+"WallaceiX FV",
+"Wallacei Utilities",
+"Orders the Fitness Value list from WallaceiX for the Wallacei Analytics components",
+null,
+null
+],
+[
+"Gene Pool and Slider shuffler",
+"Shuffler",
+"Wallacei Utilities",
+"Shuffles gene pools and number sliders renamed with the wlc_ prefix",
+[
+[
+"Boolean button",
+"Button",
+"Boolean"
+]
+],
+[]
+]
+]
+}

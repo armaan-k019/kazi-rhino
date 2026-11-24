@@ -1,0 +1,49 @@
+{
+"id": "hops",
+"name": "Hops",
+"version_checked": "docs of 2024-10-28",
+"source": "developer.rhino3d.com/guides/compute/hops-component (read 2026-11-23)",
+"notes": "Hops sits in Params > Util. The Get ... / Context ... components ship with Grasshopper itself (there is one Get component per data type, e.g. Get Number, Get String, Get Point, Get Geometry). Hops inputs and outputs are dynamic, so wire them after the Path is set.",
+"components": [
+[
+"Hops",
+null,
+"Params / Util",
+"Calls a Grasshopper definition (.gh file, URL or REST endpoint) as a function. Inputs and outputs appear once its Path is set (right-click > Path, or right-click > Show Input: Path).",
+null,
+null
+],
+[
+"Get Number",
+null,
+"Params / Util",
+"Function input (number). Its name becomes the Hops input name.",
+null,
+null
+],
+[
+"Get String",
+null,
+"Params / Util",
+"Function input (text). Its name becomes the Hops input name.",
+null,
+null
+],
+[
+"Context Bake",
+null,
+"Params / Util",
+"Function output. The name of its input becomes the Hops output name.",
+null,
+[]
+],
+[
+"Context Print",
+null,
+"Params / Util",
+"Function output (text). The name of its input becomes the Hops output name.",
+null,
+[]
+]
+]
+}

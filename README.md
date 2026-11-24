@@ -5,6 +5,7 @@ My Rhino 8 setup, modded with AI:
 1. **Claude drives Rhino** through [rhinomcp](https://github.com/jingcheng-chen/rhinomcp), the open-source Rhino MCP server (geometry, layers, commands, Grasshopper wiring and sliders).
 2. **Claude writes Grasshopper scripts.** rhinomcp can't author script components, so this repo adds a small bridge + MCP server that lets Claude create Python 3 / C# script components with code, inputs and outputs, wire them up, and read back errors so it can fix its own code.
 3. **Voice to the Rhino command line.** Speak, and it runs in Rhino. Text comes from [hushtype](https://github.com/armaan-k019/hushtype) (my Wispr Flow-style dictation app), gets mapped to a Rhino macro by fast rules or a Hugging Face model, and is typed into Rhino's command line.
+4. **Free Grasshopper add-ons by voice or through Claude.** "Panelize this facade with LunchBox", "Ladybug sun hours study", "relax this mesh with Kangaroo": components from LunchBox, Ladybug Tools, Kangaroo 2, Weaverbird, Pufferfish, Elefront, Human, Wallacei, Hops and Speckle are placed and wired for you. [Install guide and phrases](docs/04-grasshopper-addons.md).
 
 ```
                         ┌───────────────── Rhino 8 ──────────────────┐
@@ -45,7 +46,8 @@ That adds these Rhino commands (add `KaziStart` to Tools > Options > General > s
 | `KaziBake` | Bakes the last build's outputs to layers `kazi::<build>::<output>` (one undo step) |
 
 Docs: [rhinomcp](docs/01-rhino-mcp.md) · [Grasshopper scripts](docs/02-grasshopper-scripts.md) ·
-[voice](docs/03-voice-to-rhino.md). Hold Ctrl+Alt+R for commands ("select previous"), Ctrl+Alt+G
+[voice](docs/03-voice-to-rhino.md) ·
+[add-ons](docs/04-grasshopper-addons.md). Hold Ctrl+Alt+R for commands ("select previous"), Ctrl+Alt+G
 for Grasshopper ("build a voronoi script on the facade", then "more cells", "thinner frame", "bake it").
 Nothing runs until you confirm. Recipes: voronoi facade, attractor openings, fins/louvres, panels,
 diagrid, stepped massing; anything else is written by a model.
@@ -61,6 +63,7 @@ rhino-voice --dry-run say "make a box ten by ten by five"   # try the mapping wi
 | `bridge/rhino_ai_bridge.py` | Runs inside Rhino 8 (CPython). JSON-over-TCP server on 127.0.0.1:2010 |
 | `src/rhino_ai_mods/mcp_server.py` | `rhino-ai-mcp`: MCP tools for Grasshopper script components |
 | `src/rhino_ai_mods/voice/` | `rhino-voice`: dictation → rules / HF model → Rhino command line |
+| `bridge/kazi_addons.py`, `src/rhino_ai_mods/addons/` | Grasshopper add-ons: component search, placing, wiring, ready-made definitions, `kazi-addons check` |
 | `bridge/install_in_rhino.py`, `bridge/kazi_*.py` | The Kazi* Rhino commands |
 | `src/rhino_ai_mods/setup_cli.py`, `install.ps1` | One-step setup |
 | `config/` | Example MCP configs for Claude Desktop and Claude Code |

@@ -1,0 +1,985 @@
+{
+"id": "elefront",
+"name": "Elefront",
+"version_checked": "5.1.5",
+"source": "grasshopperdocs.com/addons/elefront.html (read 2026-11-23)",
+"components": [
+[
+"Reference Block by Name",
+"RefBlock",
+"01 Reference",
+"Reference Block Instance by Block Name",
+null,
+null
+],
+[
+"Reference by Name",
+"RefName",
+"01 Reference",
+"Reference Rhino objects by name.",
+[
+[
+"Object Name",
+"N",
+"Text"
+]
+],
+[
+[
+"Geometry",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Manifest Ghost Geometry",
+"Man",
+"01 Reference",
+"Import the real geometry for a ghost object.",
+null,
+null
+],
+[
+"Reference by Type",
+"refType",
+"01 Reference",
+"Reference Rhino Objects by type.",
+[
+[
+"Object Type",
+"[]T",
+"Text"
+]
+],
+[
+[
+"Geometry",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Reference by Key/Value",
+"RefKV",
+"01 Reference",
+"Reference objects based on Key/Value pairs",
+[
+[
+"Key",
+"[]K",
+"Text"
+],
+[
+"Val",
+"[]V",
+"Text"
+]
+],
+[
+[
+"Geometry",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Deconstruct Ghost",
+"DeGho",
+"01 Reference",
+"Split the Guid and Attributes from Ghost Geometry",
+null,
+null
+],
+[
+"Interact with Rhino Object",
+"IntObj",
+"01 Reference",
+"Interact with objects from the Rhino Document",
+null,
+null
+],
+[
+"Reference by BakeName",
+"RefBake",
+"01 Reference",
+"Reference objects based on Bake Name and User Attributes",
+null,
+null
+],
+[
+"Reference by Layer",
+"RefLay",
+"01 Reference",
+"Reference Rhino objects by Layer.",
+[
+[
+"Layer name",
+"[]L",
+"Text"
+]
+],
+[
+[
+"Geometry",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Filter by User Attributes",
+"FilterAtt",
+"02 Filter",
+"Filter objects by their user attributes. Optional parallel filtering.",
+[
+[
+"Key",
+"[]K",
+"Text"
+],
+[
+"Val",
+"[]V",
+"Text"
+],
+[
+"Attributes",
+"A",
+"Generic Data"
+]
+],
+[
+[
+"Geometry",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Filter By Name",
+"FilterName",
+"02 Filter",
+"Filter Objects by their Name",
+null,
+null
+],
+[
+"Filter By Layer",
+"FilterLay",
+"02 Filter",
+"Filter Objects by their Layer",
+[
+[
+"Layer",
+"[]L",
+"Text"
+],
+[
+"Geometry",
+"G",
+"Extended Geometry"
+]
+],
+[
+[
+"Excluded Geometry",
+"Ex",
+"Generic Data"
+],
+[
+"Included Geometry",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Filter by Type",
+"FilterType",
+"02 Filter",
+"Filter objects by their Object Type.",
+null,
+null
+],
+[
+"Sort By Key",
+"SortKey",
+"02 Filter",
+"Graft a tree by its User Text keys, one branch per unique key.",
+null,
+null
+],
+[
+"EleFront Attributes",
+"EF Att",
+"03 Attributes",
+"Create, Modify, or Deconstruct Attributes.",
+[
+[
+"Attributes",
+"A",
+"Generic Data"
+],
+[
+"Keys",
+"K",
+"Text"
+],
+[
+"Values",
+"V",
+"Text"
+],
+[
+"Name",
+"N",
+"Text"
+],
+[
+"Layer",
+"[]L",
+"Layer"
+],
+[
+"Colour Source",
+"[]CS",
+"Text"
+],
+[
+"Object Colour",
+"Oc",
+"Colour"
+],
+[
+"Material Source",
+"[]Ms",
+"Text"
+],
+[
+"Material Name",
+"[]Mn",
+"Text"
+],
+[
+"Linetype",
+"[]Lt",
+"Text"
+],
+[
+"Print Colour",
+"Pc",
+"Colour"
+],
+[
+"Print Width",
+"Pw",
+"Number"
+],
+[
+"Print Colour Source",
+"[]Pcs",
+"Text"
+]
+],
+[
+[
+"Attributes",
+"A",
+"Generic Data"
+],
+[
+"Keys",
+"K",
+"Text"
+],
+[
+"Values",
+"V",
+"Text"
+],
+[
+"Name",
+"N",
+"Text"
+],
+[
+"Layer",
+"L",
+"Layer"
+],
+[
+"Colour Source",
+"CS",
+"Text"
+],
+[
+"Display Colour",
+"Dc",
+"Colour"
+],
+[
+"Material Source",
+"Ms",
+"Text"
+],
+[
+"Material Name",
+"Mn",
+"Text"
+],
+[
+"Linetype",
+"Lt",
+"Text"
+],
+[
+"Print Colour",
+"Pc",
+"Colour"
+],
+[
+"Print Width",
+"Pw",
+"Number"
+],
+[
+"Print Colour Source",
+"Pcs",
+"Text"
+]
+]
+],
+[
+"AttributesFromJSON",
+"AttFromJSON",
+"03 Attributes",
+"Deserialize a JSON Object into eleFront Attributes.",
+null,
+null
+],
+[
+"AttributesToJSON",
+"AttToJSON",
+"03 Attributes",
+"Serialize EleFrontAttributes into a JSON format",
+null,
+null
+],
+[
+"EleFront Layer",
+"EF Layer",
+"03 Attributes",
+"Create, Modify or Deconstruct a Layer. Can be assigned to Object attributes, or baked with Bake Layer.",
+[
+[
+"Layer",
+"[]L",
+"Layer"
+],
+[
+"Full Path",
+"Fp",
+"Text"
+],
+[
+"Hidden",
+"H",
+"Boolean"
+],
+[
+"Locked",
+"Lk",
+"Boolean"
+],
+[
+"Display Colour",
+"Dc",
+"Colour"
+],
+[
+"Material Name",
+"[]Mn",
+"Text"
+],
+[
+"Linetype",
+"[]Lt",
+"Text"
+],
+[
+"Print Colour",
+"Pc",
+"Colour"
+],
+[
+"Print Width",
+"Pw",
+"Number"
+]
+],
+[
+[
+"Layer",
+"L",
+"Layer"
+],
+[
+"Full Path",
+"Fp",
+"Text"
+],
+[
+"Hidden",
+"H",
+"Boolean"
+],
+[
+"Locked",
+"Lk",
+"Boolean"
+],
+[
+"Display Colour",
+"Dc",
+"Colour"
+],
+[
+"Material Name",
+"Mn",
+"Text"
+],
+[
+"Linetype",
+"Lt",
+"Text"
+],
+[
+"Print Colour",
+"Pc",
+"Colour"
+],
+[
+"Print Width",
+"Pw",
+"Number"
+]
+]
+],
+[
+"Modify Rhino Object Attributes",
+"ModRAtt",
+"03 Attributes",
+"Modify attributes of Rhino Object",
+null,
+null
+],
+[
+"Remove User Text",
+"RemUT",
+"03 Attributes",
+"Remove User Keys and Values from Objects in the Rhino Document",
+null,
+null
+],
+[
+"Detach Attributes",
+"DetAtt",
+"03 Attributes",
+"Split an object into its geometry and eleFront attributes",
+null,
+null
+],
+[
+"Get All Keys/Values",
+"GetKV",
+"03 Attributes",
+"Get all Keys, Values, and BakeName from Attributes",
+null,
+null
+],
+[
+"Define Color",
+"Color",
+"03 Attributes",
+"Define Color",
+null,
+null
+],
+[
+"Get Rhino Attributes",
+"RhAtt",
+"03 Attributes",
+"Get the Rhino Attributes of an object.",
+null,
+null
+],
+[
+"Attach Attributes",
+"AttAtt",
+"03 Attributes",
+"Attach attributes to geometry, creating a complete attributed object.",
+[
+[
+"Geometry",
+"G",
+"Geometry"
+],
+[
+"Attributes",
+"A",
+"Generic Data"
+]
+],
+[
+[
+"Attributed Geometry",
+"AG",
+"Generic Data"
+]
+]
+],
+[
+"Get User Value",
+"GetUV",
+"03 Attributes",
+"Returns a User Attributes value corresponding to a User Attributes key. Works on referenced geometry or EleFront Attributes.",
+[
+[
+"Geometry",
+"G",
+"Generic Data"
+],
+[
+"Key",
+"[]K",
+"Text"
+]
+],
+[
+[
+"Values",
+"V",
+"Text"
+]
+]
+],
+[
+"Deconstruct Text",
+"DeText",
+"04 Annotations",
+"Deconstruct text object",
+null,
+null
+],
+[
+"Deconstruct Hatch",
+"DeHatch",
+"04 Annotations",
+"Deconstruct hatch",
+null,
+null
+],
+[
+"Define Angular Dimension",
+"AngularDim",
+"04 Annotations",
+"Define Angular Dimension Object",
+null,
+null
+],
+[
+"Define Hatch",
+"Hatch",
+"04 Annotations",
+"Define hatch object to send to eleFront bake component",
+[
+[
+"Curve",
+"C",
+"Curve"
+],
+[
+"Pattern",
+"[]P",
+"Text"
+],
+[
+"Rotation",
+"R",
+"Number"
+],
+[
+"Scale",
+"S",
+"Number"
+]
+],
+[
+[
+"Hatch",
+"H",
+"Generic Data"
+]
+]
+],
+[
+"Define Text Dot",
+"TextDot",
+"04 Annotations",
+"Define text dot object",
+null,
+null
+],
+[
+"Define Leader",
+"Leader",
+"04 Annotations",
+"Define Leader Object",
+null,
+null
+],
+[
+"Define Radial Dimension",
+"RadialDim",
+"04 Annotations",
+"Define Radial Dimension Object",
+null,
+null
+],
+[
+"Define Linear Dimension",
+"Linear Dim",
+"04 Annotations",
+"Define Linear Dimension",
+null,
+null
+],
+[
+"Define Text Object",
+"Text",
+"04 Annotations",
+"Define text object.",
+[
+[
+"Text",
+"T",
+"Text"
+],
+[
+"Plane",
+"P",
+"Plane"
+],
+[
+"Dimension Style",
+"[]DS",
+"Text"
+]
+],
+[
+[
+"Text",
+"T",
+"Generic Data"
+]
+]
+],
+[
+"Deconstruct Dimension",
+"DeDim",
+"04 Annotations",
+"Deconstruct dimension object",
+null,
+null
+],
+[
+"Define Linked Block",
+"DefLnkBlock",
+"05 Blocks",
+"Create a Linked Block Definition. Definition can be instantiated as a block.",
+null,
+null
+],
+[
+"Define Embedded Block",
+"DefEmbed",
+"05 Blocks",
+"Define an Embedded Block.",
+null,
+null
+],
+[
+"Push Block Definitions",
+"PushBlk",
+"05 Blocks",
+"Push block definitions to Rhino document",
+null,
+null
+],
+[
+"Get Block Info",
+"Block Info",
+"05 Blocks",
+"Returns information about a block instance",
+null,
+null
+],
+[
+"Explode Block",
+"ExpBlock",
+"05 Blocks",
+"Explode a block to get its geometry.",
+null,
+null
+],
+[
+"List Blocks In Document",
+"ListBlockD",
+"05 Blocks",
+"List all block names from the Rhino document",
+null,
+null
+],
+[
+"Insert Block",
+"Insert",
+"05 Blocks",
+"Insert a block from the active document",
+[
+[
+"Block Name",
+"N",
+"Text"
+],
+[
+"Plane",
+"P",
+"Plane"
+]
+],
+[
+[
+"Block",
+"B",
+"Generic Data"
+]
+]
+],
+[
+"Bake Objects To File",
+"BakeToFile",
+"06 Bake",
+"Bake objects to an external Rhino File with Rhino attributes and user attributes",
+null,
+null
+],
+[
+"Bake Objects",
+"Bake",
+"06 Bake",
+"Bake objects to Rhino with Rhino attributes and user attributes",
+[
+[
+"Geometry",
+"G",
+"Geometry"
+],
+[
+"Attributes",
+"A",
+"Generic Data"
+],
+[
+"BakeName",
+"N",
+"Text"
+],
+[
+"Bake Settings",
+"S",
+"Generic Data"
+],
+[
+"Bake",
+"B",
+"Boolean"
+]
+],
+[
+[
+"Message",
+"S",
+"Text"
+],
+[
+"Ghosts",
+"G",
+"Generic Data"
+]
+]
+],
+[
+"Bake Settings",
+"BkSettings",
+"06 Bake",
+"Select Preset Bake Settings, with options to override for custom settings.",
+null,
+null
+],
+[
+"Bake Layers",
+"BkLay",
+"06 Bake",
+"Bake Layers to Rhino",
+[
+[
+"Layers",
+"L",
+"Layer"
+],
+[
+"Bake",
+"B",
+"Boolean"
+]
+],
+[
+[
+"Message",
+"S",
+"Text"
+]
+]
+],
+[
+"Get Matching Branches",
+"GetBrn",
+"07 Trees",
+"Grab the branches from parallel tree with the same paths. Can remove empties.",
+null,
+null
+],
+[
+"Clean Parallel",
+"CleanP",
+"07 Trees",
+"Clean the primary data tree and output all respective secondary objects per item",
+null,
+null
+],
+[
+"Shift To Depth",
+"ShfDep",
+"07 Trees",
+"Shift a data tree to a specified depth",
+null,
+null
+],
+[
+"ShiftMatch",
+"ShiftM",
+"07 Trees",
+"Shift a data tree to match the structure of a guide tree",
+null,
+null
+],
+[
+"Graft Parallel",
+"GraftP",
+"07 Trees",
+"Graft the primary data tree and output all respective secondary objects per item",
+null,
+null
+],
+[
+"Create Tree",
+"Tree",
+"07 Trees",
+"Create tree by specifying a branch path for each item",
+null,
+null
+],
+[
+"Export Generic",
+"ExpGen",
+"09 Files",
+"Export to any file type that Rhino supports.",
+null,
+null
+],
+[
+"Export to Rhino File",
+"Exp3dm",
+"09 Files",
+"Export Objects to a 3dm File",
+[
+[
+"Destination",
+"D",
+"Text"
+],
+[
+"Rhino Object",
+"ID",
+"Guid"
+],
+[
+"Base Plane",
+"P",
+"Plane"
+]
+],
+[
+[
+"Output Messages",
+"O",
+"Text"
+]
+]
+],
+[
+"Get Current File",
+"File",
+"09 Files",
+"Returns the file name and directory of current file.",
+null,
+null
+],
+[
+"Modify Rhino File",
+"Modify3dm",
+"09 Files",
+"Add or remove objects from an external Rhino file.",
+null,
+null
+],
+[
+"Merge Rhino Files",
+"MergeF",
+"09 Files",
+"Merge Rhino files into a single, with various settings.",
+null,
+null
+],
+[
+"Deconstruct FilePath",
+"DecPath",
+"09 Files",
+"Split a file path string into folder and filename",
+null,
+null
+],
+[
+"List Files",
+"Files",
+"09 Files",
+"List all files within a directory, matching a search mask",
+null,
+null
+]
+]
+}

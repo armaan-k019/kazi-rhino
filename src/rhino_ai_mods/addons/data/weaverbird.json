@@ -1,0 +1,773 @@
+{
+"id": "weaverbird",
+"name": "Weaverbird",
+"version_checked": "0.9.0.1",
+"source": "grasshopperdocs.com/addons/weaverbird.html (read 2026-11-23)",
+"notes": "Inside Grasshopper the components are usually shown with a \"Weaverbird's \" prefix (e.g. \"Weaverbird's Catmull-Clark Subdivision\", nickname wbCatmullClark); the bridge matches either form.",
+"components": [
+[
+"Mesh From Lines (Weave Back)",
+null,
+"Wb Create",
+"Builds a mesh from a network of lines",
+[
+[
+"Lines",
+"L",
+"Line"
+],
+[
+"Maximum valence",
+"V",
+"Integer"
+]
+],
+[
+[
+"Mesh",
+"O",
+"Mesh"
+]
+]
+],
+[
+"Tile",
+null,
+"Wb Create",
+"",
+null,
+null
+],
+[
+"Mesh Antiprism",
+null,
+"Wb Define",
+"",
+null,
+null
+],
+[
+"Mesh Pyramid",
+null,
+"Wb Define",
+"",
+null,
+null
+],
+[
+"Mesh Prism",
+null,
+"Wb Define",
+"",
+null,
+null
+],
+[
+"Mesh Dipyramid",
+null,
+"Wb Define",
+"",
+null,
+null
+],
+[
+"Mesh Mesh Icosahedron",
+null,
+"Wb Define",
+"",
+null,
+null
+],
+[
+"Polylines Dodecahedron",
+null,
+"Wb Define",
+"",
+null,
+null
+],
+[
+"Join Meshes and Weld",
+null,
+"Wb Extract",
+"Joins meshes and welds coincident vertices",
+[
+[
+"Mesh",
+"M+",
+"Mesh"
+],
+[
+"Weld",
+"W",
+"Boolean"
+]
+],
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+]
+],
+[
+"Dual graph",
+null,
+"Wb Extract",
+"Dual of a mesh",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Dual Mode",
+"M",
+"DualModeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Reroute Faces",
+null,
+"Wb Extract",
+"",
+null,
+null
+],
+[
+"Reroute Faces by Pattern",
+null,
+"Wb Extract",
+"",
+null,
+null
+],
+[
+"Unify face windings",
+null,
+"Wb Extract",
+"",
+null,
+null
+],
+[
+"Vertices Component",
+null,
+"Wb Extract",
+"",
+null,
+null
+],
+[
+"Face Polylines",
+null,
+"Wb Extract",
+"Polyline outline of every mesh face",
+[
+[
+"Mesh",
+"M",
+"Mesh"
+]
+],
+[
+[
+"Polygons",
+"P",
+"Curve"
+]
+]
+],
+[
+"Mesh Edges",
+null,
+"Wb Extract",
+"All edges of a mesh as lines",
+[
+[
+"Mesh or Polylines",
+"G",
+"Geometry"
+]
+],
+[
+[
+"Lines",
+"L",
+"Line"
+]
+]
+],
+[
+"Naked boundary",
+null,
+"Wb Extract",
+"Naked edge curves of a mesh",
+[
+[
+"Mesh/Closed Polylines",
+"M",
+"Geometry"
+]
+],
+[
+[
+"Naked curves",
+"C",
+"Curve"
+]
+]
+],
+[
+"Laplacian Smoothing",
+null,
+"Wb Smoothen",
+"Laplacian smoothing",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+],
+[
+"Smooth Naked Edges",
+"S",
+"NakedEdgeEnum"
+],
+[
+"Thin",
+"T",
+"Number"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Blur Mesh",
+null,
+"Wb Smoothen",
+"",
+null,
+null
+],
+[
+"LaplacianHC Smoothing",
+null,
+"Wb Smoothen",
+"Volume-preserving Laplacian smoothing",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+],
+[
+"Smooth Naked Edges",
+"S",
+"NakedEdgeEnum"
+],
+[
+"Partial-Original",
+"P",
+"Number"
+],
+[
+"Orientation",
+"O",
+"Number"
+],
+[
+"Volume-Saving activation",
+"A",
+"Number"
+],
+[
+"Thin",
+"T",
+"Number"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Loop Subdivision",
+null,
+"Wb SubD",
+"Loop subdivision (triangles)",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+],
+[
+"Smooth Naked Edges",
+"S",
+"NakedEdgeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Inner Polygons Subdivision",
+null,
+"Wb SubD",
+"Inner polygons subdivision",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Sierpinski Triangles Subdivision",
+null,
+"Wb SubD",
+"",
+null,
+null
+],
+[
+"Catmull-Clark Subdivision",
+null,
+"Wb SubD",
+"Catmull-Clark smooth subdivision (quads)",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+],
+[
+"Smooth Naked Edges",
+"S",
+"NakedEdgeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Split Polygons Subdivision",
+null,
+"Wb SubD",
+"Split polygons subdivision",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+],
+[
+"Smooth Naked Edges",
+"S",
+"NakedEdgeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Midedge Subdivision",
+null,
+"Wb SubD",
+"Midedge subdivision",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+],
+[
+"Smooth Naked Edges",
+"S",
+"NakedEdgeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Split Triangles Subdivision",
+null,
+"Wb SubD",
+"Split triangles subdivision",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Constant Quads Split Subdivision",
+null,
+"Wb SubD",
+"Constant quads split subdivision",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Level",
+"L",
+"Integer"
+],
+[
+"Smooth Naked Edges",
+"S",
+"NakedEdgeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Offset Mesh",
+null,
+"Wb Transform",
+"Offsets a mesh",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"OffsetType",
+"T",
+"OffsetTypeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Sierpinski Carpet",
+null,
+"Wb Transform",
+"Sierpinski carpet on each face",
+[
+[
+"Mesh/Polylines",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"InsetType",
+"T",
+"InsetTypeEnum"
+]
+],
+[
+[
+"OutMesh",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Mesh Window",
+null,
+"Wb Transform",
+"Window (hole with frame) in each face",
+[
+[
+"Mesh/Polylines",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"InsetType",
+"T",
+"InsetTypeEnum"
+]
+],
+[
+[
+"OutMesh",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Picture Frame",
+null,
+"Wb Transform",
+"Frame around each face, leaving the middle open",
+[
+[
+"Mesh/Polylines",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"InsetType",
+"T",
+"InsetTypeEnum"
+]
+],
+[
+[
+"OutMesh",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Bevel Edges",
+null,
+"Wb Transform",
+"Bevels mesh edges",
+[
+[
+"Mesh/Polylines",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"InsetType",
+"T",
+"InsetTypeEnum"
+]
+],
+[
+[
+"OutMesh",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Stellate/Cumulation",
+null,
+"Wb Transform",
+"Raises a pyramid on each face",
+[
+[
+"Mesh/Polylines",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+]
+],
+[
+[
+"OutMesh",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Mesh Thicken",
+null,
+"Wb Transform",
+"Gives a mesh thickness (closed solid)",
+[
+[
+"Mesh/Curves",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"OffsetType",
+"T",
+"OffsetTypeEnum"
+]
+],
+[
+[
+"Output Mesh/Curves",
+"O",
+"Geometry"
+]
+]
+],
+[
+"Bevel Vertices",
+null,
+"Wb Transform",
+"Bevels mesh vertices",
+[
+[
+"Mesh/Polylines",
+"M",
+"Geometry"
+],
+[
+"Distance",
+"D",
+"Number"
+],
+[
+"InsetType",
+"T",
+"InsetTypeEnum"
+],
+[
+"Output geometry as mesh",
+"M",
+"Boolean"
+]
+],
+[
+[
+"OutMesh",
+"O",
+"Geometry"
+]
+]
+]
+]
+}

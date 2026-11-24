@@ -179,7 +179,27 @@ python examples\hops_hf_server.py
 Then say "add a hops component for http://127.0.0.1:5000/ask". I checked that the server starts
 and describes its components to Hops; the model calls themselves were not run here.
 
-## 5. How it works
+## 5. What about Raven?
+
+[Raven](https://www.raven.build) is a different kind of add-on. It is not a set of components
+to place and wire: it is a chat assistant inside Grasshopper that writes, adjusts and repairs
+definitions from plain language, which is the same job kazi does. So there is nothing for kazi
+to drive, and it has no public way for another program to call it.
+
+You can install it next to kazi and use both; they don't conflict. What I found (from
+third-party listings in 2026, so check raven.build before relying on it):
+
+- Rhino 8, installed from Rhino's `PackageManager` (search "Raven"), needs a Raven account.
+- A free plan with a small monthly allowance (listed as 300 tokens), then paid plans from
+  about $49 a month.
+- It runs in Raven's cloud. On the free and Personal plans your prompts and context are used
+  to improve their service; opting out needs the Professional plan.
+
+Differences that matter here: kazi is voice-first with push-to-talk, uses models you choose
+(Claude or Hugging Face), keeps a confirm step, and is yours to change. Raven is a polished
+chat window that already knows many plug-ins.
+
+## 6. How it works
 
 | Piece | Where |
 | --- | --- |
